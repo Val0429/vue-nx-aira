@@ -1,0 +1,10 @@
+{
+    "name": "vms-server",
+    "version": "1.0.0",
+    "description": "VMS Server",
+    "scripts": {
+        "start": "npm run start --prefix ../",
+        "build": "npm run build --prefix ../",
+        "create-project": "git checkout --orphan"
+    }
+}
