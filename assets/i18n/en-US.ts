@@ -21,4 +21,13 @@ export default class LangObject {
 
     m_SettingsManagement = "Settings Management";
     m_SystemConfiguration = "System Configuration";
+
+    w_No_ = "No.";
+    m_LicenseKey = "License Key";
+    m_MACAddress = "MAC Address";
+    w_Trial = "Trial";
+    w_Count = "Count";
+    m_RegisterDate = "Registration Date";
+    m_ExpireDate = "Expiration Date";
+    w_Expired = "Expired";
 }

@@ -23,8 +23,8 @@ interface RestfulRequest extends ApisRequestBase {
     }, 
 }
 
-export class SmartCommunityServer extends iSAPServerBase<RestfulRequest> {}
-export default SmartCommunityServer;
+export class Server extends iSAPServerBase<RestfulRequest> {}
+export default Server;
 
 /// /users/login - All ///////////////////////////////////// 
 declare namespace UsersLoginAll { 

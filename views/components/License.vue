@@ -1,19 +1,14 @@
 <template>
-    <iv-route-transition>
     <div key="main" style="padding: 5px 10px">
 
-        <div class="row">
-            <iv-topic class="col-md-4 mr-2" :label="_('m_SourcesManagement')">
-                <iv-topic-item variant="primary" icon="fa-video-camera" :label="_('m_VideoSource')" url="/sources/video-source" />
-            </iv-topic>
-
-            <iv-topic class="col-md-4 mr-2" :label="_('m_SettingsManagement')">
-                <iv-topic-item variant="secondary" icon="fa-cogs" :label="_('m_SystemConfiguration')" url="/settings/system-configuration" />
-            </iv-topic>
-        </div>
+        <iv-card :label="_('w_License')">
+            <iv-table
+                :server="{ path: '/license' }"
+                :interface="inf()"
+                />
+        </iv-card>
 
     </div>
-    </iv-route-transition>
 </template>
 
 <script lang="ts">
@@ -23,5 +18,44 @@ import { toEnumInterface } from '@/../core';
 
 @Component
 export default class License extends Vue {
+    private inf() {
+        return `
+            interface {
+                /**
+                 * @uiType - iv-cell-auto-index
+                 * @uiLabel - ${this._("w_No_")}
+                 */
+                autoIndex: any;
+                /**
+                 * @uiLabel - ${this._("m_LicenseKey")}
+                 */
+                licenseKey: string;
+                /**
+                 * @uiLabel - ${this._("m_MACAddress")}
+                 */
+                mac: string;
+                /**
+                 * @uiLabel - ${this._("w_Trial")}
+                 */
+                trial: boolean;
+                /**
+                 * @uiLabel - ${this._("w_Count")}
+                 */
+                count: number;
+                /**
+                 * @uiLabel - ${this._("m_RegisterDate")}
+                 */
+                registerDate: Date;
+                /**
+                 * @uiLabel - ${this._("m_ExpireDate")}
+                 */
+                expireDate: Date;
+                /**
+                 * @uiLabel - ${this._("w_Expired")}
+                 */
+                expired: boolean;
+            }
+        `;
+    }
 }
 </script>

@@ -21,4 +21,13 @@ export default class LangObject implements ILang {
 
     m_SettingsManagement = "管理設定值";
     m_SystemConfiguration = "系統設定";
+
+    w_No_ = "編號";
+    m_LicenseKey = "許可證密鑰";
+    m_MACAddress = "MAC位址";
+    w_Trial = "審查";
+    w_Count = "數量";
+    m_RegisterDate = "註冊日期";
+    m_ExpireDate = "到期日";
+    w_Expired = "已過期";
 }

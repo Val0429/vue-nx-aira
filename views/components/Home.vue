@@ -1,5 +1,4 @@
 <template>
-    <iv-route-transition>
     <div key="main" style="padding: 5px 10px">
 
         <div class="row">
@@ -18,7 +17,6 @@
         </div>
 
     </div>
-    </iv-route-transition>
 </template>
 
 <script lang="ts">

@@ -10,6 +10,7 @@ var config: Config = {
     ip: "localhost",
     port: 6083,
     ssl: false,
+    cgiPath: "api",
 
     serverFrameworkVersionGreaterThan: "1.06.00"
 }

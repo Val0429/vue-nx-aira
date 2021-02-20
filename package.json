@@ -1,7 +1,7 @@
 {
-    "name": "vms-server",
+    "name": "smart-face-tracker",
     "version": "1.0.0",
-    "description": "VMS Server",
+    "description": "Smart Face Tracker",
     "scripts": {
         "start": "npm run start --prefix ../",
         "build": "npm run build --prefix ../",
