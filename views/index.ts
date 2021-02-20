@@ -11,9 +11,9 @@ $({ path: '/', name: "Main", redirect: '/home', permission: false })();
 
     $({ path: '/home', name: "_('w_Home')", permission: false })(Home);
 
-    $({ path: '/sources', name: "_('w_Sources')", permission: false })();
+    $({ path: '/sources', name: "_('w_Sources')", icon: 'fa-video-camera', permission: false })();
         $({ path: '/sources/video-source', name: "_('m_VideoSource')", icon: 'fa-video-camera', permission: false })(VideoSource);
 
-    $({ path: '/settings', name: "_('w_Settings')", permission: false })();
+    $({ path: '/settings', name: "_('w_Settings')", icon: 'fa-cogs', permission: false })();
         $({ path: '/settings/license', name: "_('w_License')", icon: 'fa-certificate', permission: false })(License);
-        $({ path: '/settings/system-configuration', name: "_('m_SystemConfiguration')", icon: 'fa-cogs', permission: false })(SystemConfiguration);
+        $({ path: '/settings/system-configuration', name: "_('m_SystemConfiguration')", icon: 'fa-cog', permission: false })(SystemConfiguration);
