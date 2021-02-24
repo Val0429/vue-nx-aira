@@ -2,14 +2,14 @@ import { RegisterLanguage, ILang } from '@/../core/i18n';
 
 @RegisterLanguage("zh-TW", "正體中文")
 export default class LangObject implements ILang {
-    w_Name = "名前";
-    w_Enabled = "有効";
+    w_Name = "姓名";
+    w_Enabled = "開啟";
     w_Value = "値";
     w_Startdate = "開始日";
-    w_Enddate = "終了日";
+    w_Enddate = "結束日";
     w_Password = "密碼";
-    w_Selection = "選択";
-    w_Multi = "複数";
+    w_Selection = "選擇";
+    w_Multi = "複數";
 
     w_Home = "首頁";
     w_Sources = "來源";
@@ -40,4 +40,10 @@ export default class LangObject implements ILang {
     m_MergeFaceScore = "人臉合併分數 (範圍：{min}-{max}%)";
     m_PreAndPostVideoDuration = "影片回放擷取時間 (單位：秒，範圍：{min}-{max})";
     m_DataRetensionDays = "資料保留天數 (範圍：{min}-{max})";
+
+    /// Video Source
+    w_Key = "索引";
+    w_RefName = "名稱";
+    m_MinFaceLength = "最小捕捉人臉尺寸";
+    m_MergeFaceSeconds = "人臉合併秒數";
 }

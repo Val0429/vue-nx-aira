@@ -3,6 +3,7 @@ import { iSAPServerBase, ApisRequestBase, InputR, OutputR } from '@/../core/serv
 interface RestfulRequest extends ApisRequestBase { 
     "Get": { 
         "/config/sfs": [GetConfigSFS.Input, GetConfigSFS.Output, false]
+        "/cameras": [GetCameras.Input, GetCameras.Output, false]
     }, 
     "Post": { 
         "/config/sfs": [PostConfigSFS.Input, PostConfigSFS.Output, false]
@@ -47,5 +48,40 @@ export declare namespace GetConfigSFS {
 export declare namespace PostConfigSFS { 
     export type Input = GetConfigSFS.Output;
     export type Output = GetConfigSFS.Output;
+} 
+////////////////////////////////////////////////////////////// 
+
+/// /cameras - Get ///////////////////////////////////// 
+export declare namespace GetCameras { 
+    export interface ICameraConfig {
+        /// default: true
+        enable?: boolean;
+        /// default: true. only decode iframe. false to decode all.
+        ionly?: boolean;
+        /// default: 0 (px). face w & h should be larger than N (pixels).
+        minFaceLength?: number;
+        /// default: 5 (seconds)
+        mergeFaceSeconds?: number;
+    }
+    
+    export interface Input {
+    }
+    export interface Output {
+        engineObjectId?: string;
+        /// mapping: IVast2Camera.Name
+        uniqueIdentity: string;
+        /// mapping: IVast2Camera.RefName
+        refName: string;
+        /// mapping: IVast2Camera.ip
+        ip: string;
+        /// mapping: IVast2Camera.port
+        port: number;
+        /// mapping: IVast2Camera.HTTPSPort
+        httpsPort?: number;
+        /// mapping: IVast2Camera.UseSSL
+        useSSL?: boolean;
+    
+        config?: ICameraConfig;
+    }
 } 
 ////////////////////////////////////////////////////////////// 

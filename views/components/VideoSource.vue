@@ -1,19 +1,21 @@
 <template>
-    <iv-route-transition>
-    <div key="main" style="padding: 5px 10px">
+    <div key="main">
+        <iv-card :label="_('m_VideoSource')">
+            <iv-table
+                :server="{ path: '/cameras' }"
+                :interface="inf()"
+                >
 
-        <div class="row">
-            <iv-topic class="col-md-4 mr-2" :label="_('m_SourcesManagement')">
-                <iv-topic-item variant="primary" icon="fa-video-camera" :label="_('m_VideoSource')" url="/sources/video-source" />
-            </iv-topic>
+                <template #actions="{$attrs}">
+                    <iv-toolbox-more>
+                        <iv-toolbox-view @click="doView($attrs.row)" />
+                        <iv-toolbox-edit @click="doEdit($attrs.row)" />
+                    </iv-toolbox-more>
+                </template>
 
-            <iv-topic class="col-md-4 mr-2" :label="_('m_SettingsManagement')">
-                <iv-topic-item variant="secondary" icon="fa-cogs" :label="_('m_SystemConfiguration')" url="/settings/system-configuration" />
-            </iv-topic>
-        </div>
-
+            </iv-table>
+        </iv-card>
     </div>
-    </iv-route-transition>
 </template>
 
 <script lang="ts">
@@ -23,5 +25,44 @@ import { toEnumInterface } from '@/../core';
 
 @Component
 export default class VideoSource extends Vue {
+    private inf() {
+        return `
+        interface {
+            /**
+             * @uiType - iv-cell-auto-index
+             * @uiLabel - ${this._("w_No_")}
+             */
+            autoIndex: any;
+
+            /**
+             * @uiLabel - ${this._("w_Key")}
+             */
+            uniqueIdentity: string;
+            /**
+             * @uiLabel - ${this._("w_RefName")}
+             */
+            refName: string;
+
+            config: interface {
+                /**
+                 * @uiLabel - ${this._("m_MinFaceLength")}
+                 */
+                minFaceLength: number;
+                /**
+                 * @uiLabel - ${this._("m_MergeFaceSeconds")}
+                 */
+                mergeFaceSeconds: number;
+            };
+
+            actions: any;
+        }
+        `;
+    }
+
+    private doView() {
+    }
+
+    
+
 }
 </script>

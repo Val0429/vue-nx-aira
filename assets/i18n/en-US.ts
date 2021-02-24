@@ -40,4 +40,10 @@ export default class LangObject {
     m_MergeFaceScore = "Face Merge Similarity Score % (range: {min}-{max}%)";
     m_PreAndPostVideoDuration = "Pre and Post Capture Playback Video Clips (unit: second. range {min}-{max})";
     m_DataRetensionDays = "Data Retention Days (range: {min}-{max})";
+
+    /// Video Source
+    w_Key = "Key";
+    w_RefName = "Name";
+    m_MinFaceLength = "Min Face Size";
+    m_MergeFaceSeconds = "Merge Face Interval";
 }
