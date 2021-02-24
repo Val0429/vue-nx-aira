@@ -2,65 +2,50 @@ import { iSAPServerBase, ApisRequestBase, InputR, OutputR } from '@/../core/serv
 
 interface RestfulRequest extends ApisRequestBase { 
     "Get": { 
-        "/users/login": [UsersLoginAll.Input, UsersLoginAll.Output, false],
-        "/users": [any, any, true],
-        "/announcements": [AnnouncementsGet.Input, AnnouncementsGet.Output, true],
+        "/config/sfs": [GetConfigSFS.Input, GetConfigSFS.Output, false]
     }, 
     "Post": { 
-        "/users/login": [UsersLoginAll.Input, UsersLoginAll.Output, false], 
-        "/users/logout": [UsersLogoutPost.Input, any, true], 
-        "/users": [any, any, true],
+        "/config/sfs": [PostConfigSFS.Input, PostConfigSFS.Output, false]
     },
     "Put": {
-        "/users": [any, any, true],
     },
     "Delete": {
-        "/users": [any, any, true],
     },
     "Ws": {
-        "/users/alive": [any, any, true], 
-        "/agents/connect": [any, any, true], 
     }, 
 }
 
 export class Server extends iSAPServerBase<RestfulRequest> {}
 export default Server;
 
-/// /users/login - All ///////////////////////////////////// 
-declare namespace UsersLoginAll { 
+/// /config/sfs - Get ///////////////////////////////////// 
+export declare namespace GetConfigSFS { 
     export interface Input { 
-        username: string; 
-        password: string; 
-        } 
+    } 
 
-        export interface Output { 
-        sessionId: string; 
-        serverTime: Date; 
-        user: string; 
+    export interface Output { 
+        mergeFaceSeconds?: number;
+        /// 人臉合併分數
+        mergeFaceScore?: number;
+        keepFacesDays?: number;
+    
+        /// 搜尋分數 0-100
+        searchSimilarityThreshold?: number;
+        /// 搜尋時間範圍, 10-120
+        searchPeriodMinutes?: number;
+        /// 顯示資料數量, 60-300
+        faceWallDisplayMaxNumber?: number;
+        /// 影片回放擷取時間 5-60
+        preAndPostVideoDurationSeconds?: number;
+        /// 資料保留時間 0-180
+        dataRetensionDays?: number;
     } 
 } 
 ////////////////////////////////////////////////////////////// 
-/// /users/logout - Post ///////////////////////////////////// 
-declare namespace UsersLogoutPost { 
-    export interface Input { 
-    sessionId: string; 
-    } 
+
+/// /config/sfs - Post ///////////////////////////////////// 
+export declare namespace PostConfigSFS { 
+    export type Input = GetConfigSFS.Output;
+    export type Output = GetConfigSFS.Output;
 } 
-////////////////////////////////////////////////////////////// 
-/// /announcements - Get /////////////////////////////////////
-export declare namespace AnnouncementsGet { 
-    export interface IAnnouncements {
-        /**
-        * Title of announcements.
-        */
-        title: string;
-        
-        /**
-        * Content of announcements.
-        */
-        content?: string;
-    }
-    export type Input = InputR<IAnnouncements>;
-    export type Output = OutputR<IAnnouncements>;
-}
 ////////////////////////////////////////////////////////////// 

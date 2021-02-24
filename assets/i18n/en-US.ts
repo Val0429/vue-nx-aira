@@ -30,4 +30,14 @@ export default class LangObject {
     m_RegisterDate = "Registration Date";
     m_ExpireDate = "Expiration Date";
     w_Expired = "Expired";
+
+    /// System Configuration
+    m_LiveTracking = "Live Tracking";
+    m_SearchResults = "Search Results";
+    w_Database = "Database";
+    m_SearchSimilarityThreshold = "Search Similarity Threshold % (range: {min}-{max}%)";
+    m_SearchPeriodMinutes = "Quick Search Period (unit: minute. range {min}-{max})";
+    m_MergeFaceScore = "Face Merge Similarity Score % (range: {min}-{max}%)";
+    m_PreAndPostVideoDuration = "Pre and Post Capture Playback Video Clips (unit: second. range {min}-{max})";
+    m_DataRetensionDays = "Data Retention Days (range: {min}-{max})";
 }

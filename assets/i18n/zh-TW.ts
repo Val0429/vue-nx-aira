@@ -30,4 +30,14 @@ export default class LangObject implements ILang {
     m_RegisterDate = "註冊日期";
     m_ExpireDate = "到期日";
     w_Expired = "已過期";
+
+    /// System Configuration
+    m_LiveTracking = "即時追蹤";
+    m_SearchResults = "搜尋結果";
+    w_Database = "資料庫";
+    m_SearchSimilarityThreshold = "搜尋分數 (範圍：{min}-{max}%)";
+    m_SearchPeriodMinutes = "搜尋時間範圍 (單位：分鐘，範圍：{min}-{max})";
+    m_MergeFaceScore = "人臉合併分數 (範圍：{min}-{max}%)";
+    m_PreAndPostVideoDuration = "影片回放擷取時間 (單位：秒，範圍：{min}-{max})";
+    m_DataRetensionDays = "資料保留天數 (範圍：{min}-{max})";
 }

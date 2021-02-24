@@ -1,14 +1,11 @@
 <template>
-    <div key="main" style="padding: 5px 10px">
-
-        <iv-card :label="_('w_License')">
-            <iv-table
-                :server="{ path: '/license' }"
-                :interface="inf()"
-                />
-        </iv-card>
-
-    </div>
+    <iv-card :label="_('w_License')">
+        <iv-table
+            :server="{ path: '/license' }"
+            :selectable="false"
+            :interface="inf()"
+            />
+    </iv-card>
 </template>
 
 <script lang="ts">
