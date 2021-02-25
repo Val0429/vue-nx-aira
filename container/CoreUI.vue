@@ -18,6 +18,7 @@
 
                 <SidebarNavItem url="/settings">
                     <SidebarNavItem url="/settings/license" />
+                    <SidebarNavItem url="/settings/vast2-configuration" />
                     <SidebarNavItem url="/settings/system-configuration" />
                 </SidebarNavItem>
 

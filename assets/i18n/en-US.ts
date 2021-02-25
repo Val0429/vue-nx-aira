@@ -7,6 +7,7 @@ export default class LangObject {
     w_Value = "Value";
     w_Startdate = "Start Date";
     w_Enddate = "End Date";
+    w_Account = "Account";
     w_Password = "Password";
     w_Selection = "Selection";
     w_Multi = "Multi";
@@ -20,6 +21,7 @@ export default class LangObject {
     m_VideoSource = "Video Source";
 
     m_SettingsManagement = "Settings Management";
+    m_VAST2Configuration = "VAST2 Configuration";
     m_SystemConfiguration = "System Configuration";
 
     w_No_ = "No.";
@@ -31,6 +33,12 @@ export default class LangObject {
     m_ExpireDate = "Expiration Date";
     w_Expired = "Expired";
 
+    /// Toolbox
+    w_View = "View";
+    w_Add = "Add";
+    w_Preview = "Preview";
+    w_Edit = "Edit";
+
     /// System Configuration
     m_LiveTracking = "Live Tracking";
     m_SearchResults = "Search Results";
@@ -41,9 +49,26 @@ export default class LangObject {
     m_PreAndPostVideoDuration = "Pre and Post Capture Playback Video Clips (unit: second. range {min}-{max})";
     m_DataRetensionDays = "Data Retention Days (range: {min}-{max})";
 
+    /// VAST2 Configuration
+    w_Protocol = "Protocol";
+    w_HostName = "Hostname";
+    m_Port = "Port (range: {min}-{max})";
+    m_ConfigSuccessful = "Save Successfully!";
+
     /// Video Source
     w_Key = "Key";
     w_RefName = "Name";
     m_MinFaceLength = "Min Face Size";
     m_MergeFaceSeconds = "Merge Face Interval";
+
+    /// Walkthrough
+    m_Walkthrough1 = "Let's get our services <BR/>up and running!";
+    m_Walkthrough2 = "Enter your Smart Face Tracker <BR/>Activation License:";
+    m_Walkthrough3 = "Click to activate offline license";
+    m_Walkthrough4 = "Opps! Something <BR/>went wrong...";
+    m_Walkthrough5 = "There is an issue registering <BR/>your license.";
+    m_Walkthrough6 = "Error Message: {message}";
+    w_Register = "Register";
+    m_LicenseInvalid = "Invalid License";
+    m_TryAgain = "Try Again";
 }

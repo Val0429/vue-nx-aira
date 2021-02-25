@@ -1,20 +1,6 @@
 <template>
     <div key="main">
-        <iv-card :label="_('m_VideoSource')">
-            <iv-table
-                :server="{ path: '/cameras' }"
-                :interface="inf()"
-                >
-
-                <template #actions="{$attrs}">
-                    <iv-toolbox-more>
-                        <iv-toolbox-view @click="doView($attrs.row)" />
-                        <iv-toolbox-edit @click="doEdit($attrs.row)" />
-                    </iv-toolbox-more>
-                </template>
-
-            </iv-table>
-        </iv-card>
+        <ivc-cameras />
     </div>
 </template>
 

@@ -3,10 +3,15 @@ import { iSAPServerBase, ApisRequestBase, InputR, OutputR } from '@/../core/serv
 interface RestfulRequest extends ApisRequestBase { 
     "Get": { 
         "/config/sfs": [GetConfigSFS.Input, GetConfigSFS.Output, false]
+        "/config/vast2": [GetConfigVAST2.Input, GetConfigVAST2.Output, false]
         "/cameras": [GetCameras.Input, GetCameras.Output, false]
+        "/license": [GetLicense.Input, OutputR<GetLicense.Output>, false]
+        "/license/mac": [GetLicenseMac.Input, GetLicenseMac.Output, false]
     }, 
     "Post": { 
         "/config/sfs": [PostConfigSFS.Input, PostConfigSFS.Output, false]
+        "/config/vast2": [PostConfigVAST2.Input, PostConfigVAST2.Output, false]
+        "/license": [PostLicense.Input, PostLicense.Output, false]
     },
     "Put": {
     },
@@ -51,6 +56,28 @@ export declare namespace PostConfigSFS {
 } 
 ////////////////////////////////////////////////////////////// 
 
+/// /config/vast2 - Get ///////////////////////////////////// 
+export declare namespace GetConfigVAST2 { 
+    export interface Input { 
+    } 
+
+    export interface Output { 
+        hostname: string;
+        port: number;
+        protocol: string;
+        username?: string;
+        password?: string;
+    } 
+} 
+////////////////////////////////////////////////////////////// 
+
+/// /config/vast2 - Post ///////////////////////////////////// 
+export declare namespace PostConfigVAST2 { 
+    export type Input = GetConfigVAST2.Output;
+    export type Output = GetConfigVAST2.Output;
+} 
+////////////////////////////////////////////////////////////// 
+
 /// /cameras - Get ///////////////////////////////////// 
 export declare namespace GetCameras { 
     export interface ICameraConfig {
@@ -83,5 +110,43 @@ export declare namespace GetCameras {
     
         config?: ICameraConfig;
     }
+} 
+////////////////////////////////////////////////////////////// 
+
+/// /license - Get ///////////////////////////////////// 
+export declare namespace GetLicense { 
+    export interface Input {
+    }
+    export interface Output {
+        count: number;
+        expired: boolean;
+        licenseKey: string;
+        mac: string;
+        productNO: string;
+        trial: boolean;
+    }
+} 
+////////////////////////////////////////////////////////////// 
+
+/// /license - Post ///////////////////////////////////// 
+export declare namespace PostLicense { 
+    export interface Input {
+        mac?: string;
+        keyOrData: string;
+    }
+    export interface Output {
+    }
+} 
+////////////////////////////////////////////////////////////// 
+
+/// /license/mac - Get ///////////////////////////////////// 
+export declare namespace GetLicenseMac { 
+    export interface Input {
+    }
+    export interface OutputUnit {
+        name: string;
+        mac: string;
+    }
+    export type Output = OutputUnit[];
 } 
 ////////////////////////////////////////////////////////////// 
