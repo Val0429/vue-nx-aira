@@ -1,4 +1,4 @@
-import { iSAPServerBase, ApisRequestBase, InputR, OutputR } from '@/../core/server';
+import { iSAPServerBase, ApisRequestBase, InputR, OutputR, OutputU, InputU } from '@/../core/server';
 
 interface RestfulRequest extends ApisRequestBase { 
     "Get": { 
@@ -12,6 +12,7 @@ interface RestfulRequest extends ApisRequestBase {
         "/config/sfs": [PostConfigSFS.Input, PostConfigSFS.Output, false]
         "/config/vast2": [PostConfigVAST2.Input, PostConfigVAST2.Output, false]
         "/license": [PostLicense.Input, PostLicense.Output, false]
+        "/test/vast2": [PostTestVAST2.Input, PostTestVAST2.Output, false]
     },
     "Put": {
     },
@@ -45,6 +46,8 @@ export declare namespace GetConfigSFS {
         preAndPostVideoDurationSeconds?: number;
         /// 資料保留時間 0-180
         dataRetensionDays?: number;
+
+        supporterEmail?: string;
     } 
 } 
 ////////////////////////////////////////////////////////////// 
@@ -73,9 +76,16 @@ export declare namespace GetConfigVAST2 {
 
 /// /config/vast2 - Post ///////////////////////////////////// 
 export declare namespace PostConfigVAST2 { 
-    export type Input = GetConfigVAST2.Output;
+    export type Input = Partial<GetConfigVAST2.Output>;
     export type Output = GetConfigVAST2.Output;
 } 
+////////////////////////////////////////////////////////////// 
+
+/// /test/vast2 - Post ///////////////////////////////////////
+export declare namespace PostTestVAST2 {
+    export type Input = GetConfigVAST2.Output;
+    export type Output = any;
+}
 ////////////////////////////////////////////////////////////// 
 
 /// /cameras - Get ///////////////////////////////////// 

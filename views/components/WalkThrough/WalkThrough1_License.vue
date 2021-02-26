@@ -19,7 +19,7 @@
                         v-on="$listeners"
                         label=""
                         />
-                    <router-link class="link" to="/walkthrough/2" v-html="_('m_Walkthrough3')" />
+                    <a class="link" @click="doOffline" v-html="_('m_Walkthrough3')" />
                 </div>
             </template>
 
@@ -51,13 +51,14 @@
             transform-origin: left;
 
             & /deep/ input {
-                width: 260px !important;
+                width: 300px !important;
             }
         }
 
         .link {
             text-decoration: underline;
             margin-left: 20px;
+            cursor: pointer;
         }
 
         .selection {
@@ -66,7 +67,7 @@
             transform-origin: left;
 
             & /deep/ > div {
-                width: 260px !important;
+                width: 300px !important;
             }
         }
     }
@@ -95,6 +96,12 @@ export default class WalkThrough1_License extends Vue {
     /// united emitter
     @Emit("failed")
     private doFailed(msg: string) { return msg; }
+
+    @Emit("success")
+    private doSuccess() {}
+
+    @Emit("offline")
+    private doOffline() {}
 
     /// interface
     private inf() {
@@ -128,13 +135,13 @@ export default class WalkThrough1_License extends Vue {
 
         await new Promise(resolve => setTimeout(resolve, 1000));
 
-        try {   
+        try {
             await this.$server.C("/license", {
                 mac: data.mac,
-                keyOrData: data.license
+                keyOrData: data.license.toUpperCase()
             }, undefined, undefined, true);
+            this.doSuccess();
 
-            console.log("no error");
         } catch(e) { this.doFailed(e.body) } finally {
             modal.close();
         }

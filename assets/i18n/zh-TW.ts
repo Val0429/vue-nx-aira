@@ -25,7 +25,7 @@ export default class LangObject implements ILang {
     m_SystemConfiguration = "系統設定";
 
     w_No_ = "編號";
-    m_LicenseKey = "許可證密鑰";
+    m_LicenseKey = "金鑰";
     m_MACAddress = "MAC位址";
     w_Trial = "審查";
     w_Count = "數量";
@@ -63,12 +63,29 @@ export default class LangObject implements ILang {
 
     /// Walkthrough
     m_Walkthrough1 = "讓我們開始動手設定服務吧！";
-    m_Walkthrough2 = "輸入您的 Smart Face Tracker <BR/>啟動許可證密鑰：";
+    m_Walkthrough2 = "輸入您的 Smart Face Tracker <BR/>啟動金鑰：";
     m_Walkthrough3 = "點此啟動離線許可證";
-    m_Walkthrough4 = "Opps! Something <BR/>went wrong...";
-    m_Walkthrough5 = "註冊許可證發生問題。";
+    m_Walkthrough4 = "哎呀，似乎有東西出錯了...";
+    m_Walkthrough5 = "我們無法成功註冊您的金鑰。";
     m_Walkthrough6 = "錯誤訊息：{message}";
+    m_Walkthrough7 = "離線啟動許可證";
+    m_Walkthrough8 = "我們了解，您的環境不一定有網際網路。";
+    m_Walkthrough9 = "或是您可以使用";
+    m_Walkthrough10 = "線上註冊許可證";
+    m_Walkthrough11 = "記下您的MAC位址";
+    m_Walkthrough12 = "下載可用MAC位址列表";
+    m_Walkthrough13 = "將您的MAC位址寄到";
+    m_Walkthrough14 = "將收到的金鑰檔案在此加入附件";
+    m_Walkthrough15 = "讓我們動手設定影像管理系統";
+    m_Walkthrough16 = "輸入您的 VAST2 認證：";
+    m_Walkthrough17 = "上傳金鑰檔案 (.lic)";
+    m_Walkthrough18 = "遇到問題嗎？";
+    m_Walkthrough19 = "寄信給我們";
+    m_Walkthrough20 = "錯誤的使用者名稱或密碼";
+    m_Walkthrough21 = "伺服器連線失敗，請重試";
     w_Register = "註冊";
-    m_LicenseInvalid = "不合格的許可證密鑰";
+    m_LicenseInvalid = "無法辨識的金鑰";
     m_TryAgain = "再試一次";
+    m_StepNum = "步驟 {0}";
+    w_Connect = "連線";
 }
