@@ -5,8 +5,10 @@ interface RestfulRequest extends ApisRequestBase {
         "/config/sfs": [GetConfigSFS.Input, GetConfigSFS.Output, false]
         "/config/vast2": [GetConfigVAST2.Input, GetConfigVAST2.Output, false]
         "/cameras": [GetCameras.Input, GetCameras.Output, false]
-        "/license": [GetLicense.Input, OutputR<GetLicense.Output>, false]
+        "/cameras/sync": [GetCamerasSync.Input, GetCamerasSync.Output, false]
+        "/license": [GetLicense.Input, OutputR<GetLicense.Output> & { summary: any, productKey: string }, false]
         "/license/mac": [GetLicenseMac.Input, GetLicenseMac.Output, false]
+        "/apis": [GetApis.Input, GetApis.Output, false]
     }, 
     "Post": { 
         "/config/sfs": [PostConfigSFS.Input, PostConfigSFS.Output, false]
@@ -15,6 +17,7 @@ interface RestfulRequest extends ApisRequestBase {
         "/test/vast2": [PostTestVAST2.Input, PostTestVAST2.Output, false]
     },
     "Put": {
+        "/cameras": [PutCameras.Input, PutCameras.Output, false]
     },
     "Delete": {
     },
@@ -88,6 +91,13 @@ export declare namespace PostTestVAST2 {
 }
 ////////////////////////////////////////////////////////////// 
 
+/// /cameras - Put ///////////////////////////////////// 
+export declare namespace PutCameras { 
+    export type Input = InputU<GetCameras.Output>;
+    export type Output = GetCameras.Output;
+} 
+////////////////////////////////////////////////////////////// 
+
 /// /cameras - Get ///////////////////////////////////// 
 export declare namespace GetCameras { 
     export interface ICameraConfig {
@@ -120,6 +130,14 @@ export declare namespace GetCameras {
     
         config?: ICameraConfig;
     }
+} 
+////////////////////////////////////////////////////////////// 
+
+/// /cameras/sync - Get ///////////////////////////////////// 
+export declare namespace GetCamerasSync { 
+    export interface Input {
+    }
+    export type Output = OutputR<GetCameras.Output>;
 } 
 ////////////////////////////////////////////////////////////// 
 
@@ -158,5 +176,16 @@ export declare namespace GetLicenseMac {
         mac: string;
     }
     export type Output = OutputUnit[];
+} 
+////////////////////////////////////////////////////////////// 
+
+/// /apis - Get //////////////////////////////////////////////
+export declare namespace GetApis { 
+    export interface Input {
+    }
+    export interface Output {
+        serverVersion: string;
+        frameworkVersion: string;
+    }
 } 
 ////////////////////////////////////////////////////////////// 

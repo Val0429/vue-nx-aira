@@ -4,6 +4,7 @@ import { RegisterLanguage, ILang } from '@/../core/i18n';
 export default class LangObject implements ILang {
     w_Name = "姓名";
     w_Enabled = "開啟";
+    w_Disabled = "關閉";
     w_Value = "値";
     w_Startdate = "開始日";
     w_Enddate = "結束日";
@@ -83,9 +84,18 @@ export default class LangObject implements ILang {
     m_Walkthrough19 = "寄信給我們";
     m_Walkthrough20 = "錯誤的使用者名稱或密碼";
     m_Walkthrough21 = "伺服器連線失敗，請重試";
+    m_Walkthrough22 = "啟用設備以進行人臉辨識：";
+    m_Walkthrough23 = "刷新列表";
+    m_Walkthrough24 = "啟用的影像來源 {0}/{1}";
+    m_Walkthrough25 = "沒有設備可以顯示。 <BR/>請檢查您的影像設定。";
+    m_Walkthrough26 = "服務啟動完成！";
+    m_Walkthrough27 = "我們的系統即將自動啟動。";
+    m_Walkthrough28 = "五秒鐘後將自動將您轉移至設定頁...";
+    m_Walkthrough29 = "或是 <a href='{0}'>點擊前往</a> 以完成其他設定步驟。";
     w_Register = "註冊";
     m_LicenseInvalid = "無法辨識的金鑰";
     m_TryAgain = "再試一次";
     m_StepNum = "步驟 {0}";
     w_Connect = "連線";
+    w_Finish = "完成";
 }

@@ -78,7 +78,7 @@
     }
 
     .steps {
-        margin-top: 30px;
+        margin-top: 40px;
         list-style-type: none;
         padding-left: 0;
         padding-top: 25px;

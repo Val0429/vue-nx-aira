@@ -2,28 +2,32 @@
     <div class="main">
         <div class="content_border">
             <iv-auto-transition :step="step">
-                <WalkThrough1_License key="1" v-show="step==1" ref="walkthrough1"
+                <WalkThrough1_License key="1" v-if="step==1" ref="walkthrough1"
                     @offline="step=2"
                     @failed="step=9; backStep=1; licenseFailedMessage = $event"
                     @success="step=11"
                     />
 
-                <WalkThrough2_LicensOffline key="2" v-show="step==2"
+                <WalkThrough2_LicensOffline key="2" v-if="step==2"
                     @online="step=1"
                     @failed="step=9; backStep=2; licenseFailedMessage = $event"
                     @success="step=11"
                     />
                 
-                <WalkThrough9_LicenseFailed key="9" v-show="step==9"
+                <WalkThrough9_LicenseFailed key="9" v-if="step==9"
                     :message="licenseFailedMessage"
                     @retry="step=backStep; $refs.walkthrough1.clean();"
                     />
                 
-                <WalkThrough11_VAST2 key="11" v-show="step==11"
+                <WalkThrough11_VAST2 key="11" v-if="step==11"
                     @success="step=12"
                     />
 
-                <WalkThrough12_VAST2Cameras key="12" v-show="step==12"
+                <WalkThrough12_VAST2Cameras key="12" v-if="step==12"
+                    @success="step=21"
+                    />
+
+                <WalkThrough19_Success key="21" v-if="step==21"
                     />
             </iv-auto-transition>
         </div>
@@ -31,6 +35,16 @@
 </template>
 
 <style lang="scss" scoped>
+@font-face {
+    font-family: "Century Gothic";
+    src: local("Century Gothic"),
+         url("./../../../assets/fonts/CenturyGothicRegular.ttf") format("truetype");
+}
+
+body .main * {
+    font-family: "Century Gothic", "微軟正黑體" !important;
+}
+
 .main {
     width: 100vw;
     height: 100vh;
@@ -82,6 +96,7 @@ import WalkThrough2_LicensOffline from '@/views/components/WalkThrough/WalkThrou
 import WalkThrough9_LicenseFailed from '@/views/components/WalkThrough/WalkThrough9_LicenseFailed.vue';
 import WalkThrough11_VAST2 from '@/views/components/WalkThrough/WalkThrough11_VAST2.vue';
 import WalkThrough12_VAST2Cameras from '@/views/components/WalkThrough/WalkThrough12_VAST2Cameras.vue';
+import WalkThrough19_Success from '@/views/components/WalkThrough/WalkThrough19_Success.vue';
 
 @Component({
     components: {
@@ -89,7 +104,8 @@ import WalkThrough12_VAST2Cameras from '@/views/components/WalkThrough/WalkThrou
         WalkThrough2_LicensOffline,
         WalkThrough9_LicenseFailed,
         WalkThrough11_VAST2,
-        WalkThrough12_VAST2Cameras
+        WalkThrough12_VAST2Cameras,
+        WalkThrough19_Success
     }
 })
 export default class WalkThrough extends Vue {
@@ -99,7 +115,7 @@ export default class WalkThrough extends Vue {
     /// 11: VAST2 credential
     /// 12: VAST2 camera selection
     /// 19: Activation Success
-    private step: number = 11;
+    private step: number = 1;
 
     /// if going back
     private backStep: number;

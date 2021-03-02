@@ -3,84 +3,194 @@
         <iv-language-button style="position: absolute; right: 0; top: 0" />
 
         <p class="v-title" v-html="_('m_Walkthrough15')" />
-        <p class="v-subtitle" v-html="_('m_Walkthrough16')" />
+        <p class="v-subtitle" v-html="_('m_Walkthrough22')" />
+
+        <div class="block">
+            <div class="menu">
+                <iv-toolbox-custom class="refresh-button" label="" icon="fa-refresh" variant="white" size="lg" @click="doRefresh" />
+                <span class="title" v-html="_('m_Walkthrough23')" />
+                <span class="right" v-html="_('m_Walkthrough24', [this.selectedCount, maxCameras])" />
+            </div>
+            <div class="scrollbar-border">
+                <div v-if="cameras.length === 0" class="placeholder" v-html="_('m_Walkthrough25')" />
+                <iv-scrollbar v-else class="scrollbar">
+                    <template v-for="(camera, index) in cameras">
+                        <div :key="index" :class="{ 'camera-unit': true, disabled: selectedCount >= maxCameras && !camera.config.enable }">
+                            <span class="name">{{ camera.refName }}</span>
+                            <iv-form-switch class="switch" v-model="camera.config.enable" />
+                            <span class="right" v-html="camera.config.enable ? _('w_Enabled') : _('w_Disabled')" />
+                        </div>
+                    </template>
+                </iv-scrollbar>
+            </div>
+
+            <b-button class="finish-button" @click="doSubmit" :disabled="selectedCount==0" size="lg">{{ _("w_Finish") }}</b-button>        
+        </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
 .main1 {
-    .form {
-        margin-left: -13px;
-        margin-top: 55px;
-        width: 400px;
-        transform: scale(1.3);
-        transform-origin: left;
+    > .block {
+        width: 570px;
 
-        .license {
-            margin-top: 30px;
-            transform: scale(1.3);
-            transform-origin: left;
-
-            & /deep/ input {
-                width: 300px !important;
+        .menu {
+            .title {
+                font-size: 12px;
+                color: #7E7E7E;
+                margin-top: 2px;
+                margin-left: 16px;
+                cursor: default;
+            }
+            .right {
+                float: right;
+                font-size: 12px;
+                margin-top: 5px;
+                color: #7E7E7E;
+                cursor: default;
+            }
+            .refresh-button {
+                /deep/ button {
+                    color: #7E7E7E;
+                    transform: scale(1.3);
+                    transform-origin: left;
+                }
             }
         }
 
-        .link {
-            text-decoration: underline;
-            margin-left: 20px;
-            cursor: pointer;
-        }
+        .scrollbar-border {
+            border-top: 2px solid #DBDBDB;
+            border-bottom: 2px solid #DBDBDB;
+            padding: 15px 0;
+            height: 412px;
+            
+            > .scrollbar {
+                height: 382px;
+            }
 
-        .selection {
-            margin-top: 45px;
-            transform: scale(1.3);
-            transform-origin: left;
+            > .hidden {
+                 display: none;
+            }
 
-            & /deep/ > div {
-                width: 300px !important;
+            .camera-unit {
+                clear: both;
+                height: 30px;
+                margin-left: 10px;
+                margin-right: 22px;
+
+                > .name {
+                    color: #7E7E7E;
+                    font-weight: bold;
+                    font-size: 14px;
+                    line-height: 30px;
+                    cursor: default;
+                }
+
+                > .switch {
+                    float: right;
+                    margin-top: 2px;
+                }
+
+                > .right {
+                    margin-top: 5px;
+                    margin-right: 12px;
+                    float: right;
+                    color: #7E7E7E;
+                    font-size: 11px;
+                    cursor: default;
+                }
+
+                &.disabled {
+                    > .name {
+                        opacity: 0.5;
+                    }
+                    > .switch {
+                        pointer-events: none;
+                        opacity: 0.5;
+                    }
+                    > .right {
+                        opacity: 0.5;
+                    }
+                }
+            }
+            .placeholder {
+                height: 100px;
+                margin-top: 15px;
+                color: #CCCCCC;
+                text-align: center;
+                font-size: 20px;
             }
         }
-    }
 
-    .connect-button {
-        margin-top: 40px;
-        margin-left: 6px;
-        transform: scale(1.1);
-        transform-origin: left;
+        .finish-button {
+            float: right;
+            width: 150px;
+            border-radius: 20px;
+            margin-top: 25px;
+            margin-left: 6px;
+            transform: scale(1.05);
+            transform-origin: left;
+        }
     }
 }
 </style>
 
 <script lang="ts">
-import { GetLicenseMac } from '@/config/default/server';
+import { GetCameras, GetLicenseMac } from '@/config/default/server';
 import { Component, Vue, Emit } from 'vue-property-decorator';
 import { ModalLoading } from '@/../components/modal/modal-loading';
 
 @Component
 export default class WalkThrough12_VAST2Cameras extends Vue {
-    /// united emitter
-    // @Emit("failed")
-    // private doFailed(msg: string) { return msg; }
+    private cameras: GetCameras.Output[] = [];
+    private maxCameras: number = 0;
 
+    /// united emitter
     @Emit("success")
     private doSuccess() {}
 
-    /// interface
-    private inf() {
-        return `
-        interface {
-            /**
-             * @uiLabel - ${this._("wb_Username")}
-             */
-            username: string;
-            /**
-             * @uiLabel - ${this._("wb_Password")}
-             * @uiType - iv-form-password
-             */
-            password: string;
+    private mounted() {
+        /// sync camera
+        this.doRefresh();
+        /// load license
+        this.doLicenseRefresh();
+    }
+
+    private get selectedCount() {
+        return this.cameras.reduce((final, value) => {
+            return value.config.enable ? final+1 : final;
+        }, 0);
+    }
+
+    private async doLicenseRefresh() {
+        console.log("do license refresh!");
+        this.$server.R("/license")
+            .then(response => {
+                console.log("got response!", response);
+                this.maxCameras = (response.summary[response.productKey]||{}).totalCount || 0;
+            });
+    }
+
+    private async doRefresh() {
+        let modal = new ModalLoading();
+        modal.$modal();
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        try {
+            this.$server.R("/cameras/sync")
+                .then(response => {
+                    this.cameras = response.results.map(camera => {
+                        if (!camera.config) camera.config = { enable: false }
+                        return camera;
+                    });
+                });
+
+        } catch(e) {
+
+        } finally {
+            modal.close();
         }
-        `;
     }
 
     private async doSubmit(data) {
@@ -90,10 +200,13 @@ export default class WalkThrough12_VAST2Cameras extends Vue {
         await new Promise(resolve => setTimeout(resolve, 1000));
 
         try {
-            await this.$server.C("/config/vast2", {
-                username: data.username,
-                password: data.password
-            });
+            /// save all cameras
+            for (let camera of this.cameras) {
+                let { objectId, config } = (camera as any);
+                await this.$server.U("/cameras", {
+                    objectId, config
+                });
+            }
             this.doSuccess();
 
         } catch(e) {
@@ -101,21 +214,6 @@ export default class WalkThrough12_VAST2Cameras extends Vue {
         } finally {
             modal.close();
         }
-
-        // try {
-        //     console.log("send the license", {
-        //         mac: data.mac,
-        //         keyOrData: data.license
-        //     });
-        //     await this.$server.C("/license", {
-        //         mac: data.mac,
-        //         keyOrData: data.license.toUpperCase()
-        //     }, undefined, undefined, true);
-
-        //     console.log("no error");
-        // } catch(e) { this.doFailed(e.body) } finally {
-        //     modal.close();
-        // }
     }
 }
 </script>

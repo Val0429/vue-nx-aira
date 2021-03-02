@@ -4,6 +4,7 @@ import { RegisterLanguage } from '@/../core/i18n';
 export default class LangObject {
     w_Name = "Name";
     w_Enabled = "Enabled";
+    w_Disabled = "Disabled";
     w_Value = "Value";
     w_Startdate = "Start Date";
     w_Enddate = "End Date";
@@ -83,9 +84,18 @@ export default class LangObject {
     m_Walkthrough19 = "Send us an email";
     m_Walkthrough20 = "Incorrect Username or Password";
     m_Walkthrough21 = "Server connection failed, please retry";
+    m_Walkthrough22 = "Select which devices to enable Face Capture:";
+    m_Walkthrough23 = "Refresh List";
+    m_Walkthrough24 = "Enabled Video Source {0}/{1}";
+    m_Walkthrough25 = "No devices to show here. <BR/>Check your Video Management System.";
+    m_Walkthrough26 = "Service Activation <BR/>Success!";
+    m_Walkthrough27 = "Our Smart Face Tracker back-end services <BR/>will start automatically.";
+    m_Walkthrough28 = "This page will automatically close to redirect you <BR/>back to Smart Face Tracker Settings Page in 5 seconds...";
+    m_Walkthrough29 = "or you may <a href='{0}'>click here to proceed to SFT Settings page</a> <BR/>and continue with your configuration process.";
     w_Register = "Register";
     m_LicenseInvalid = "Invalid License";
     m_TryAgain = "Try Again";
     m_StepNum = "Step {0}";
     w_Connect = "Connect";
+    w_Finish = "Finish";
 }

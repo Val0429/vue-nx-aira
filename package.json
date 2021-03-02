@@ -1,6 +1,6 @@
 {
     "name": "smart-face-tracker",
-    "version": "1.0.0",
+    "version": "1.00.00",
     "description": "Smart Face Tracker",
     "scripts": {
         "start": "npm run start --prefix ../",
