@@ -61,6 +61,9 @@ export default class LangObject implements ILang {
     w_RefName = "名稱";
     m_MinFaceLength = "最小捕捉人臉尺寸";
     m_MergeFaceSeconds = "人臉合併秒數";
+    m_MinFaceLengthRange = "最小捕捉人臉尺寸 (範圍：{min}-{max}%)";
+    m_MergeFaceSecondsRange = "人臉合併秒數 (範圍：{min}-{max}%)";
+    m_NoExpire = "無期限";
 
     /// Walkthrough
     m_Walkthrough1 = "讓我們開始動手設定服務吧！";

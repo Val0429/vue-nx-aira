@@ -1,5 +1,5 @@
 <template>
-    <div class="main">
+    <div id="walkthrough-main">
         <div class="content_border">
             <iv-auto-transition :step="step">
                 <WalkThrough1_License key="1" v-if="step==1" ref="walkthrough1"
@@ -35,17 +35,7 @@
 </template>
 
 <style lang="scss" scoped>
-@font-face {
-    font-family: "Century Gothic";
-    src: local("Century Gothic"),
-         url("./../../../assets/fonts/CenturyGothicRegular.ttf") format("truetype");
-}
-
-body .main * {
-    font-family: "Century Gothic", "微軟正黑體" !important;
-}
-
-.main {
+#walkthrough-main {
     width: 100vw;
     height: 100vh;
     background: white;
@@ -85,6 +75,20 @@ body .main * {
         font-size: 16px;
         font-weight: bold;
         color: #F86D70;
+    }
+}
+</style>
+
+<style lang="scss">
+@font-face {
+    font-family: "Century Gothic";
+    src: local("Century Gothic"),
+         url("./../../../assets/fonts/CenturyGothicRegular.ttf") format("truetype");
+}
+
+#walkthrough-main {
+    span, div, p, a, label {
+        font-family: "Century Gothic", "微軟正黑體";
     }
 }
 </style>

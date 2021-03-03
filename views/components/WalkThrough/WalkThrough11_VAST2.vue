@@ -14,7 +14,7 @@
         </iv-form>
 
         <template v-if="$vref('form')">
-            <b-button class="connect-button" size="lg" v-bind="$refs.form.submitBindings.$attrs" v-on="$refs.form.submitBindings.$listeners">{{ _("w_Connect") }}</b-button>
+            <iv-button class="connect-button" size="lg" icon="fa-plug" v-bind="$refs.form.submitBindings.$attrs" v-on="$refs.form.submitBindings.$listeners">{{ _("w_Connect") }}</iv-button>
         </template>
 
         <p class="failed-message" v-if="failedMessage.length > 0" v-html="_(failedMessage)" />

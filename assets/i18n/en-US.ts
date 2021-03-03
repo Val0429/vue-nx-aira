@@ -61,6 +61,9 @@ export default class LangObject {
     w_RefName = "Name";
     m_MinFaceLength = "Min Face Size";
     m_MergeFaceSeconds = "Merge Face Interval";
+    m_MinFaceLengthRange = "Min Face Size (range: {min}-{max})";
+    m_MergeFaceSecondsRange = "Merge Face Interval (range: {min}-{max})";
+    m_NoExpire = "No Limit";
 
     /// Walkthrough
     m_Walkthrough1 = "Let's get our services <BR/>up and running!";

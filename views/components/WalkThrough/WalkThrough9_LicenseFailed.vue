@@ -6,7 +6,7 @@
         <p class="v-subtitle" v-html="_('m_Walkthrough5')" />
         <p class="v-error" v-html="_('m_Walkthrough6', {message})" />
 
-        <b-button class="retry-button" size="lg" @click="doRetry">{{_('m_TryAgain')}}</b-button>
+        <iv-button class="retry-button" size="lg" icon="fa-repeat" @click="doRetry">{{_('m_TryAgain')}}</iv-button>
     </div>
 </template>
 

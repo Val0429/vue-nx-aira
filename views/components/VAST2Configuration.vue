@@ -37,6 +37,15 @@ export default class VAST2Configuration extends Vue {
              * @uiType - iv-form-password
              */
             password: string;
+
+            /**
+             * @uiLabel - ${this._("m_Port", this.pr)}
+             * @uiType - iv-form-number
+             * @uiAttrs - ${JSON.stringify(this.pr)}
+             * @uiValidation - (v) => v >= ${this.pr.min} && v <= ${this.pr.max}
+             * @uiInvalidMessage - ${this._("m_Port", this.pr)}
+             */
+            port: number;
         };
         `;
     }

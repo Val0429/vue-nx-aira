@@ -45,6 +45,7 @@ export default class License extends Vue {
                 registerDate: Date;
                 /**
                  * @uiLabel - ${this._("m_ExpireDate")}
+                 * @uiNull - ${this._("m_NoExpire")}
                  */
                 expireDate: Date;
                 /**

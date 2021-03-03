@@ -55,7 +55,10 @@
         </iv-form>
 
         <template v-if="$vref('form')">
-            <b-button class="register-button" size="lg" v-bind="$refs.form.submitBindings.$attrs" v-on="$refs.form.submitBindings.$listeners">{{ _("w_Register") }}</b-button>
+            <iv-button class="register-button" size="lg"
+                :label="_('w_Register')" icon="fa-bolt"
+                v-bind="$refs.form.submitBindings.$attrs" v-on="$refs.form.submitBindings.$listeners"
+                />
         </template>
 
         <div class="link2block">

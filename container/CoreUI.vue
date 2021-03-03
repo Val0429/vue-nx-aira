@@ -3,7 +3,7 @@
         <template #header>
             <div class="custom-header">
                 <span style="font-size: 18px; font-weight: bold; position: absolute; left: 10px; top: 12px">Smart Face Tracker</span>
-                <iv-language-button style="float: right; z-index: 1000" />
+                <iv-language-button class="language-btn" />
             </div>
         </template>
 
@@ -62,6 +62,12 @@
         content: '';
         display: block;
         clear: both;
+    }
+
+    > .language-btn {
+        float: right;
+        margin-right: 30px !important;
+        z-index: 1000;
     }
 }
 

@@ -7,7 +7,7 @@
 
         <div class="block">
             <div class="menu">
-                <iv-toolbox-custom class="refresh-button" label="" icon="fa-refresh" variant="white" size="lg" @click="doRefresh" />
+                <iv-toolbox-custom class="refresh-button" icon="fa-refresh" variant="white" size="lg" @click="doRefresh" />
                 <span class="title" v-html="_('m_Walkthrough23')" />
                 <span class="right" v-html="_('m_Walkthrough24', [this.selectedCount, maxCameras])" />
             </div>
@@ -24,7 +24,7 @@
                 </iv-scrollbar>
             </div>
 
-            <b-button class="finish-button" @click="doSubmit" :disabled="selectedCount==0" size="lg">{{ _("w_Finish") }}</b-button>        
+            <iv-button class="finish-button" @click="doSubmit" icon="fa-check" :disabled="selectedCount==0" size="lg">{{ _("w_Finish") }}</iv-button>
         </div>
     </div>
 </template>
@@ -163,10 +163,8 @@ export default class WalkThrough12_VAST2Cameras extends Vue {
     }
 
     private async doLicenseRefresh() {
-        console.log("do license refresh!");
         this.$server.R("/license")
             .then(response => {
-                console.log("got response!", response);
                 this.maxCameras = (response.summary[response.productKey]||{}).totalCount || 0;
             });
     }

@@ -1,5 +1,6 @@
 import { EFormQuick, IFormQuick } from '@/../components/form/helpers/form-quick';
 import { Vue, Component, Prop, Model } from "vue-property-decorator";
+import { IFormNumberRange } from '@/../components/form/elements/form-number/form-number.vue';
 
 export class Cameras extends Vue implements IFormQuick {
     /// 1) cgi path
@@ -18,6 +19,10 @@ export class Cameras extends Vue implements IFormQuick {
     canDelete?: boolean = false;
 
     /// 40) interfaces - view / edit / add
+    /// Min Face Length
+    private mflr: IFormNumberRange = { min: 0, max: 500 };
+    /// Merge Face Seconds
+    private mfsr: IFormNumberRange = { min: 0, max: 500 };
     inf(type: EFormQuick): string {
         switch (type) {
             case EFormQuick.View:
@@ -29,10 +34,6 @@ export class Cameras extends Vue implements IFormQuick {
                      */
                     autoIndex: any;
         
-                    /**
-                     * @uiLabel - ${this._("w_Key")}
-                     */
-                    uniqueIdentity: string;
                     /**
                      * @uiLabel - ${this._("w_RefName")}
                      */
@@ -49,6 +50,7 @@ export class Cameras extends Vue implements IFormQuick {
                         mergeFaceSeconds: number;
                         /**
                          * @uiLabel - ${this._("w_Enabled")}
+                         * @uiType - iv-cell-switch
                          */
                         enable: boolean;
                     };
@@ -59,11 +61,6 @@ export class Cameras extends Vue implements IFormQuick {
                 return `
                 interface {
                     /**
-                     * @uiLabel - ${this._("w_Key")}
-                     * @uiType - iv-form-label
-                     */
-                    uniqueIdentity: string;
-                    /**
                      * @uiLabel - ${this._("w_RefName")}
                      * @uiType - iv-form-label
                      */
@@ -71,13 +68,19 @@ export class Cameras extends Vue implements IFormQuick {
         
                     config: interface {
                         /**
-                         * @uiLabel - ${this._("m_MinFaceLength")}
+                         * @uiLabel - ${this._("m_MinFaceLengthRange", this.mflr)}
                          * @uiType - ${type === EFormQuick.Preview ? 'iv-form-label' : 'default'}
+                         * @uiAttrs - ${JSON.stringify(this.mflr)}
+                         * @uiValidation - (v) => v >= ${this.mflr.min} && v <= ${this.mflr.max}
+                         * @uiInvalidMessage - ${this._("m_MinFaceLengthRange", this.mflr)}
                          */
                         minFaceLength: number;
                         /**
-                         * @uiLabel - ${this._("m_MergeFaceSeconds")}
+                         * @uiLabel - ${this._("m_MergeFaceSecondsRange", this.mfsr)}
                          * @uiType - ${type === EFormQuick.Preview ? 'iv-form-label' : 'default'}
+                         * @uiAttrs - ${JSON.stringify(this.mfsr)}
+                         * @uiValidation - (v) => v >= ${this.mfsr.min} && v <= ${this.mfsr.max}
+                         * @uiInvalidMessage - ${this._("m_MergeFaceSecondsRange", this.mfsr)}
                          */
                         mergeFaceSeconds: number;
 
