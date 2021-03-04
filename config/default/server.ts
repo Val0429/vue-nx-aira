@@ -15,11 +15,13 @@ interface RestfulRequest extends ApisRequestBase {
         "/config/vast2": [PostConfigVAST2.Input, PostConfigVAST2.Output, false]
         "/license": [PostLicense.Input, PostLicense.Output, false]
         "/test/vast2": [PostTestVAST2.Input, PostTestVAST2.Output, false]
+        "/cameras/live/notify": [PostCamerasLiveNotify.Input, PostCamerasLiveNotify.Output, false]
     },
     "Put": {
         "/cameras": [PutCameras.Input, PutCameras.Output, false]
     },
     "Delete": {
+        "/license": [any, any, false]
     },
     "Ws": {
     }, 
@@ -96,6 +98,16 @@ export declare namespace PutCameras {
     export type Input = InputU<GetCameras.Output>;
     export type Output = GetCameras.Output;
 } 
+////////////////////////////////////////////////////////////// 
+
+/// /cameras/live/notify - Post //////////////////////////////
+export declare namespace PostCamerasLiveNotify {
+    export interface Input {
+        messageType: string;
+        messageBody: string;
+    }
+    export type Output = any;
+}
 ////////////////////////////////////////////////////////////// 
 
 /// /cameras - Get ///////////////////////////////////// 

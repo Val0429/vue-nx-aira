@@ -12,6 +12,8 @@ export default class LangObject implements ILang {
     w_Password = "密碼";
     w_Selection = "選擇";
     w_Multi = "複數";
+    w_Success ="成功";
+    w_Failed ="失敗";
 
     w_Home = "首頁";
     w_Sources = "來源";
@@ -20,6 +22,7 @@ export default class LangObject implements ILang {
 
     m_SourcesManagement = "管理影像來源";
     m_VideoSource = "影像來源";
+    m_LogsManagement = "查看事件紀錄";
 
     m_SettingsManagement = "管理設定值";
     m_VAST2Configuration = "VAST2設定";
@@ -33,6 +36,20 @@ export default class LangObject implements ILang {
     m_RegisterDate = "註冊日期";
     m_ExpireDate = "到期日";
     w_Expired = "已過期";
+    m_RegisterOnline = "在線註冊";
+    m_RegisterOffline = "離線註冊";
+    m_RegisterClean = "清除註冊資料";
+    m_RegisterCleanTitle = "清除註冊資料";
+    m_RegisterCleanBody = "確定要刪除所有註冊資料嗎？";
+    m_RegisterSuccessBody = "註冊成功。";
+    m_RegisterFailedBody = "註冊失敗。";
+
+    /// Logs
+    w_Logs = "事件紀錄";
+    w_LogAction = "事件類型";
+    w_LogEntity = "詳細內容";
+    m_LogEntityNone = "沒有額外內容";
+    m_EventLicenseRemoved = "刪除金鑰";
 
     /// Toolbox
     w_View = "檢視";

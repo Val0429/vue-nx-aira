@@ -1,0 +1,1 @@
+export * from './offline-register-modal.vue';

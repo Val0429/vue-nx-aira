@@ -12,6 +12,8 @@ export default class LangObject {
     w_Password = "Password";
     w_Selection = "Selection";
     w_Multi = "Multi";
+    w_Success ="Success";
+    w_Failed ="Failed";
 
     w_Home = "Home";
     w_Sources = "Sources";
@@ -20,11 +22,13 @@ export default class LangObject {
 
     m_SourcesManagement = "Sources Management";
     m_VideoSource = "Video Source";
+    m_LogsManagement = "View Logs";
 
     m_SettingsManagement = "Settings Management";
     m_VAST2Configuration = "VAST2 Configuration";
     m_SystemConfiguration = "System Configuration";
 
+    /// License
     w_No_ = "No.";
     m_LicenseKey = "License Key";
     m_MACAddress = "MAC Address";
@@ -33,6 +37,20 @@ export default class LangObject {
     m_RegisterDate = "Registration Date";
     m_ExpireDate = "Expiration Date";
     w_Expired = "Expired";
+    m_RegisterOnline = "Online Registration";
+    m_RegisterOffline = "Offline Registration";
+    m_RegisterClean = "Clean Registration";
+    m_RegisterCleanTitle = "Clean License";
+    m_RegisterCleanBody = "Are you sure to clean all the license(s)?";
+    m_RegisterSuccessBody = "Registration Successful.";
+    m_RegisterFailedBody = "Registration Failed.";
+
+    /// Logs
+    w_Logs = "Logs";
+    w_LogAction = "Log Type";
+    w_LogEntity = "Detail";
+    m_LogEntityNone = "No Content";
+    m_EventLicenseRemoved = "License Removed";
 
     /// Toolbox
     w_View = "View";

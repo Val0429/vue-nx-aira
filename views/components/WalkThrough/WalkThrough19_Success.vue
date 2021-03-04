@@ -29,6 +29,10 @@ export default class WalkThrough19_Success extends Vue {
     message: string;
 
     private mounted() {
+        this.$server.C("/cameras/live/notify", {
+            messageType: "walkthrough",
+            messageBody: "walkthrough is ready"
+        });
         setTimeout(() => {
             this.$router.push("/");
         }, 5000);

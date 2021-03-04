@@ -28,6 +28,8 @@
                     <SidebarNavItem url="/settings/system-configuration" />
                 </SidebarNavItem>
 
+                <SidebarNavItem url="/logs" />
+
                 <!-- <SidebarNavItem url="/components">
                     <SidebarNavItem url="/components/buttons" />
                     <SidebarNavItem url="/components/forms" />

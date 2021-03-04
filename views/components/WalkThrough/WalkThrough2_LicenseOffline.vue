@@ -30,29 +30,7 @@
             ref="form"
             :interface="inf()"
             @submit="doSubmit"
-        >
-            <template #license="{$attrs, $listeners}">
-                <div>
-                    <iv-form-license
-                        class="license"
-                        v-bind="$attrs"
-                        v-on="$listeners"
-                        label=""
-                        />
-                    <a class="link" @click="doOffline" v-html="_('m_Walkthrough3')" />
-                </div>
-            </template>
-
-            <template #mac="{$attrs, $listeners}">
-                <iv-form-selection
-                    class="selection"
-                    :options="options"
-                    v-bind="$attrs"
-                    v-on="$listeners"
-                    label=""
-                    />
-            </template>
-        </iv-form>
+        />
 
         <template v-if="$vref('form')">
             <iv-button class="register-button" size="lg"
