@@ -17,6 +17,7 @@ import { RegisterRouter } from '@/../core/router';
 import { toEnumInterface } from '@/../core';
 import { IFormNumberRange } from '@/../components/form/elements/form-number/form-number.vue';
 import { GetConfigSFS } from '@/config/default/server';
+import AlertResponse from '@/../components/modal/alert-response/alert-response.vue';
 
 @Component
 export default class SystemConfiguration extends Vue {
@@ -102,8 +103,14 @@ export default class SystemConfiguration extends Vue {
             });
     }
 
-    private doSubmit(): void {
-        this.$server.C("/config/sfs", this.$form("form"));
+    private async doSubmit(): Promise<void> {
+        await this.$server.C("/config/sfs", this.$form("form"));
+        new AlertResponse({
+            propsData: {
+                label: this._("w_Settings"),
+                value: this._("m_ConfigSuccessful")
+            }
+        }).$modal();
     }
 }
 </script>
