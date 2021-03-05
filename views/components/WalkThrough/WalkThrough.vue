@@ -16,7 +16,7 @@
                 
                 <WalkThrough9_LicenseFailed key="9" v-if="step==9"
                     :message="licenseFailedMessage"
-                    @retry="step=backStep; $refs.walkthrough1.clean();"
+                    @retry="step=backStep"
                     />
                 
                 <WalkThrough11_VAST2 key="11" v-if="step==11"
