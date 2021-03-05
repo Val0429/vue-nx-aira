@@ -8,6 +8,7 @@ import License from './components/License.vue';
 import Logs from './components/Logs.vue';
 import VAST2Configuration from './components/VAST2Configuration.vue';
 import SystemConfiguration from './components/SystemConfiguration.vue';
+import Test from './components/Test.vue';
 
 import WalkThrough from './components/WalkThrough/WalkThrough.vue';
 
