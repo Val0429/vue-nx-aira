@@ -24,7 +24,7 @@
                 </iv-scrollbar>
             </div>
 
-            <iv-button class="finish-button" @click="doSubmit" icon="fa-check" :disabled="selectedCount==0" size="lg">{{ _("w_Finish") }}</iv-button>
+            <iv-button class="v-button finish-button" @click="doSubmit" icon="fa-check" :disabled="selectedCount==0" size="lg">{{ _("w_Finish") }}</iv-button>
         </div>
     </div>
 </template>
@@ -39,21 +39,19 @@
                 font-size: 12px;
                 color: #7E7E7E;
                 margin-top: 2px;
-                margin-left: 16px;
+                margin-left: 8px;
                 cursor: default;
             }
             .right {
                 float: right;
                 font-size: 12px;
-                margin-top: 5px;
+                margin-top: 10px;
                 color: #7E7E7E;
                 cursor: default;
             }
             .refresh-button {
                 /deep/ button {
                     color: #7E7E7E;
-                    transform: scale(1.3);
-                    transform-origin: left;
                 }
             }
         }
@@ -125,7 +123,6 @@
         .finish-button {
             float: right;
             width: 150px;
-            border-radius: 20px;
             margin-top: 25px;
             margin-left: 6px;
             transform: scale(1.05);

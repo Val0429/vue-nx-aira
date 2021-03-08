@@ -35,7 +35,7 @@
         </iv-form>
 
         <template v-if="$vref('form')">
-            <iv-button class="register-button" size="lg"
+            <iv-button class="v-button register-button" size="lg"
                 icon="fa-bolt"
                 v-bind="$refs.form.submitBindings.$attrs" v-on="$refs.form.submitBindings.$listeners">
                 {{ _('w_Register') }}

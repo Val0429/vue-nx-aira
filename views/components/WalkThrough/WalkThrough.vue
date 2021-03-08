@@ -50,31 +50,35 @@
         margin: auto auto;
     }
 
-    & /deep/ .v-title {
-        font-size: 55px;
-        font-weight: bold;
-    }
+    & ::v-deep {
+        .v-title {
+            font-size: 55px;
+            font-weight: bold;
+        }
+        .v-subtitle {
+            margin-top: 25px;
+            font-size: 25px;
+            font-weight: bold;
+            color: #7E7E7E;
+        }
+        .v-subtitle2 {
+            margin-top: 0;
+            font-size: 20px;
+            font-weight: bold;
+            color: #7E7E7E;
+            margin-bottom: 0.2rem;
+        }
 
-    & /deep/ .v-subtitle {
-        margin-top: 25px;
-        font-size: 25px;
-        font-weight: bold;
-        color: #7E7E7E;
-    }
+        .v-error {
+            margin-top: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #F86D70;
+        }
 
-    & /deep/ .v-subtitle2 {
-        margin-top: 0;
-        font-size: 20px;
-        font-weight: bold;
-        color: #7E7E7E;
-        margin-bottom: 0.2rem;
-    }
-
-    & /deep/ .v-error {
-        margin-top: 30px;
-        font-size: 16px;
-        font-weight: bold;
-        color: #F86D70;
+        .v-button {
+            border-radius: 20px;
+        }
     }
 }
 </style>

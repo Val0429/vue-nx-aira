@@ -1,7 +1,7 @@
 <template>
     <iv-card :label="_('w_License')">
         <template #toolbox>
-            <iv-toolbox-more>
+            <iv-toolbox-more size="md">
                 <iv-toolbox-custom
                     :label="_('m_RegisterOnline')"
                     icon="fa-plus"

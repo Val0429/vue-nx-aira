@@ -1,7 +1,7 @@
 <template>
-    <iv-route-transition>
+    <!-- <iv-route-transition> -->
         <div key="main">test</div>
-    </iv-route-transition>
+    <!-- </iv-route-transition> -->
 </template>
 
 <script lang="ts">
