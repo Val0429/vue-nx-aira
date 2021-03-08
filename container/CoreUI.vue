@@ -10,8 +10,8 @@
         <template #footer>
             <div style="flex: 1">
             <span class="version">
-                <span>Server Version: v{{ serverVersion }}</span>
-                <span>Web Version: v{{ webVersion }}</span>
+                <span>Server Version: v{{ $info.server.version }}</span>
+                <span>Web Version: v{{ $info.web.version }}</span>
             </span>
             copyright © iSAP Solution 2021
             </div>
@@ -94,7 +94,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { RegisterTheme } from '@/../core/theme';
-import { WebVersion } from '@/../core/server';
 import { CoreUI as CoreUIBase,
     SidebarHeader, SidebarNav, SidebarNavTitle, SidebarNavDivider, SidebarNavItem
 } from '@/../containers/CoreUI';
@@ -108,13 +107,5 @@ import template from './CoreUI.template';
     }
 })
 export default class CoreUI extends Vue {
-    private serverVersion: string = "";
-    private webVersion: string = WebVersion;
-    private mounted() {
-        this.$server.R("/apis")
-            .then(response => {
-                this.serverVersion = response.serverVersion;
-            });
-    }
 }
 </script>

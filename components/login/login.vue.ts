@@ -1,6 +1,5 @@
 import { Vue, Component } from "vue-property-decorator";
 import { RegisterLoginRouter } from '@/../core';
-import { ServerName, ServerVersion } from '@/../core/server';
 import { ModalResponse } from '@/../components/modal';
 
 // @RegisterLoginRouter({
@@ -10,7 +9,6 @@ import { ModalResponse } from '@/../components/modal';
 // })
 @Component
 export default class Login extends Vue {
-    private version = `${ServerName} ${ServerVersion}`;
     private username: string = '';
     private password: string = '';
 
