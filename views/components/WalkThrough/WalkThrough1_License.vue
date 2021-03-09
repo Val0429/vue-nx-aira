@@ -22,16 +22,6 @@
                     <a class="link" @click="doOffline" v-html="_('m_Walkthrough3')" />
                 </div>
             </template>
-
-            <template #mac="{$attrs, $listeners}">
-                <iv-form-selection
-                    class="selection"
-                    :options="options"
-                    v-bind="$attrs"
-                    v-on="$listeners"
-                    label=""
-                    />
-            </template>
         </iv-form>
 
         <template v-if="$vref('form')">
@@ -54,7 +44,7 @@
             transform: scale(1.3);
             transform-origin: left;
 
-            & /deep/ input {
+            & ::v-deep input {
                 width: 300px !important;
             }
         }
@@ -65,12 +55,12 @@
             cursor: pointer;
         }
 
-        .selection {
+        ::v-deep .selection {
             margin-top: 45px;
             transform: scale(1.3);
             transform-origin: left;
 
-            & /deep/ > div {
+            & > div {
                 width: 300px !important;
             }
         }
@@ -86,6 +76,7 @@
 import { GetLicenseMac } from '@/config/default/server';
 import { Component, Vue, Emit } from 'vue-property-decorator';
 import { ModalLoading } from '@/../components/modal/modal-loading';
+import { toEnumInterface } from '@/../core';
 
 @Component
 export default class WalkThrough1_License extends Vue {
@@ -94,7 +85,7 @@ export default class WalkThrough1_License extends Vue {
         (this.$refs.form as any).set("license", "");
     }
 
-    private options: {id: string, text: string}[] = [];
+    private options: any = {};
     private value: { license: string, mac: string } = {} as any;
 
     /// united emitter
@@ -115,7 +106,10 @@ export default class WalkThrough1_License extends Vue {
              * @uiType - iv-form-license
              */
             license: string;
-            mac: string;
+            /**
+             * @uiAttrs - { label: '', class: 'selection' }
+             */
+            mac: ${toEnumInterface(this.options, false)};
         }
         `;
     }
@@ -123,13 +117,13 @@ export default class WalkThrough1_License extends Vue {
     private mounted() {
         this.$server.R("/license/mac")
             .then(response => {
+                let firstMac = null;
                 this.options = response.reduce((final, value) => {
-                    final.push({ id: value.mac, text: `${value.name} - ${value.mac}` });
+                    final[value.mac] = `${value.name} - ${value.mac}`;
+                    if (!firstMac) firstMac = value.mac;
                     return final;
-                }, []);
-                if (this.options.length > 0) {
-                    (this.$refs.form as any).set("mac", this.options[0].id);
-                }
+                }, {});
+                firstMac && (this.$refs.form as any).set("mac", firstMac);
             });
     }
 
