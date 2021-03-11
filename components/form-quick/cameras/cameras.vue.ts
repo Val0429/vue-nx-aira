@@ -22,7 +22,7 @@ export class Cameras extends Vue implements IFormQuick {
     /// Min Face Length
     private mflr: IFormNumberRange = { min: 0, max: 500 };
     /// Merge Face Seconds
-    private mfsr: IFormNumberRange = { min: 0, max: 500 };
+    private mfsr: IFormNumberRange = { min: 0, max: 30 };
     inf(type: EFormQuick): string {
         switch (type) {
             case EFormQuick.View:
