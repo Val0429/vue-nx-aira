@@ -15,7 +15,7 @@ export class Cameras extends Vue implements IFormQuick {
     /// 30) possibility - edit / add / delete
     canAdd?: boolean = false;
     canEdit?: boolean = true;
-    canPreview?: boolean = true;
+    canPreview?: boolean = false;
     canDelete?: boolean = false;
 
     /// 40) interfaces - view / edit / add
