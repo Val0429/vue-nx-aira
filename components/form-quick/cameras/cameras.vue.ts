@@ -2,6 +2,7 @@ import { EFormQuick, IFormQuick } from '@/../components/form/helpers/form-quick'
 import { Vue, Component, Prop, Model } from "vue-property-decorator";
 import { IFormNumberRange } from '@/../components/form/elements/form-number/form-number.vue';
 
+@Component
 export class Cameras extends Vue implements IFormQuick {
     /// 1) cgi path
     path: string = "/cameras";
@@ -93,6 +94,22 @@ export class Cameras extends Vue implements IFormQuick {
                     };
                 }
                 `;
+        }
+    }
+
+    async doSwitchChanged(value, attrs) {
+        let objectId = attrs.row.objectId;
+        let config = attrs.row.config;
+        try {
+            await this.$server.U("/cameras", {
+                objectId,
+                config: {
+                    ...config,
+                    enable: value
+                }
+            });
+        } catch(e) {
+            (this.$refs.quick as any).reload();
         }
     }
 }
