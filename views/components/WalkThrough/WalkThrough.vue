@@ -1,7 +1,7 @@
 <template>
     <div id="walkthrough-main">
         <div class="content_border">
-            <iv-auto-transition :step="step">
+            <iv-auto-transition :step="step" class="content_transition">
                 <WalkThrough1_License key="1" v-if="step==1" ref="walkthrough1"
                     @offline="step=2"
                     @failed="step=9; backStep=1; licenseFailedMessage = $event"
@@ -46,8 +46,32 @@
         position: relative;
         width: 1364px;
         height: 780px;
-        background: url("../../../assets/images/walkthrough-bk.png") 100% 100% no-repeat;
         margin: auto auto;
+        display: flex;
+        align-items: stretch;
+
+        > .content_transition {
+            display: flex;
+            flex: 1;
+            align-items: stretch;
+            align-self: stretch;
+
+            & ::v-deep {
+                .main1, .main2, .main9 {
+                    flex: 1;
+                    align-self: stretch;
+                }
+                .main1 {
+                    background: url("../../../assets/images/walkthrough-bk.png") 100% 100% no-repeat;
+                }
+                .main2 {
+                    background: url("../../../assets/images/walkthrough-bk2.png") 100% 100% no-repeat;
+                }
+                .main9 {
+                    background: url("../../../assets/images/walkthrough-bk9.png") 100% 100% no-repeat;
+                }
+            }
+        }
     }
 
     & ::v-deep {
@@ -78,6 +102,8 @@
 
         .v-button {
             border-radius: 20px;
+            padding-left: 24px;
+            padding-right: 24px;
         }
     }
 }

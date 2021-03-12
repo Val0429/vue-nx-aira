@@ -1,5 +1,5 @@
 <template>
-    <div class="main1">
+    <div class="main2">
         <iv-language-button style="position: absolute; right: 0; top: 0" />
 
         <p class="v-title" v-html="_('m_Walkthrough4')" />
@@ -11,7 +11,7 @@
 </template>
 
 <style lang="scss" scoped>
-.main1 {
+.main2 {
     .retry-button {
         margin-top: 50px;
     }

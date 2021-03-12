@@ -1,5 +1,5 @@
 <template>
-    <div class="main1">
+    <div class="main9">
         <iv-language-button style="position: absolute; right: 0; top: 0" />
 
         <p class="v-title" v-html="_('m_Walkthrough26')" />
@@ -10,7 +10,7 @@
 </template>
 
 <style lang="scss" scoped>
-.main1 {
+.main9 {
     > .v-subtitle3 {
         margin-top: 40px;
         font-size: 25px;
