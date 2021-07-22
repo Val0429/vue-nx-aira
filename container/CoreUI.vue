@@ -7,13 +7,17 @@
             </div>
         </template>
 
+        <template #logo>
+          <img class="navbar-brand-full" src="/public/logo.png" width="89" height="25" alt="Logo">
+        </template>
+
         <template #footer>
             <div style="flex: 1">
             <span class="version">
                 <span>Server Version: v{{ $info.server.version }}</span>
                 <span>Web Version: v{{ $info.web.version }}</span>
             </span>
-            copyright © iSAP Solution 2021
+            {{ $info.web.copyright }}
             </div>
         </template>
 
