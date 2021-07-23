@@ -17,7 +17,7 @@
                 <span>Server Version: v{{ $info.server.version }}</span>
                 <span>Web Version: v{{ $info.web.version }}</span>
             </span>
-            {{ $info.web.copyright }}
+            {{ $info.server.copyright }}
             </div>
         </template>
 
