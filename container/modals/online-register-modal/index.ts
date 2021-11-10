@@ -1,0 +1,1 @@
+export * from './online-register-modal.vue';
