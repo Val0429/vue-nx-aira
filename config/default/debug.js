@@ -1,7 +1,7 @@
 module.exports = {
     prodMode: process.env.NODE_ENV === 'production',
 
-    title: 'iSAP',
+    title: 'Val Co.',
     port: 8080,
     https: false,
     autoOpen: false,

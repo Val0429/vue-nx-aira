@@ -24,15 +24,17 @@
         <template #nav>
             <SidebarNav>
 
-                <SidebarNavItem url="/sources/video-source" />
+                <SidebarNavItem url="/chart" />
 
-                <SidebarNavItem url="/settings">
+                <!-- <SidebarNavItem url="/sources/video-source" /> -->
+
+                <!-- <SidebarNavItem url="/settings">
                     <SidebarNavItem url="/settings/license" />
                     <SidebarNavItem url="/settings/vast2-configuration" />
                     <SidebarNavItem url="/settings/system-configuration" />
                 </SidebarNavItem>
 
-                <SidebarNavItem url="/logs" />
+                <SidebarNavItem url="/logs" /> -->
 
                 <!-- <SidebarNavItem url="/components">
                     <SidebarNavItem url="/components/buttons" />

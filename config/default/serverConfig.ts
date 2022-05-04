@@ -9,7 +9,7 @@ import { Config } from '@/../config/default/serverConfig';
 var config: Config = {
     ip: "localhost",
     // ip: "172.16.10.147",
-    port: 6083,
+    port: 80,
     ssl: false,
     cgiPath: "api",
 

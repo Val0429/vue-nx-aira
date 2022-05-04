@@ -2,26 +2,28 @@ import { iSAPServerBase, ApisRequestBase, InputR, OutputR, OutputU, InputU } fro
 
 interface RestfulRequest extends ApisRequestBase { 
     "Get": { 
-        "/config/sfs": [GetConfigSFS.Input, GetConfigSFS.Output, false]
-        "/config/vast2": [GetConfigVAST2.Input, GetConfigVAST2.Output, false]
-        "/cameras": [GetCameras.Input, GetCameras.Output, false]
-        "/cameras/sync": [GetCamerasSync.Input, GetCamerasSync.Output, false]
-        "/license": [GetLicense.Input, OutputR<GetLicense.Output> & { summary: any, productKey: string }, false]
-        "/license/mac": [GetLicenseMac.Input, GetLicenseMac.Output, false]
+        // "/config/sfs": [GetConfigSFS.Input, GetConfigSFS.Output, false]
+        // "/config/vast2": [GetConfigVAST2.Input, GetConfigVAST2.Output, false]
+        // "/cameras": [GetCameras.Input, GetCameras.Output, false]
+        // "/cameras/sync": [GetCamerasSync.Input, GetCamerasSync.Output, false]
+        // "/license": [GetLicense.Input, OutputR<GetLicense.Output> & { summary: any, productKey: string }, false]
+        // "/license/mac": [GetLicenseMac.Input, GetLicenseMac.Output, false]
         "/apis": [GetApis.Input, GetApis.Output, false]
+        "/chart": [GetChart.Input, GetChart.Output, false],
+        "/chart/data": [any, any, false]
     }, 
     "Post": { 
-        "/config/sfs": [PostConfigSFS.Input, PostConfigSFS.Output, false]
-        "/config/vast2": [PostConfigVAST2.Input, PostConfigVAST2.Output, false]
-        "/license": [PostLicense.Input, PostLicense.Output, false]
-        "/test/vast2": [PostTestVAST2.Input, PostTestVAST2.Output, false]
-        "/cameras/live/notify": [PostCamerasLiveNotify.Input, PostCamerasLiveNotify.Output, false]
+        // // "/config/sfs": [PostConfigSFS.Input, PostConfigSFS.Output, false]
+        // // "/config/vast2": [PostConfigVAST2.Input, PostConfigVAST2.Output, false]
+        // // "/license": [PostLicense.Input, PostLicense.Output, false]
+        // // "/test/vast2": [PostTestVAST2.Input, PostTestVAST2.Output, false]
+        // "/cameras/live/notify": [PostCamerasLiveNotify.Input, PostCamerasLiveNotify.Output, false]
     },
     "Put": {
-        "/cameras": [PutCameras.Input, PutCameras.Output, false]
+        // "/cameras": [PutCameras.Input, PutCameras.Output, false]
     },
     "Delete": {
-        "/license": [any, any, false]
+        // "/license": [any, any, false]
     },
     "Ws": {
     }, 
@@ -199,5 +201,18 @@ export declare namespace GetApis {
         serverVersion: string;
         frameworkVersion: string;
     }
+} 
+////////////////////////////////////////////////////////////// 
+
+/// /chart - Get //////////////////////////////////////////////
+export declare namespace GetChart { 
+    export interface Input {
+        nft: string;
+    }
+    export type Output = any;
+    // export interface Output {
+    //     serverVersion: string;
+    //     frameworkVersion: string;
+    // }
 } 
 ////////////////////////////////////////////////////////////// 
