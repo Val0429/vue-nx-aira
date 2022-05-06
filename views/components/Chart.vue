@@ -66,6 +66,10 @@
             :params="{ duration, nft, date: date.toISOString() }"
             ref="table"
         >
+            <template #actions$="{$attrs}">
+                <iv-toolbox-view @click.stop="doPreview($attrs.row)" />
+            </template>
+
             <template #trade_type="{$attrs}">
                 {{
                     detectTradeTypeSuccess($attrs.row) === 0 ? '限價交易' :
@@ -75,13 +79,27 @@
             </template>
 
             <template #total_price="{$attrs}">
-                <div style="display: flex; align-items: center; justify-content: center;">
+                <div style="display: flex; align-items: center; justify-content: center; flex-flow: row wrap;">
                     <img :src="eth_image_url" title="ETH" style="height: 20px; margin-right: 6px" />
                     {{ toFixedPrice($attrs.value * $attrs.row.payment_token.eth_price) }}
                     
                     <fragment v-if="$attrs.row.payment_token.symbol != 'ETH' && $attrs.row.payment_token.symbol != 'WETH'">
-                    <span style="margin-left: 10px" />(<img :src="$attrs.row.payment_token.image_url" :title="$attrs.row.payment_token.symbol" style="height: 20px; margin-right: 6px" />{{ toFixedPrice($attrs.value) }})
+                        <BR/>
+                        <span style="margin-left: 10px">(<img :src="$attrs.row.payment_token.image_url" :title="$attrs.row.payment_token.symbol" style="height: 20px; margin-right: 6px" />{{ toFixedPrice($attrs.value) }})</span>
                     </fragment>
+                </div>
+                <fragment v-if="$attrs.row.floor > $attrs.value * $attrs.row.payment_token.eth_price">
+                    <div width="100%" />
+                    <span style="margin-left: 10px"><img src="@/assets/images/lower.svg" style="height: 20px" />
+                    ({{ "-" + toFixedPrice((1 - $attrs.value * $attrs.row.payment_token.eth_price / $attrs.row.floor)*100) + "%" }}
+                    )</span>
+                </fragment>
+            </template>
+
+            <template #floor="{$attrs}">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <img :src="eth_image_url" title="ETH" style="height: 20px; margin-right: 6px" />
+                    {{ toFixedPrice($attrs.value) }}
                 </div>
             </template>
 
@@ -89,8 +107,13 @@
                 <a :href="$attrs.row.asset.permalink" target="_blank"><img :src="$attrs.row.asset.image_url" :title="'#'+$attrs.row.asset.token_id" style="height: 60px" /></a>
             </template>
 
+            <template #buyer="{$attrs}">
+                <a :href="'https://opensea.io/'+$attrs.row.seller.address" target="_blank">{{ getUsername($attrs.row.seller) }}</a> / <BR/>
+                <a :href="'https://opensea.io/'+$attrs.row.winner_account.address" target="_blank">{{ getUsername($attrs.row.winner_account) }}</a>
+            </template>
+
             <template #rank="{$attrs}">
-                {{ $attrs.value.rank + " / " + $attrs.value.total }}
+                <span :style="{ 'font-weight': $attrs.value.rank/$attrs.value.total <= 0.5 ? 'bold' : 'normal', color: $attrs.value.rank/$attrs.value.total <= 0.15 ? 'gold' : $attrs.value.rank/$attrs.value.total <= 0.3 ? 'orange' : $attrs.value.rank/$attrs.value.total <= 0.5 ? '#995000' : 'black' }">{{ $attrs.value.rank }}</span> {{ " / " + $attrs.value.total }}
             </template>
         </iv-table>
     </div>
@@ -151,13 +174,15 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { RegisterRouter } from '@/../core/router';
 import { NumberHelper, toEnumInterface } from '@/../core';
-import { detectTradeTypeSuccess } from '@/helpers';
+import { detectTradeTypeSuccess, getUsername } from '@/helpers';
 import $ from 'jquery';
 import TradingVue, { DataCube } from 'trading-vue-js';
 import Data from './data.json';
+import PreviewChartHistoryModal from '@/components/modals/preview-chart-history-modal/preview-chart-history-modal.vue';
 
 @Component({
     components: { TradingVue },
+    methods: { getUsername }
 })
 export default class Chart extends Vue {
     private width: any = null;
@@ -173,6 +198,13 @@ export default class Chart extends Vue {
     private date: Date = null;
 
     /// interaction handler
+    private doPreview(o) {
+        // modal.$on("success", () => (modal as any).visible = false);
+        let modal = new PreviewChartHistoryModal();
+        (modal as any).setData(o);
+        modal.$modal();
+    }
+
     private chart_clicked(o) {
         let data = this.$vref('Trading').getCursor().values[0].Candles_0;
         this.date = new Date(data[0]);
@@ -250,6 +282,10 @@ export default class Chart extends Vue {
              */
             total_price: number;
             /**
+             * @uiLabel - 當前地板價
+             */
+            floor: number;
+            /**
              * @uiLabel - 交易類別
              */
             trade_type: string;
@@ -261,6 +297,10 @@ export default class Chart extends Vue {
              * @uiLabel - 稀有度
              */
             rank: any;
+            /**
+             * @uiLabel - 賣家/買家
+             */
+            buyer: any;
             /**
              * @uiLabel - 事件日期
              */

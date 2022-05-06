@@ -17,6 +17,11 @@ export enum ETradeType {
 
 export function detectTradeTypeSuccess(data): ETradeType {
     if (data.is_private !== null) return ETradeType.limit;
-    if (data.transaction.to_account === data.contract_address) return ETradeType.offerAccepted;
+    if (data.transaction.to_account.address === data.contract_address) return ETradeType.offerAccepted;
     return ETradeType.english;
+}
+
+export function getUsername(account) {
+    if (account.user && account.user.username) return account.user.username;
+    return account.address.substr(0, 6);
 }
