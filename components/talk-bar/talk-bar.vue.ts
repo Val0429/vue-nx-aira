@@ -23,6 +23,9 @@ export default class TalkBar extends Vue {
     @Prop({ type: Number, required: false, default: 0 })
     side: number;
 
+    @Prop({ type: Number, required: false })
+    floor: number;
+
     @Prop({ required: false })
     date: Date;
 

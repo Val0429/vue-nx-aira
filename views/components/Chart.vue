@@ -194,7 +194,7 @@ export default class Chart extends Vue {
     private tableValue: any = {};
 
     private nft: any = "proof-moonbirds";
-    private duration: any = "60";
+    private duration: any = "1440";
     private date: Date = null;
 
     /// interaction handler

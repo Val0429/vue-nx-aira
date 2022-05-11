@@ -3,11 +3,11 @@
 
         <div class="row">
             <div class="col-md-6">
-                <iv-topic :label="_('m_SourcesManagement')">
-                    <iv-topic-item variant="primary" url="/sources/video-source" />
+                <iv-topic label="NFT歷史資料">
+                    <iv-topic-item variant="primary" url="/chart" />
                 </iv-topic>
             </div>
-
+<!-- 
             <div class="col-md-6">
                 <iv-topic :label="_('m_LogsManagement')">
                     <iv-topic-item variant="primary" url="/logs" />
@@ -22,7 +22,7 @@
                     <iv-topic-item variant="secondary" url="/settings/vast2-configuration" />
                     <iv-topic-item variant="secondary" url="/settings/system-configuration" />
                 </iv-topic>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

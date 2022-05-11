@@ -57,6 +57,7 @@
                     v-if="history"
                     title="賣家"
                     :message="getSellerWantingInfoText(history.seller_info)"
+                    :floor="history.seller_info.wanting_price.floor"
                     :account="((history||{}).seller_info||{}).account"
                     :date="history.seller_info.wanting_price.date ? new Date(history.seller_info.wanting_price.date): null"
                     />
@@ -65,6 +66,7 @@
                     v-if="history"
                     title="買家"
                     :side="1"
+                    :floor="history.buyer_info.bought_price.floor"
                     :message="getBuyerInfoText(history)"
                     :account="((history||{}).buyer_info||{}).account"
                     :date="((history||{}).buyer_info||{}).bought_price.date ? new Date(((history||{}).buyer_info||{}).bought_price.date) : null"
@@ -73,9 +75,24 @@
                 <ivc-talk-bar
                     v-if="history"
                     title="賣家"
+                    :floor="history.buyer_info.bought_price.floor"
                     :message="getSellerDealText(history)"
                     :account="((history||{}).seller_info||{}).account"
                     :date="((history||{}).buyer_info||{}).bought_price.date ? new Date(((history||{}).buyer_info||{}).bought_price.date) : null"
+                    />
+            </iv-card>
+
+            <!-- 買家後續發展 -->
+            <iv-card label="買家後續發展">
+                <ivc-talk-bar
+                    v-for="(item, index) in history.events"
+                    :side="1"
+                    :key="index"
+                    title="買家"
+                    :floor="item.floor"
+                    :message="getAdvancedMessage(item, index, history.events)"
+                    :account="((history||{}).buyer_info||{}).account"
+                    :date="new Date(item.created_date)"
                     />
             </iv-card>
         </div>

@@ -8,13 +8,13 @@ import { Vue, Component, Prop, Model, Watch, Emit } from "vue-property-decorator
 import { toEnumInterface, NumberHelper } from '@/../core';
 import { AlertResponse } from '@/../components/modal/alert-response';
 import { detectTradeTypeSuccess, ETradeType } from '@/helpers';
-import { getUsername } from "@/helpers/nft-utility";
+import { calcRealPrice, detectTradeTypeCreated, getUsername, getSecondsText } from "@/helpers/nft-utility";
 import TalkBar from '@/components/talk-bar/talk-bar.vue';
 import { ModalLoading } from '@/../components/modal/modal-loading';
 
 @Component({
     components: { 'ivc-talk-bar': TalkBar },
-    methods: { getUsername }
+    methods: { getUsername, getSecondsText }
 })
 export default class PreviewChartHistoryModal extends Vue {
     @Prop({ type: Boolean, required: false })
@@ -164,7 +164,6 @@ export default class PreviewChartHistoryModal extends Vue {
         let { date, floor, price } = bought_price;
 
         let messages = [];
-        messages.push(`今天的地板價是 ${this.makeMsg(floor+ " ETH")} 。`);
         if (way === ETradeType.dutch || way === ETradeType.limit) {
             messages.push(`我願以你開的價(Buy) ${this.makeMsg(price+" ETH")} 買下這個寶物。`);
         } else if (way === ETradeType.english) {
@@ -241,6 +240,9 @@ export default class PreviewChartHistoryModal extends Vue {
                     messages.push(` <b style="color: orange">英式拍賣 ${!starting_price ? "不限價" : `起價 ${starting_price} ETH </b>`} 出售。`);
                     break;
             }
+        } else if (detectTradeTypeSuccess(this.event) === 1) {
+            messages.push(`我沒有在市場上出售這件寶物，收到賣家向我喊價。`);
+
         } else {
             messages.push(`在之前以`);
             messages.push(` <b style="color: orange">${detectTradeTypeSuccess(this.event) === 3 ? "英式拍賣" : "限價"}</b> 出售，詳細資料在公海中遺失。`);
@@ -263,12 +265,69 @@ export default class PreviewChartHistoryModal extends Vue {
         let { buyer_info, seller_info } = history;
         let originPrice = seller_info.bought_price.way === "mint" ? 0 : seller_info.bought_price.price;
         let dealPrice = buyer_info.bought_price.price;
-        let finalPrice = NumberHelper.toFixedNumber(dealPrice * (1-feeRate/100), 6);
+        return this.getGainLoseText(originPrice, dealPrice, feeRate);
+        // let finalPrice = NumberHelper.toFixedNumber(dealPrice * (1-feeRate/100), 6);
+        
+        // let messages = [];
+        // messages.push(`得到 ${this.makeMsg(finalPrice)+ " ETH "}，`);
+        // messages.push(`扣除成本 ${this.makeMsg((finalPrice >= originPrice ? "獲利" : "虧損")+" "+NumberHelper.toFixedNumber(finalPrice-originPrice, 6)+ " ETH", finalPrice >= originPrice ? "#339933" : "red")} 。`);
+        // return messages.join("<BR/>");
+    }
+    private getGainLoseText(buyPrice, sellPrice, feeRate) {
+        let finalPrice = NumberHelper.toFixedNumber(sellPrice * (1-feeRate/100), 6);
         
         let messages = [];
         messages.push(`得到 ${this.makeMsg(finalPrice)+ " ETH "}，`);
-        messages.push(`扣除成本 ${this.makeMsg((finalPrice >= originPrice ? "獲利" : "虧損")+" "+NumberHelper.toFixedNumber(finalPrice-originPrice, 6)+ " ETH", finalPrice >= originPrice ? "#339933" : "red")} 。`);
+        messages.push(`扣除成本 ${this.makeMsg((finalPrice >= buyPrice ? "獲利" : "虧損")+" "+NumberHelper.toFixedNumber(finalPrice-buyPrice, 6)+ " ETH", finalPrice >= buyPrice ? "#339933" : "red")} 。`);
         return messages.join("<BR/>");
+    }
+
+    /// Advanced Message
+    private getAdvancedMessage(event, index, events) {
+        /// events:
+        /// created
+        /// cancelled
+        /// transfer
+        /// successful
+
+        let { event_type } = event;
+        let address = this.event.winner_account.address;
+        let feeRate = this.event.asset.asset_contract.opensea_seller_fee_basis_points / 100;
+
+        // return event_type;
+        switch (event_type) {
+            case "created": {
+                let type = detectTradeTypeCreated(event);
+                let messages = [];
+                if (type === ETradeType.limit) messages.push(`我打算以 ${this.makeMsg("限價")} 賣出，價格 ${this.makeMsg(event.starting_price+" ETH")} 。`);
+                else if (type === ETradeType.english) messages.push(`我打算以 ${this.makeMsg("英式拍賣")} 賣出，起標價 ${this.makeMsg((event.starting_price||0)+" ETH")} 。`);
+                else messages.push(`我打算以 ${this.makeMsg("荷蘭式拍賣")} 賣出，區間 ${this.makeMsg((event.starting_price)+" ETH")} - ${this.makeMsg((event.ending_price)+" ETH")} 。`);
+                messages.push(`期限為 ${this.makeMsg(getSecondsText(event.duration))} 。`);
+                return messages.join("<BR/>");
+                break;
+            }
+            case "successful": {
+                let price = calcRealPrice(event);
+                let isBuy = (event.winner_account.address === address) ? true : false;
+                let messages = [];
+                messages.push(`我 ${this.makeMsg(isBuy ? "買入" : "賣出")} 這個寶物，${this.makeMsg(`價格 ${price} ETH `)}。`);
+                if (isBuy && events.length === index+1) messages.push("目前還保留在手上。");
+                if (!isBuy) messages.push("扣除成本"+this.getGainLoseText(this.history.buyer_info.bought_price.price, price, feeRate));
+                return messages.join("<BR/>");
+                break;
+            }
+            case "transfer":
+                let to_account = event.to_account;
+                let from_account = event.from_account;
+
+                return from_account.address === address ?
+                    `我把它轉給了 <a title="${event.to_account.address}" href="https://opensea.io/${event.to_account.address}" target="_blank">${getUsername(event.to_account)}</a>。` :
+                    `<a title="${event.from_account.address}" href="https://opensea.io/${event.from_account.address}" target="_blank">${getUsername(event.from_account)}</a> 把它轉回給我。`;
+                break;
+
+            default:
+                return event_type;
+        }
     }
 
     /// private helper

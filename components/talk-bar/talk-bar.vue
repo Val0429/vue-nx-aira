@@ -1,8 +1,10 @@
 <template>
 <div>
     <div :style=" { display: 'flex', 'justify-content': side === 0 ? 'end' : 'start', 'flex-direction': side === 0 ? 'row' : 'row-reverse', [side === 0 ? 'margin-left' : 'margin-right']: '10px', 'margin-top': '5px' }">
-        <!-- date -->
         <div :style="{ 'text-align': side === 0 ? 'right' : 'left', 'align-self': 'flex-end', 'margin-bottom': '10px', 'margin-right': '10px' }">
+            <!-- floor -->
+            <span v-if="floor" style="font-weight: bold; font-size: 12px; color: orange">地板價: {{floor}} ETH</span><BR/>
+            <!-- date -->
             <span style="font-weight: bold; font-size: 12px" v-html="getDateText()" />
         </div>
         <!-- message -->
