@@ -25,6 +25,8 @@
             <SidebarNav>
 
                 <SidebarNavItem url="/chart" />
+                <SidebarNavItem url="/saleanalyze" />
+                <SidebarNavItem url="/looksrare" />
 
                 <!-- <SidebarNavItem url="/sources/video-source" /> -->
 

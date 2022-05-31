@@ -4,6 +4,8 @@ import CoreUIBlue from '@/container/CoreUI-Blue.vue';
 
 import Home from './components/Home.vue';
 import Chart from './components/Chart.vue';
+import SaleAnalyze from './components/SaleAnalyze.vue';
+import LooksRare from './components/LooksRare.vue';
 // import VideoSource from './components/VideoSource.vue';
 // import License from './components/License.vue';
 // import Logs from './components/Logs.vue';
@@ -14,8 +16,9 @@ import Chart from './components/Chart.vue';
 $({ path: '/', name: "Main", redirect: '/home', permission: false })();
 
     $({ path: '/home', name: "_('w_Home')", permission: false })(Home);
-    $({ path: '/chart', name: "Chart", permission: false})(Chart);
-
+    $({ path: '/chart', name: "NFT歷史紀錄", permission: false})(Chart);
+    $({ path: '/saleanalyze', name: "NFT賣出數據分析", permission: false})(SaleAnalyze);
+    $({ path: '/looksrare', name: "LooksRare掛單收益", permission: false})(LooksRare);
 
 // $({ path: '/', name: "Main", redirect: '/home', permission: false })();
 

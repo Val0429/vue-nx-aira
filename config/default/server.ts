@@ -11,7 +11,8 @@ interface RestfulRequest extends ApisRequestBase {
         "/apis": [GetApis.Input, GetApis.Output, false]
         "/chart": [GetChart.Input, GetChart.Output, false],
         "/chart/data": [any, any, false],
-        "/chart/history": [any, any, false]
+        "/chart/history": [any, any, false],
+        "/looksrarelist": [any, any, false]
     }, 
     "Post": { 
         // // "/config/sfs": [PostConfigSFS.Input, PostConfigSFS.Output, false]

@@ -49,3 +49,15 @@ export function getDaysText(days): string {
     let hourpart = NumberHelper.toFixedNumber((days%1)*24, 1);
     return `${daypart ? daypart+" 天" : ""}${hourpart ? " "+hourpart+" 小時": ""}`;
 }
+
+export function toFixedPrice(num, digits = 3) {
+    return NumberHelper.toFixedNumber(num, digits);
+}
+
+export function getUTCDateString(date: Date): string {
+    return `${date.getUTCFullYear()}/${date.getUTCMonth()+1}/${date.getUTCDate()}`;
+}
+
+export function getPercentText(value: number, hasPlusSign: boolean = true): string {
+    return `${value >= 0 ? (hasPlusSign ? "+" : "") : ""}${toFixedPrice(value*100)}%`;
+}

@@ -3,7 +3,7 @@
 
         <!-- filter -->
         <iv-auto-card
-            label="Search" :visible="true"
+            label="搜尋條件" :visible="true"
             >
             <iv-form
                 :interface="search_inf()"
@@ -174,7 +174,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { RegisterRouter } from '@/../core/router';
 import { NumberHelper, toEnumInterface } from '@/../core';
-import { detectTradeTypeSuccess, getUsername } from '@/helpers';
+import { detectTradeTypeSuccess, getUsername, NFTCollections } from '@/helpers';
 import $ from 'jquery';
 import TradingVue, { DataCube } from 'trading-vue-js';
 import Data from './data.json';
@@ -265,12 +265,7 @@ export default class Chart extends Vue {
              * @uiLabel - NFT
              * @uiDefault - proof-moonbirds
              */
-            nft?: ${toEnumInterface({
-                "proof-moonbirds": "Moonbirds",
-                "boredapeyachtclub": "Bored Ape Yacht Club",
-                "mutant-ape-yacht-club": "Mutant Ape Yacht Club",
-                "meebits": "Meebits"
-            })}
+            nft?: ${toEnumInterface(NFTCollections)}
         }
         `;
     }
