@@ -15,22 +15,25 @@
         </iv-auto-card>
 
         <BR />
-        <div v-if="value && ($refs['table']||{}).result" style="font-weight: bold; font-size: 20px">
-            <div style="float:left; width: 120px">剩餘資金:</div>{{ toFixedNumber(($refs['table']||{}).result.Funds, 5) }} ETH<BR/>
-            <div style="float:left; width: 120px">Looks點數:</div>{{ toFixedNumber(($refs['table']||{}).result.LooksPoints, 5) }}
-            {{ '(約 '+ toFixedNumber(($refs['table']||{}).result.LooksPoints*value.looks_eth*value.looks_lookspt,5) +' ETH)' }}
-            <BR/>
-            <div style="float:left; width: 120px">資產價值:</div>{{ toFixedNumber(($refs['table']||{}).result.Total, 5) }} ETH<BR/>
-            <div style="float:left; width: 120px">資產總值:</div>
-            {{ toFixedNumber(($refs['table']||{}).result.Funds+($refs['table']||{}).result.Total+($refs['table']||{}).result.LooksPoints*value.looks_eth*value.looks_lookspt, 5) }} ETH
-            ( {{ getPercentText( toFixedNumber( (1- (((($refs['table']||{}).result.Funds+($refs['table']||{}).result.Total+($refs['table']||{}).result.LooksPoints*value.looks_eth*value.looks_lookspt)) / value.funds)) * (-1), 5)) }} )        </div>
-        <BR />
+        <fragment v-if="value && value.chartType === 'A'">
+            <div v-if="value && ($refs['table']||{}).result" style="font-weight: bold; font-size: 20px">
+                <div style="float:left; width: 120px">剩餘資金:</div>{{ toFixedNumber(($refs['table']||{}).result.Funds, 5) }} ETH<BR/>
+                <div style="float:left; width: 120px">Looks點數:</div>{{ toFixedNumber(($refs['table']||{}).result.LooksPoints, 5) }}
+                {{ '(約 '+ toFixedNumber(($refs['table']||{}).result.LooksPoints*value.looks_eth*value.looks_lookspt,5) +' ETH)' }}
+                <BR/>
+                <div style="float:left; width: 120px">資產價值:</div>{{ toFixedNumber(($refs['table']||{}).result.Total, 5) }} ETH<BR/>
+                <div style="float:left; width: 120px">資產總值:</div>
+                {{ toFixedNumber(($refs['table']||{}).result.Funds+($refs['table']||{}).result.Total+($refs['table']||{}).result.LooksPoints*value.looks_eth*value.looks_lookspt, 5) }} ETH
+                ( {{ getPercentText( toFixedNumber( (1- (((($refs['table']||{}).result.Funds+($refs['table']||{}).result.Total+($refs['table']||{}).result.LooksPoints*value.looks_eth*value.looks_lookspt)) / value.funds)) * (-1), 5)) }} )        </div>
+            <BR />
+        </fragment>
 
         <iv-table
             v-if="value"
-            :interface="table_inf()"
+            :interface="value.chartType === 'A' ? table_inf() : table_inf_b()"
             :server="{ path: '/looksrare-revenue' }"
             :params="value"
+            @update:result="onTableResultChanged"
             ref="table"
         >
             <template #type="{$attrs}">
@@ -129,7 +132,7 @@
 </style>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { RegisterRouter } from '@/../core/router';
 import { NumberHelper, toEnumInterface, toFixedNumber } from '@/../core';
 import { detectTradeTypeSuccess, getPercentText, getSecondsText, getUsername, NFTCollections } from '@/helpers';
@@ -147,6 +150,14 @@ export default class Chart extends Vue {
 
     /// chart value
     private value: any = null;
+
+    /// chart options
+    private chartTypeBOptions = {
+        buyStrategy: "買入策略",
+        allowLoss: "認賠賣出",
+        floorRate: "地板倍率",
+        tradeTime: "交易時間"
+    }
 
     /// private helper
     private getMessageInfo(o) {
@@ -210,8 +221,8 @@ export default class Chart extends Vue {
 
     /// interfaces
     private search_inf() {
-        let defStart = new Date(2022, 4, 10);
-        let defEnd = new Date(2022, 4, 20);
+        let defStart = new Date(2022, 4, 3);
+        let defEnd = new Date(2022, 4, 25);
 
         return `
         interface {
@@ -278,7 +289,7 @@ export default class Chart extends Vue {
 
             /**
              * @uiLabel - 資金 (ETH)
-             * @uiDefault - 20
+             * @uiDefault - 40
              */
             funds: number;
 
@@ -320,7 +331,7 @@ export default class Chart extends Vue {
             /**
              * @uiLabel - 手動買入時間 (幾點)
              * @uiHidden - ${this.$form("searchform", "manualOrRobot") !== "manual"}
-             * @uiDefault - () => [8]
+             * @uiDefault - () => [11]
              */
             manualHours: number[];
 
@@ -361,8 +372,8 @@ export default class Chart extends Vue {
             header4?: any;
 
             /**
-             * @uiLabel - 比前一天均價少 N % (若大於地板價，則直接買入地板)
-             * @uiDefault - 5
+             * @uiLabel - 比前一天均價 (或地板價取小值) 少 N %
+             * @uiDefault - 10
              * @uiColumnGroup - 1
              */
             buyRuleLessThanYesterdayAverage: number;
@@ -382,7 +393,7 @@ export default class Chart extends Vue {
 
             /**
              * @uiLabel - 地板倍率 (1.0x-1.1x 10倍，1.1x-1.2x 4倍，1.2x-1.3x 2倍，1.3x-1.4x 1倍)
-             * @uiDefault - 1.15
+             * @uiDefault - 1.12
              */
             listRuleFloorMultiply: number;
 
@@ -412,21 +423,140 @@ export default class Chart extends Vue {
 
             /**
              * @uiLabel - 認賠掛單 上限 %
-             * @uiDefault - 5
+             * @uiDefault - 10
              */
             listRuleLossAllow: number;
+
+            /**
+             * @uiLabel - 表單形式
+             * @uiType - iv-form-header
+             */
+            header6?: any;
+
+            /**
+             * @uiLabel - 表單形式
+             * @uiDefault - A
+             */
+            chartType: ${toEnumInterface({
+                A: "標準",
+                B: "比較"
+            })};
+
+            /**
+             * @uiLabel - 橫軸
+             * @uiHidden - ${this.$form("searchform", "chartType") !== "B"}
+             * @uiColumnGroup - 1
+             * @uiDefault - buyStrategy
+             */
+            chartTypeBRow: ${toEnumInterface(this.chartTypeBOptions)};
+
+            /**
+             * @uiLabel - 縱軸
+             * @uiHidden - ${this.$form("searchform", "chartType") !== "B"}
+             * @uiColumnGroup - 1
+             * @uiDefault - allowLoss
+             */
+            chartTypeBCol: ${toEnumInterface(this.chartTypeBOptions)};
 
             /**
              * @uiLabel - 其他
              * @uiType - iv-form-header
              */
-            header6?: any;
+            header7?: any;
 
             /**
              * @uiLabel - 忽略 0 點數
              * @uiDefault - () => true
              */
             ignoreZero: boolean;
+        }
+        `;
+    }
+
+    private getChartTypeBLooksETH(v) {
+        return toFixedNumber(v.LooksPoints * this.value.looks_lookspt * this.value.looks_eth, 3);
+    }
+    private getChartTypeBTotalETH(v) {
+        return toFixedNumber(v.Funds+v.Total+this.getChartTypeBLooksETH(v), 3);
+    }
+
+    private chartTypeBFieldConverter(v) {
+        let looks = this.getChartTypeBLooksETH(v);
+        let total = this.getChartTypeBTotalETH(v);
+        let funds = this.value.funds;
+        return `<div style="background: ${this.chartTypeBGetColor(v)}; margin: -12px; padding: 8px 0">
+            Looks: ${looks} ETH
+            <BR/>
+            總額: ${total} ETH 
+            (${getPercentText((1-total/funds)*(-1))})
+        </div>`;
+    }
+
+    private chartTypeBColorMax = 0xC6ECAE;
+    private chartTypeBColorMin = 0xFE5F55;
+    private chartTypeBMinMax: { min: number, max: number } = {} as any;
+    private onTableResultChanged(value) {
+        if (this.value.chartType !== "B") return;
+        let result = value.results.reduce((final, row) => {
+            Object.keys(row).forEach(key => {
+                if (key === "title") return;
+                let col = row[key];
+                let value = this.getChartTypeBTotalETH(col);
+                final.min = Math.min(value, final.min);
+                final.max = Math.max(value, final.max);
+            });
+            return final;
+        }, { min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER });
+
+        this.chartTypeBMinMax = result;
+    }
+    private chartTypeBGetColor(v) {
+        let { min, max } = this.chartTypeBMinMax;
+        if (!min || !max) return;
+        let value = this.getChartTypeBTotalETH(v);
+        let minR = (this.chartTypeBColorMin & 0xFF0000) / (Math.pow(16, 4));
+        let minG = (this.chartTypeBColorMin & 0x00FF00) / (Math.pow(16, 2));
+        let minB = (this.chartTypeBColorMin & 0x0000FF) / 1;
+        let maxR = (this.chartTypeBColorMax & 0xFF0000) / (Math.pow(16, 4));
+        let maxG = (this.chartTypeBColorMax & 0x00FF00) / (Math.pow(16, 2));
+        let maxB = (this.chartTypeBColorMax & 0x0000FF) / 1;
+
+        let R = Math.floor(minR+(maxR-minR)*((value-min)/(max-min))).toString(16);
+        let G = Math.floor(minG+(maxG-minG)*((value-min)/(max-min))).toString(16);
+        let B = Math.floor(minB+(maxB-minB)*((value-min)/(max-min))).toString(16);
+        return `#${R}${G}${B}`;
+    }
+
+    private table_inf_b() {
+        let tt = ((this.$refs['table']||{} as any).result||{} as any).results;
+
+        let result;
+        if (tt && tt.length > 0) {
+            let row = tt[0];
+            result = Object.keys(row).map((key, idx) => {
+                if (key === "title") return;
+                return `
+            /**
+             * @uiLabel - ${key.replace("column_", "").replace("_", ".")}
+             * @uiType - iv-cell-html-string
+             * @uiConverter - chartTypeBFieldConverter
+             **/
+            ${key}: any;
+                `;
+            }).filter(v => !!v).join("\r\n");
+
+            result = `
+            /**
+             * @uiLabel - ${this.chartTypeBOptions[this.value.chartTypeBRow]} | ${this.chartTypeBOptions[this.value.chartTypeBCol]}
+             */
+            title: string;
+            ` + result;
+
+        }
+
+        return (!tt || tt.length === 0) ? null : `
+        interface {
+${result}
         }
         `;
     }
