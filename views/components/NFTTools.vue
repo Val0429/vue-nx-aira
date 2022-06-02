@@ -10,6 +10,22 @@
                 :interface="setup_inf()"
                 @update:*="setupUpdated"
                 />
+            <iv-card
+                label="掛單策略" :visible="false"
+                >
+                <iv-form ref="setuplistform"
+                    :interface="setuplist_inf()"
+                    @update:*="setupUpdated"
+                    />
+            </iv-card>
+            <iv-card
+                label="核心參數" :visible="false"
+                >
+                <iv-form ref="setupcoreform"
+                    :interface="setupcore_inf()"
+                    @update:*="setupUpdated"
+                    />
+            </iv-card>
         </iv-card>
 
         <iv-card
@@ -69,15 +85,28 @@ export default class NFTTools extends Vue {
             });
     }
 
-    private setup_inf() {
+    private setuplist_inf() {
         return `
         interface {
-            /**
-             * @uiLabel - 核心參數
-             * @uiType - iv-form-header
-             */
-            header0?: any;
 
+            /**
+             * @uiLabel - 地板倍率 (1.0x-1.1x 10倍，1.1x-1.2x 4倍，1.2x-1.3x 2倍，1.3x-1.4x 1倍)
+             * @uiDefault - 1.12
+             */
+            listRuleFloorMultiply: number;
+
+            /**
+             * @uiLabel - 認賠掛單 上限 %
+             * @uiDefault - 10
+             */
+            listRuleLossAllow: number;            
+        }
+        `;
+    }
+
+    private setupcore_inf() {
+        return `
+        interface {
             /**
              * @uiLabel - Looks / ETH
              * @uiDefault - 0.0002838
@@ -98,7 +127,13 @@ export default class NFTTools extends Vue {
              * @uiColumnGroup - 1
              */
             tradept_eth: number;
+        }
+        `;
+    }
 
+    private setup_inf() {
+        return `
+        interface {
             /**
              * @uiLabel - 價位
              * @uiType - iv-form-header
@@ -129,24 +164,6 @@ export default class NFTTools extends Vue {
              * @uiColumnGroup - 1
              */
             buyRuleLessThanYesterdayAverage: number;
-
-            /**
-             * @uiLabel - 掛單策略
-             * @uiType - iv-form-header
-             */
-            header5?: any;
-
-            /**
-             * @uiLabel - 地板倍率 (1.0x-1.1x 10倍，1.1x-1.2x 4倍，1.2x-1.3x 2倍，1.3x-1.4x 1倍)
-             * @uiDefault - 1.12
-             */
-            listRuleFloorMultiply: number;
-
-            /**
-             * @uiLabel - 認賠掛單 上限 %
-             * @uiDefault - 10
-             */
-            listRuleLossAllow: number;
         }
         `;
     }
@@ -159,15 +176,17 @@ export default class NFTTools extends Vue {
 
     private suggestBuyPrice(market: NFTToolsMarket) {
         let form = (this.$refs.setupform as any);
+        let core = (this.$refs.setupcoreform as any);
         if (!form) return "";
         let result = form.getResult();
         let yesFloor = result.yesterdayFloor;
         let todayFloor = result.todayFloor;
         let buyRate = result.buyRuleLessThanYesterdayAverage || 0;
 
-        let looks_lookspt = result.looks_lookspt;
-        let looks_eth = result.looks_eth;
-        let tradept_eth = result.tradept_eth;
+        let coreresult = core.getResult();
+        let looks_lookspt = coreresult.looks_lookspt;
+        let looks_eth = coreresult.looks_eth;
+        let tradept_eth = coreresult.tradept_eth;
         if (!yesFloor || !todayFloor ||
             !tradept_eth || !looks_lookspt || !looks_eth) return "";
 
@@ -180,8 +199,11 @@ export default class NFTTools extends Vue {
         if (!form) return "";
         let result = form.getResult();
         let todayFloor = result.todayFloor;
-        let floorMultiply = result.listRuleFloorMultiply;
-        let lossAllow = result.listRuleLossAllow || 0;
+
+        let listform = (this.$refs.setuplistform as any);
+        let listresult = listform.getResult();
+        let floorMultiply = listresult.listRuleFloorMultiply;
+        let lossAllow = listresult.listRuleLossAllow || 0;
         if (!todayFloor || !floorMultiply) return "";
 
         // let buyprice = property.offer.price;
