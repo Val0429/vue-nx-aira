@@ -8,6 +8,7 @@
         "create-project": "git checkout --orphan"
     },
     "dependencies": {
+        "opensea-js": "^3.0.4",
         "trading-vue-js": "^1.0.2"
     }
 }

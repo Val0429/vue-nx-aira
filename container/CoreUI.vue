@@ -24,6 +24,7 @@
         <template #nav>
             <SidebarNav>
 
+                <SidebarNavItem url="/nftautotools" />
                 <SidebarNavItem url="/nfttools" />
                 <SidebarNavItem url="/chart" />
                 <SidebarNavItem url="/saleanalyze" />

@@ -14,6 +14,8 @@ interface RestfulRequest extends ApisRequestBase {
         "/chart/history": [any, any, false],
         "/looksrarelist": [any, any, false],
         "/nfttools/yesfloor": [any, any, false],
+        "/nftautotools/stats": [any, any, false],
+        "/nftautotools/suggestion": [any, any, false],
     }, 
     "Post": { 
         // // "/config/sfs": [PostConfigSFS.Input, PostConfigSFS.Output, false]
