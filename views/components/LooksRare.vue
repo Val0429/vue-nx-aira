@@ -484,11 +484,14 @@ export default class Chart extends Vue {
         let looks = this.getChartTypeBLooksETH(v);
         let total = this.getChartTypeBTotalETH(v);
         let funds = this.value.funds;
-        return `<div style="background: ${this.chartTypeBGetColor(v)}; margin: -12px; padding: 8px 0">
+        let { background, text } = this.chartTypeBGetColor(v);
+        return `<div style="background: ${background}; margin: -12px; padding: 8px 0">
+            <span style="color: ${text}">
             Looks: ${looks} ETH
             <BR/>
             總額: ${total} ETH 
             (${getPercentText((1-total/funds)*(-1))})
+            </span>
         </div>`;
     }
 
@@ -544,7 +547,20 @@ export default class Chart extends Vue {
             B = Math.floor(minB+(maxB-minB)*((value-baseValue)/(min-baseValue))).toString(16);
         }
 
-        return `#${this.PadLeft(R, '0', 2)}${this.PadLeft(G, '0', 2)}${this.PadLeft(B, '0', 2)}`;
+        return {
+            background: `#${this.PadLeft(R, '0', 2)}${this.PadLeft(G, '0', 2)}${this.PadLeft(B, '0', 2)}`,
+            text: this.contract_color(R, G, B)
+        }
+    }
+
+    private contract_color(R, G, B) {
+        R = parseInt(R, 16); G = parseInt(G, 16); B = parseInt(B, 16);
+        let d = 0;
+        let luminance = (0.299 * R + 0.587 * G + 0.114 * B) / 255;
+        if (luminance > 0.5)
+            return "#000";
+        else
+            return "#FFF";
     }
 
     private table_inf_b() {
