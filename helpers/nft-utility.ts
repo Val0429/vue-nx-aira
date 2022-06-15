@@ -61,3 +61,43 @@ export function getUTCDateString(date: Date): string {
 export function getPercentText(value: number, hasPlusSign: boolean = true): string {
     return `${value >= 0 ? (hasPlusSign ? "+" : "") : ""}${toFixedPrice(value*100)}%`;
 }
+
+export function convertTraitString(trait) {
+    let results = [];
+    
+    switch (trait.sediment) {
+        case 0: results.push("一級中心地段"); break;
+        case 1: results.push("二級中心地段"); break;
+        case 2: results.push("BAYC地"); break;
+        case 3: results.push("MAYC地"); break;
+        default: break;
+    }
+
+    if (trait.koda) {
+        results.push("有KODA");
+    }
+
+    if (trait.artifact) {
+        results.push(`神器: ${getPercentText(trait.artifact/100000, false)}`);
+    }
+
+    if (trait.category) {
+        results.push("地形: Chaos");
+    }
+
+    if (trait.environment) {
+        results.push(`環境: ${getPercentText(trait.environment/100000, false)}`);
+    }
+
+    if (trait.resources) {
+        let res = trait.resources;
+        let tmp = [];
+        if (res.c2000) tmp.push(`3% x ${res.c2000}`);
+        if (res.c140) tmp.push(`0.02% x ${res.c140}`);
+        if (res.c70) tmp.push(`0.01% x ${res.c70}`);
+        if (res.c30) tmp.push(`0.00% x ${res.c30}`);
+
+        results.push(`資源(${res.count}): ${tmp.join(", ")}`);
+    }
+    return results.length === 0 ? "什麼都沒有" : results.join("<BR/>");
+}

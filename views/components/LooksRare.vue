@@ -221,8 +221,8 @@ export default class Chart extends Vue {
 
     /// interfaces
     private search_inf() {
-        let defStart = new Date(2022, 4, 3);
-        let defEnd = new Date(2022, 4, 25);
+        let defStart = new Date(2022, 5, 2, 0, 0, 0);
+        let defEnd = new Date(2022, 5, 16, 0, 0, 0);
 
         return `
         interface {
@@ -373,7 +373,7 @@ export default class Chart extends Vue {
 
             /**
              * @uiLabel - 比前一天均價 (或地板價取小值) 少 N %
-             * @uiDefault - 10
+             * @uiDefault - 0
              * @uiColumnGroup - 1
              */
             buyRuleLessThanYesterdayAverage: number;
@@ -443,7 +443,7 @@ export default class Chart extends Vue {
             })};
 
             /**
-             * @uiLabel - 橫軸
+             * @uiLabel - 縱軸
              * @uiHidden - ${this.$form("searchform", "chartType") !== "B"}
              * @uiColumnGroup - 1
              * @uiDefault - buyStrategy
@@ -451,10 +451,10 @@ export default class Chart extends Vue {
             chartTypeBRow: ${toEnumInterface(this.chartTypeBOptions)};
 
             /**
-             * @uiLabel - 縱軸
+             * @uiLabel - 橫軸
              * @uiHidden - ${this.$form("searchform", "chartType") !== "B"}
              * @uiColumnGroup - 1
-             * @uiDefault - allowLoss
+             * @uiDefault - floorRate
              */
             chartTypeBCol: ${toEnumInterface(this.chartTypeBOptions)};
 
@@ -494,6 +494,10 @@ export default class Chart extends Vue {
 
     private chartTypeBColorMax = 0xC6ECAE;
     private chartTypeBColorMin = 0xFE5F55;
+    private chartTypeBLossColorMax = 0x254711;
+    private chartTypeBLossColorMin = 0xC6ECAE;
+    private chartTypeBWinColorMax = 0xA70C01;
+    private chartTypeBWinColorMin = 0xFFAEA9;
     private chartTypeBMinMax: { min: number, max: number } = {} as any;
     private onTableResultChanged(value) {
         if (this.value.chartType !== "B") return;
@@ -514,17 +518,33 @@ export default class Chart extends Vue {
         let { min, max } = this.chartTypeBMinMax;
         if (!min || !max) return;
         let value = this.getChartTypeBTotalETH(v);
-        let minR = (this.chartTypeBColorMin & 0xFF0000) / (Math.pow(16, 4));
-        let minG = (this.chartTypeBColorMin & 0x00FF00) / (Math.pow(16, 2));
-        let minB = (this.chartTypeBColorMin & 0x0000FF) / 1;
-        let maxR = (this.chartTypeBColorMax & 0xFF0000) / (Math.pow(16, 4));
-        let maxG = (this.chartTypeBColorMax & 0x00FF00) / (Math.pow(16, 2));
-        let maxB = (this.chartTypeBColorMax & 0x0000FF) / 1;
+        let baseValue = this.value.funds;
 
-        let R = Math.floor(minR+(maxR-minR)*((value-min)/(max-min))).toString(16);
-        let G = Math.floor(minG+(maxG-minG)*((value-min)/(max-min))).toString(16);
-        let B = Math.floor(minB+(maxB-minB)*((value-min)/(max-min))).toString(16);
-        return `#${R}${G}${B}`;
+        let minR, minG, minB, maxR, maxG, maxB, R, G, B;
+        if (value >= baseValue) {
+            minR = (this.chartTypeBWinColorMin & 0xFF0000) / (Math.pow(16, 4));
+            minG = (this.chartTypeBWinColorMin & 0x00FF00) / (Math.pow(16, 2));
+            minB = (this.chartTypeBWinColorMin & 0x0000FF) / 1;
+            maxR = (this.chartTypeBWinColorMax & 0xFF0000) / (Math.pow(16, 4));
+            maxG = (this.chartTypeBWinColorMax & 0x00FF00) / (Math.pow(16, 2));
+            maxB = (this.chartTypeBWinColorMax & 0x0000FF) / 1;
+            R = Math.floor(minR+(maxR-minR)*((value-baseValue)/(max-baseValue))).toString(16);
+            G = Math.floor(minG+(maxG-minG)*((value-baseValue)/(max-baseValue))).toString(16);
+            B = Math.floor(minB+(maxB-minB)*((value-baseValue)/(max-baseValue))).toString(16);
+
+        } else {
+            minR = (this.chartTypeBLossColorMin & 0xFF0000) / (Math.pow(16, 4));
+            minG = (this.chartTypeBLossColorMin & 0x00FF00) / (Math.pow(16, 2));
+            minB = (this.chartTypeBLossColorMin & 0x0000FF) / 1;
+            maxR = (this.chartTypeBLossColorMax & 0xFF0000) / (Math.pow(16, 4));
+            maxG = (this.chartTypeBLossColorMax & 0x00FF00) / (Math.pow(16, 2));
+            maxB = (this.chartTypeBLossColorMax & 0x0000FF) / 1;
+            R = Math.floor(minR+(maxR-minR)*((value-baseValue)/(min-baseValue))).toString(16);
+            G = Math.floor(minG+(maxG-minG)*((value-baseValue)/(min-baseValue))).toString(16);
+            B = Math.floor(minB+(maxB-minB)*((value-baseValue)/(min-baseValue))).toString(16);
+        }
+
+        return `#${this.PadLeft(R, '0', 2)}${this.PadLeft(G, '0', 2)}${this.PadLeft(B, '0', 2)}`;
     }
 
     private table_inf_b() {

@@ -18,11 +18,7 @@ interface RestfulRequest extends ApisRequestBase {
         "/nftautotools/suggestion": [any, any, false],
     }, 
     "Post": { 
-        // // "/config/sfs": [PostConfigSFS.Input, PostConfigSFS.Output, false]
-        // // "/config/vast2": [PostConfigVAST2.Input, PostConfigVAST2.Output, false]
-        // // "/license": [PostLicense.Input, PostLicense.Output, false]
-        // // "/test/vast2": [PostTestVAST2.Input, PostTestVAST2.Output, false]
-        // "/cameras/live/notify": [PostCamerasLiveNotify.Input, PostCamerasLiveNotify.Output, false]
+        "/rating": [any, any, false]
     },
     "Put": {
         // "/cameras": [PutCameras.Input, PutCameras.Output, false]

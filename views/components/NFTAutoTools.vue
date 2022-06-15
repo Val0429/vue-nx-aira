@@ -1,6 +1,8 @@
 <template>
     <div key="main" style="padding: 5px 10px">
 
+        <iv-button @click="metamask_connect" variant="info" size="lg" style="margin-bottom: 10px">連線 Metamask</iv-button>
+
         <!-- filter -->
         <iv-auto-card
             label="設定值" :visible="true"
@@ -43,8 +45,20 @@
                 </template>
                 
                 <template #image_url="{$attrs}">
-                    <img :src="$attrs.value" :title="$attrs.row.token_id" style="height: 40px; width: 25px" />
-                    #{{$attrs.row.token_id}}
+                    <ivc-NFT-item :attrs="$attrs" />
+                </template>
+
+                <template #trait_feature="{$attrs}">
+                    <span v-html="convertTraitString($attrs.value)" />
+                </template>
+
+                <template #rating="{$attrs}">
+                    <div style="display: flex; flex-direction: row">
+                        <iv-form-selection :data="{'allow-clear': false}" :disabled="$attrs.row.rating_enabled !== true" :value="$attrs.value" @input="rating_changed($attrs.row, $event)" :options="toFormOptions(rating)" placeholder="未定" style="transform: scale(0.8); margin-bottom: 0; flex: 1" />
+                        <b-button size="sm" style="flex: 0 0 30px; margin-top: 2px; margin-bottom: 2px" @click="rating_enable($attrs.row)">
+                            <i :class="{ fa: true, 'fa-lock': $attrs.row.rating_enabled !== true, 'fa-unlock': $attrs.row.rating_enabled }" />
+                        </b-button>
+                    </div>
                 </template>
 
                 <template #looksrare_listing_price="{$attrs}">
@@ -68,9 +82,10 @@
                     <a :href="'https://looksrare.org/collections/0x34d85c9CDeB23FA97cb08333b511ac86E1C4E258/' + $attrs.row.token_id" target="_blank" @click.stop>
                         <img :src="looksrare_image_url" title="Go Looksrare" style="height: 20px; margin-right: 6px" />
                     </a>
-                    <a :href="'https://opensea.io/assets/ethereum/0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258/' + $attrs.row.token_id" target="_blank" @click.stop>
+                    <!-- <a :href="'https://opensea.io/assets/ethereum/0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258/' + $attrs.row.token_id" target="_blank" @click.stop>
                         <img :src="opensea_image_url" title="Go Opensea" style="height: 20px; margin-right: 6px" />
-                    </a>
+                    </a> -->
+                    <img :src="opensea_image_url" title="Go Opensea" style="height: 20px; margin-right: 6px" @click="metamask_request_sell($attrs.row)" />
                 </template>
 
             </iv-table>
@@ -116,11 +131,13 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { RegisterRouter } from '@/../core/router';
 import { NumberHelper, toEnumInterface, toFixedNumber } from '@/../core';
-import { detectTradeTypeSuccess, getPercentText, getSecondsText, getUsername, NFTCollections, toFixedPrice } from '@/helpers';
+import { detectTradeTypeSuccess, getPercentText, getSecondsText, getUsername, NFTCollections, toFixedPrice, convertTraitString } from '@/helpers';
 import $ from 'jquery';
 import TradingVue, { DataCube } from 'trading-vue-js';
 import Data from './data.json';
 import PreviewChartHistoryModal from '@/components/modals/preview-chart-history-modal/preview-chart-history-modal.vue';
+import { OpenSeaPort, Network } from "opensea-js";
+import NFTItem from "@/components/NFT/NFT-item/NFT-item.vue";
 
 enum NFTToolsMarket {
     Looks = 0,
@@ -128,13 +145,14 @@ enum NFTToolsMarket {
 }
 
 @Component({
-    components: { TradingVue },
-    methods: { getUsername, getSecondsText, toFixedNumber, getPercentText }
+    components: { TradingVue, 'ivc-NFT-item': NFTItem },
+    methods: { getUsername, getSecondsText, toFixedNumber, getPercentText, toEnumInterface, convertTraitString }
 })
 export default class NFTTools extends Vue {
     private eth_image_url: string = "https://openseauserdata.com/files/6f8e2979d428180222796ff4a33ab929.svg";
     private opensea_image_url: string = "https://opensea.io/static/images/logos/opensea.svg";
     private looksrare_image_url: string = "https://s2.coinmarketcap.com/static/img/coins/200x200/17081.png";
+    private rating = { U: "Custom", A: "A", B: "B", C: "C", D: "D", E: "E", F: "F" };
 
     private result = null;
 
@@ -148,7 +166,7 @@ export default class NFTTools extends Vue {
 
         this.$server.R("/nftautotools/suggestion", value)
             .then((value) => {
-                console.log("what I got", value);
+                // console.log("what I got", value);
                 this.result = value;
             });
     }
@@ -193,14 +211,19 @@ export default class NFTTools extends Vue {
             bought_price: number;
             
             /**
-             * @uiLabel - 外觀
+             * @uiLabel - 寶物
              */
             image_url: string;
 
             /**
-             * @uiLabel - 稀有度
+             * @uiLabel - 特徵
              */
-            rank: string;
+            trait_feature: any;
+
+            /**
+             * @uiLabel - 評級
+             */
+            rating: ${toEnumInterface(this.rating)};
 
             /**
              * @uiLabel - Looksrare建議賣價
@@ -351,7 +374,6 @@ export default class NFTTools extends Vue {
 
             /**
              * @uiLabel - 昨日平均地板價
-             * @uiType - iv-form-label
              * @uiDefault - () => "正在取得..."
              */
             yesterdayFloor: string;
@@ -436,16 +458,67 @@ export default class NFTTools extends Vue {
         }
         `;
     }
-    private sell_inf() {
-        return `
-        interface {
-            /**
-             * @uiLabel - 建議掛單價
-             * @uiType - iv-form-label
-             */
-            suggest?: string;
+
+    /// private helper
+    private async metamask_connect(e) {
+        console.log(e);
+        await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+        e.srcElement.innerHTML = "已連線";
+    }
+
+    private metamask_request_sell(o) {
+        let token_id = o.token_id;
+        let listing_price = o.opensea_listing_price;
+        if (!listing_price || listing_price < 2.4) {
+            console.error(`the price too low: ${listing_price}`);
+            return;
         }
-        `;
+
+        const seaport = new OpenSeaPort((window as any).ethereum, {
+            networkName: Network.Main,
+            apiKey: "39632e5ef8aa4f959ff8c3c5dda0cc48"
+        });
+
+        /// NextMerchLabs
+        const OTHERDEED = "0x34d85c9CDeB23FA97cb08333b511ac86E1C4E258";
+        const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+        const accountAddress = "0x9e6A7521Ee6BF10e47d16cbd2F679624Bdf24BD8";
+
+        const expirationTime = new Date();
+        expirationTime.setDate(expirationTime.getDate()+1);
+        expirationTime.setHours(19); expirationTime.setMinutes(0); expirationTime.setSeconds(0); 
+        console.log("expiration:", expirationTime);
+        seaport.createSellOrder({
+            asset: {
+                tokenId: token_id,
+                tokenAddress: OTHERDEED
+            },
+            tokenId: token_id,
+            tokenAddress: OTHERDEED,
+            accountAddress,
+            startAmount: o.opensea_listing_price,
+            paymentTokenAddress: WETH,
+            expirationTime: Math.floor(expirationTime.valueOf() / 1000)
+        } as any);
+    }
+
+    private async rating_changed(row, rating) {
+        let { token_id } = row;
+        !rating && (rating = undefined);
+        await this.$server.C("/rating", {
+            token_id, rating
+        });
+    }
+
+    private rating_enable(row) {
+        row.rating_enabled = !row.rating_enabled;
+    }
+
+    private toFormOptions(options) {
+        return Object.keys(options).reduce((final, id) => {
+            final.push({ id, text: options[id] });
+            return final;
+        }, []);
     }
 }
 </script>

@@ -29,6 +29,8 @@
                 <SidebarNavItem url="/chart" />
                 <SidebarNavItem url="/saleanalyze" />
                 <SidebarNavItem url="/looksrare" />
+                <SidebarNavItem url="/otherdeedanalyze" />
+                <SidebarNavItem url="/otherdeedresourcefilter" />
 
                 <!-- <SidebarNavItem url="/sources/video-source" /> -->
 

@@ -8,6 +8,9 @@ import NFTTools from './components/NFTTools.vue';
 import Chart from './components/Chart.vue';
 import SaleAnalyze from './components/SaleAnalyze.vue';
 import LooksRare from './components/LooksRare.vue';
+import OtherdeedSaleAnalyze from './components/OtherdeedSaleAnalyze.vue';
+import OtherdeedResourceFilter from './components/OtherdeedResourceFilter.vue';
+
 // import VideoSource from './components/VideoSource.vue';
 // import License from './components/License.vue';
 // import Logs from './components/Logs.vue';
@@ -23,6 +26,8 @@ $({ path: '/', name: "Main", redirect: '/home', permission: false })();
     $({ path: '/chart', name: "NFT歷史紀錄", permission: "/looksrare-revenue"})(Chart);
     $({ path: '/saleanalyze', name: "NFT賣出數據分析", permission: "/looksrare-revenue"})(SaleAnalyze);
     $({ path: '/looksrare', name: "LooksRare掛單收益", permission: "/looksrare-revenue"})(LooksRare);
+    $({ path: '/otherdeedanalyze', name: "Otherdeed賣出數據", permission: "/otherdeed-analyze"})(OtherdeedSaleAnalyze);
+    $({ path: '/otherdeedresourcefilter', name: "Otherdeed資源篩選", permission: "/otherdeed-resource-filter" })(OtherdeedResourceFilter);
 
 // $({ path: '/', name: "Main", redirect: '/home', permission: false })();
 
