@@ -163,9 +163,16 @@ export default class Chart extends Vue {
     /// chart options
     private chartTypeBOptions = {
         buyStrategy: "買入策略",
-        allowLoss: "認賠賣出",
+        bottomPrice: "掛單底價",
+        stopLossAllow: "停損底價",
+        stopLossLower: "停損掛價",
         floorRate: "地板倍率",
         tradeTime: "交易時間"
+    }
+
+    private allowLossTypeOptions = {
+        bottomPrice: "掛單底價限制",
+        stopLoss: "停損"
     }
 
     /// private helper
@@ -431,10 +438,35 @@ export default class Chart extends Vue {
             listRuleFloorMultiplyAutoMax: number;
 
             /**
-             * @uiLabel - 認賠掛單 上限 %
+             * @uiLabel - 止損類型
+             * @uiDefault - bottomPrice
+             * @uiColumnGroup - 2
+             */
+            allowLossType: ${toEnumInterface(this.allowLossTypeOptions)};
+
+            /**
+             * @uiLabel - 掛單底價 -N%
              * @uiDefault - 10
+             * @uiColumnGroup - 2
+             * @uiHidden - ${this.$form("searchform", "allowLossType") !== "bottomPrice"}
              */
             listRuleLossAllow: number;
+
+            /**
+             * @uiLabel - 停損底價 -N%
+             * @uiDefault - 10
+             * @uiColumnGroup - 2
+             * @uiHidden - ${this.$form("searchform", "allowLossType") !== "stopLoss"}
+             */
+            listRuleStopLossAllow: number;
+
+            /**
+             * @uiLabel - 停損掛價 -N%
+             * @uiDefault - 0
+             * @uiColumnGroup - 2
+             * @uiHidden - ${this.$form("searchform", "allowLossType") !== "stopLoss"}
+             */
+            listRuleStopLossLower: number;
 
             /**
              * @uiLabel - 表單形式
@@ -483,9 +515,11 @@ export default class Chart extends Vue {
     }
 
     private getChartTypeBLooksETH(v) {
+        if (!v) return 0;
         return toFixedNumber(v.LooksPoints * this.value.looks_lookspt * this.value.looks_eth, 3);
     }
     private getChartTypeBTotalETH(v) {
+        if (!v) return 0;
         return toFixedNumber(v.Funds+v.Total+this.getChartTypeBLooksETH(v), 3);
     }
 
@@ -572,6 +606,34 @@ export default class Chart extends Vue {
             return "#FFF";
     }
 
+    private getGeneralLabel(type, key) {
+        // buyStrategy: "買入策略",
+        // bottomPrice: "掛單底價",
+        // stopLossAllow: "停損底價",
+        // stopLossLower: "停損掛價",
+        // floorRate: "地板倍率",
+        // tradeTime: "交易時間"
+        switch (type) {
+            case "buyStrategy":
+            case "bottomPrice":
+            case "stopLossAllow":
+            case "stopLossLower":
+                return `-${key}%`;
+            case "floorRate":
+                return `${key}x`;
+            case "tradeTime":
+                return `${this.PadLeft(key, "0", 2)}:00`;
+            default:
+                return key;
+        }
+    }
+    private getColLabel(key) {
+        return this.getGeneralLabel(this.value.chartTypeBRow, key);
+    }
+    private getRowLabel(key) {
+        return this.getGeneralLabel(this.value.chartTypeBCol, key.replace("column_", "").replace("_", "."));
+    }
+
     private table_inf_b() {
         let tt = ((this.$refs['table']||{} as any).result||{} as any).results;
 
@@ -582,7 +644,7 @@ export default class Chart extends Vue {
                 if (key === "title") return;
                 return `
             /**
-             * @uiLabel - ${key.replace("column_", "").replace("_", ".")}
+             * @uiLabel - ${this.getRowLabel(key)}
              * @uiType - iv-cell-html-string
              * @uiConverter - chartTypeBFieldConverter
              **/
@@ -593,6 +655,7 @@ export default class Chart extends Vue {
             result = `
             /**
              * @uiLabel - ${this.chartTypeBOptions[this.value.chartTypeBRow]} | ${this.chartTypeBOptions[this.value.chartTypeBCol]}
+             * @uiConverter - getColLabel
              */
             title: string;
             ` + result;
