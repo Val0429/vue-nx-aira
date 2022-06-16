@@ -37,15 +37,24 @@
             ref="table"
         >
             <template #type="{$attrs}">
-                {{
-                    $attrs.value === "collect" ? "收集Looks點數" :
-                    $attrs.value === "offering" ? "在市場開價" :
-                    $attrs.value === "bought" ? "成功買入" :
-                    $attrs.value === "listing" ? "在市場掛單" :
-                    $attrs.value === "sold" ? "意外賣出" :
-                    $attrs.value === "message" ? "重要事件" :
-                    ""
-                }}
+                <template v-if="$attrs.value === 'collect'">
+                    收集Looks點數
+                </template>
+                <template v-else-if="$attrs.value === 'offering'">
+                    在市場開價
+                </template>
+                <template v-else-if="$attrs.value === 'bought'">
+                    <span style="background: #00B176; color: white; padding: 3px 10px 7px 10px">成功買入</span>
+                </template>
+                <template v-else-if="$attrs.value === 'listing'">
+                    在市場掛單
+                </template>
+                <template v-else-if="$attrs.value === 'sold'">
+                    <span style="background: #FF0000; padding: 3px 10px 7px 10px; color: white">成功賣出</span>
+                </template>
+                <template v-else-if="$attrs.value === 'message'">
+                    重要事件
+                </template>
             </template>
 
             <template #date="{$attrs}">
@@ -222,7 +231,7 @@ export default class Chart extends Vue {
     /// interfaces
     private search_inf() {
         let defStart = new Date(2022, 5, 2, 0, 0, 0);
-        let defEnd = new Date(2022, 5, 16, 0, 0, 0);
+        let defEnd = new Date(2022, 5, 15, 0, 0, 0);
 
         return `
         interface {
@@ -626,12 +635,26 @@ ${result}
         `;
     }
 
-    PadLeft(str: string, char: string = '0', length: number = 2): string {
+    private PadLeft(str: string, char: string = '0', length: number = 2): string {
         str += "";
         while (str.length < length) {
             str = `${char}${str}`;
         }
         return str;
+    }
+
+    private getEventCategoryText(o) {
+        return `
+            ${
+                o.value === "collect" ? "收集Looks點數" :
+                o.value === "offering" ? "在市場開價" :
+                o.value === "bought" ? "<img src='@/assets/images/buyin.png' />成功買入" :
+                o.value === "listing" ? "在市場掛單" :
+                o.value === "sold" ? "<img src='@/assets/images/soldout.png' />成功賣出" :
+                o.value === "message" ? "重要事件" :
+                ""
+            }
+        `;
     }
 }
 </script>
