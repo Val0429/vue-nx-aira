@@ -18,4 +18,8 @@ export default class PercentText extends Vue {
 
     @Prop({ type: Number })
     refValue: number;
+
+    /// spec | normal
+    @Prop({ type: String })
+    type: string;
 }

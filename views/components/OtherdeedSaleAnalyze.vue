@@ -79,6 +79,7 @@ export default class NFTTools extends Vue {
     private result = null;
 
     private form_submit(value) {
+        console.log("value!", value);
         this.params = value;
     }
 

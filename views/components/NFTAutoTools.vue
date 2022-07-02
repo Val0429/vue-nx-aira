@@ -62,20 +62,19 @@
                 </template>
 
                 <template #looksrare_listing_price="{$attrs}">
-                    <img :src="eth_image_url" title="WETH" style="height: 20px; margin-right: 6px" />
-                    {{ toFixedNumber($attrs.value, 6) }}
+                    <ivc-crypto-price :value="$attrs.value" />
+                    <ivc-crypto-price :value="$attrs.row.looksrare_sell_revenue" />
+                    ( <ivc-percent-text :value="$attrs.row.looksrare_sell_revenue" :refValue="$attrs.row.bought_price" type="normal" /> )
                 </template>
                 <template #opensea_listing_price="{$attrs}">
-                    <img :src="eth_image_url" title="WETH" style="height: 20px; margin-right: 6px" />
-                    {{ toFixedNumber($attrs.value, 6) }}
+                    <ivc-crypto-price :value="$attrs.value" :digits="6" />
+                    <ivc-crypto-price :value="$attrs.row.opensea_sell_revenue" />
+                    ( <ivc-percent-text :value="$attrs.row.opensea_sell_revenue" :refValue="$attrs.row.bought_price" type="normal" /> )
                 </template>
-
-                <template #revenue="{$attrs}">
-                    <img :src="eth_image_url" title="WETH" style="height: 20px; margin-right: 6px" />
-                    {{ toFixedNumber($attrs.row.looksrare_sell_revenue, 3) }}&nbsp;
-                    (
-                    {{ getPercentText($attrs.row.looksrare_sell_revenue / $attrs.row.bought_price) }}
-                    )
+                <template #x2y2_listing_price="{$attrs}">
+                    <ivc-crypto-price :value="$attrs.value" :digits="6" />
+                    <ivc-crypto-price :value="$attrs.row.x2y2_sell_revenue" />
+                    ( <ivc-percent-text :value="$attrs.row.x2y2_sell_revenue" :refValue="$attrs.row.bought_price" type="normal" /> )
                 </template>
                 
                 <template #goOL="{$attrs}">
@@ -138,6 +137,8 @@ import Data from './data.json';
 import PreviewChartHistoryModal from '@/components/modals/preview-chart-history-modal/preview-chart-history-modal.vue';
 import { OpenSeaPort, Network } from "opensea-js";
 import NFTItem from "@/components/NFT/NFT-item/NFT-item.vue";
+import CryptoPrice from "@/components/NFT/crypto-price/crypto-price.vue";
+import PercentText from "@/components/NFT/percent-text/percent-text.vue";
 
 enum NFTToolsMarket {
     Looks = 0,
@@ -145,7 +146,7 @@ enum NFTToolsMarket {
 }
 
 @Component({
-    components: { TradingVue, 'ivc-NFT-item': NFTItem },
+    components: { TradingVue, "ivc-NFT-item": NFTItem, "ivc-percent-text": PercentText, "ivc-crypto-price": CryptoPrice },
     methods: { getUsername, getSecondsText, toFixedNumber, getPercentText, toEnumInterface, convertTraitString }
 })
 export default class NFTTools extends Vue {
@@ -236,9 +237,9 @@ export default class NFTTools extends Vue {
             opensea_listing_price: number;
 
             /**
-             * @uiLabel - 賣出獲利
+             * @uiLabel - X2Y2建議賣價
              */
-            revenue: number;
+            x2y2_listing_price: number;
 
             /**
              * @uiLabel - 　
@@ -286,7 +287,7 @@ export default class NFTTools extends Vue {
 
             /**
              * @uiLabel - 地板倍率 (1.0x-1.1x 10倍，1.1x-1.2x 4倍，1.2x-1.3x 2倍，1.3x-1.4x 1倍)
-             * @uiDefault - 1.12
+             * @uiDefault - 1.1
              */
             listRuleFloorMultiply: number;
 
@@ -416,7 +417,7 @@ export default class NFTTools extends Vue {
 
             /**
              * @uiLabel - 少於均價或地板價，與占比
-             * @uiDefault - () => [{ less: 1, percent: 0.3 }, { less: 2, percent: 0.3 }, { less: 3, percent: 0.2 }, { less: 4, percent: 0.2 }]
+             * @uiDefault - () => [{ less: 5, percent: 0.5 }, { less: 10, percent: 0.5 }]
              * @uiColumnGroup - 1
              */
             buyRuleLessThanYesterdayAverage: interface {

@@ -237,8 +237,8 @@ export default class Chart extends Vue {
 
     /// interfaces
     private search_inf() {
-        let defStart = new Date(2022, 5, 2, 0, 0, 0);
-        let defEnd = new Date(2022, 5, 15, 0, 0, 0);
+        let defStart = new Date(2022, 4, 3, 0, 0, 0);
+        let defEnd = new Date(2022, 5, 22, 0, 0, 0);
 
         return `
         interface {
@@ -389,7 +389,7 @@ export default class Chart extends Vue {
 
             /**
              * @uiLabel - 比前一天均價 (或地板價取小值) 少 N %
-             * @uiDefault - 0
+             * @uiDefault - 10
              * @uiColumnGroup - 1
              */
             buyRuleLessThanYesterdayAverage: number;
@@ -438,33 +438,23 @@ export default class Chart extends Vue {
             listRuleFloorMultiplyAutoMax: number;
 
             /**
-             * @uiLabel - 止損類型
-             * @uiDefault - bottomPrice
-             * @uiColumnGroup - 2
-             */
-            allowLossType: ${toEnumInterface(this.allowLossTypeOptions)};
-
-            /**
              * @uiLabel - 掛單底價 -N%
              * @uiDefault - 10
              * @uiColumnGroup - 2
-             * @uiHidden - ${this.$form("searchform", "allowLossType") !== "bottomPrice"}
              */
             listRuleLossAllow: number;
 
             /**
              * @uiLabel - 停損底價 -N%
-             * @uiDefault - 10
+             * @uiDefault - 100
              * @uiColumnGroup - 2
-             * @uiHidden - ${this.$form("searchform", "allowLossType") !== "stopLoss"}
              */
             listRuleStopLossAllow: number;
 
             /**
              * @uiLabel - 停損掛價 -N%
-             * @uiDefault - 0
+             * @uiDefault - 1
              * @uiColumnGroup - 2
-             * @uiHidden - ${this.$form("searchform", "allowLossType") !== "stopLoss"}
              */
             listRuleStopLossLower: number;
 

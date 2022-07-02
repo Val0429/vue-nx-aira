@@ -15,4 +15,7 @@ export default class CryptoPrice extends Vue {
 
     @Prop({ type: Number })
     value: number;
+
+    @Prop({ type: Number, required: false })
+    digits: number;
 }
