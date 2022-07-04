@@ -374,12 +374,20 @@ export default class Chart extends Vue {
             })};
 
             /**
-             * @uiLabel - 幾個?
+             * @uiLabel - 買幾個?
+             * @uiDefault - 2
+             * @uiHidden - ${this.$form("searchform", "dealRuleType") !== "less"}
+             * @uiColumnGroup - 1
+             */
+            dealRuleBuyLessThanPriceNumber: number;
+
+            /**
+             * @uiLabel - 賣幾個?
              * @uiDefault - 3
              * @uiHidden - ${this.$form("searchform", "dealRuleType") !== "less"}
              * @uiColumnGroup - 1
              */
-            dealRuleLessThanPriceNumber: number;
+            dealRuleSellLessThanPriceNumber: number;
 
             /**
              * @uiLabel - 買入策略
@@ -517,7 +525,9 @@ export default class Chart extends Vue {
         let looks = this.getChartTypeBLooksETH(v);
         let total = this.getChartTypeBTotalETH(v);
         let funds = this.value.funds;
-        let { background, text } = this.chartTypeBGetColor(v);
+        let colors = this.chartTypeBGetColor(v);
+        if (!colors) return "";
+        let { background, text } = colors;
         return `<div style="background: ${background}; margin: -12px; padding: 8px 0">
             <span style="color: ${text}">
             Looks: ${looks} ETH
