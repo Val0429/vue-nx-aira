@@ -348,8 +348,17 @@ export default class Chart extends Vue {
              * @uiLabel - 手動買入時間 (幾點)
              * @uiHidden - ${this.$form("searchform", "manualOrRobot") !== "manual"}
              * @uiDefault - () => [11]
+             * @uiColumnGroup - 1
              */
             manualHours: number[];
+
+            /**
+             * @uiLabel - 前日平均對齊時間 (幾點)
+             * @uiHidden - ${this.$form("searchform", "manualOrRobot") !== "manual"}
+             * @uiDefault - () => 0
+             * @uiColumnGroup - 1
+             */
+            manualAverageAlignHours: number;
 
             /**
              * @uiLabel - 對買賣事件即時反應
