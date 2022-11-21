@@ -97,6 +97,7 @@ export default class NFTTools extends Vue {
                 ARTIFACT_SET_1: "神器預設集",
                 BAYC_SET_1: "BAYC預設集",
                 RESOURCES_3_SET: "三資源預設集",
+                KODA_SET_1: "KODA預設集",
             })};
         }
         `;

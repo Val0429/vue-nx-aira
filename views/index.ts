@@ -29,6 +29,16 @@ $({ path: '/', name: "Main", redirect: '/home', permission: false })();
     $({ path: '/otherdeedanalyze', name: "Otherdeed賣出數據", permission: "/otherdeed-analyze"})(OtherdeedSaleAnalyze);
     $({ path: '/otherdeedresourcefilter', name: "Otherdeed資源篩選", permission: "/otherdeed-resource-filter" })(OtherdeedResourceFilter);
 
+    // $({ path: '/home', name: "_('w_Home')", permission: false })(Home);
+    // $({ path: '/nftautotools', name: "自動買賣工具", permission: false})(NFTAutoTools);
+    // $({ path: '/nfttools', name: "買賣小工具", permission: false})(NFTTools);
+    // $({ path: '/chart', name: "NFT歷史紀錄", permission: false})(Chart);
+    // $({ path: '/saleanalyze', name: "NFT賣出數據分析", permission: false})(SaleAnalyze);
+    // $({ path: '/looksrare', name: "LooksRare掛單收益", permission: false})(LooksRare);
+    // $({ path: '/otherdeedanalyze', name: "Otherdeed賣出數據", permission: false})(OtherdeedSaleAnalyze);
+    // $({ path: '/otherdeedresourcefilter', name: "Otherdeed資源篩選", permission: false})(OtherdeedResourceFilter);
+
+
 // $({ path: '/', name: "Main", redirect: '/home', permission: false })();
 
 //     $({ path: '/home', name: "_('w_Home')", permission: false })(Home);

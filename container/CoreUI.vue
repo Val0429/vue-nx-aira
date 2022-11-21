@@ -32,38 +32,7 @@
                 <SidebarNavItem url="/otherdeedanalyze" />
                 <SidebarNavItem url="/otherdeedresourcefilter" />
 
-                <!-- <SidebarNavItem url="/sources/video-source" /> -->
-
-                <!-- <SidebarNavItem url="/settings">
-                    <SidebarNavItem url="/settings/license" />
-                    <SidebarNavItem url="/settings/vast2-configuration" />
-                    <SidebarNavItem url="/settings/system-configuration" />
-                </SidebarNavItem>
-
-                <SidebarNavItem url="/logs" /> -->
-
-                <!-- <SidebarNavItem url="/components">
-                    <SidebarNavItem url="/components/buttons" />
-                    <SidebarNavItem url="/components/forms" />
-                    <SidebarNavItem url="/components/step-progress" />
-                    <SidebarNavItem url="/components/tab" />
-                    <SidebarNavItem url="/components/toolbox" />
-                    <SidebarNavItem url="/components/cards" />
-                    <SidebarNavItem url="/components/cards/auto" />
-                    <SidebarNavItem url="/components/table" />
-                    <SidebarNavItem url="/components/tree" />
-                    <SidebarNavItem url="/components/transition" />
-                    <SidebarNavItem url="/components/modal" />
-                    <SidebarNavItem url="/components/utilities" />
-                </SidebarNavItem>
-                <SidebarNavItem url="/reusable-theme" />
-
-                <SidebarNavTitle label="選單特殊樣式" />
-                <SidebarNavItem url="/menu-style/1" />
-                <SidebarNavItem url="/menu-style/2" /> -->
-
             </SidebarNav>
-
         </template>
     </CoreUIBase>
 </template>

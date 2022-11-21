@@ -167,7 +167,8 @@ export default class Chart extends Vue {
         stopLossAllow: "停損底價",
         stopLossLower: "停損掛價",
         floorRate: "地板倍率",
-        tradeTime: "交易時間"
+        tradeTime: "交易時間",
+        averageFloorTime: "平均地板基準時間"
     }
 
     private allowLossTypeOptions = {
@@ -238,7 +239,7 @@ export default class Chart extends Vue {
     /// interfaces
     private search_inf() {
         let defStart = new Date(2022, 4, 3, 0, 0, 0);
-        let defEnd = new Date(2022, 5, 22, 0, 0, 0);
+        let defEnd = new Date(2022, 6, 18, 0, 0, 0);
 
         return `
         interface {
@@ -257,7 +258,7 @@ export default class Chart extends Vue {
 
             /**
              * @uiLabel - Looks / Looks PT
-             * @uiDefault - 0.0006256102
+             * @uiDefault - 0.0003128051
              * @uiColumnGroup - 1
              */
             looks_lookspt: number;
@@ -271,7 +272,7 @@ export default class Chart extends Vue {
 
             /**
              * @uiLabel - Base PT
-             * @uiDefault - 200
+             * @uiDefault - 100
              * @uiColumnGroup - 2
              */
             basept: number;
