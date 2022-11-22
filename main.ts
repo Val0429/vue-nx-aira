@@ -1,7 +1,8 @@
 import { DisableLoginRouter, obDefaultRoute } from "@/../core/router";
 
+import "echarts";
 
-// DisableLoginRouter();
+DisableLoginRouter();
 
 // /// load /license when web initial
 // import Server from "./config/default/server";

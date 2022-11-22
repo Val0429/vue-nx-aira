@@ -8,7 +8,7 @@ import { Config } from '@/../config/default/serverConfig';
 
 var config: Config = {
     // ip: "localhost",
-    ip: "192.168.100.105",
+    ip: "192.168.100.103",
     port: 80,
     ssl: false,
     cgiPath: "api",

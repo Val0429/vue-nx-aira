@@ -77,7 +77,8 @@ import { Component, Vue } from 'vue-property-decorator';
 import { RegisterTheme } from '@/../core/theme';
 import { CoreUI as CoreUIBase,
     SidebarHeader, SidebarNav, SidebarNavTitle, SidebarNavDivider, SidebarNavItem
-} from '@/../containers/CoreUI';
+// } from '@/../containers/CoreUI';
+} from '@valuis0429/vue-coreui-white';
 import template from './CoreUI.template';
 
 @RegisterTheme('coreui', 'mb_iSAP_Theme_White')

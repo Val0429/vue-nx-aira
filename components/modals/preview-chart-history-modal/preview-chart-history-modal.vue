@@ -5,7 +5,7 @@
         @update:visible="doUpdateVisible"
     >
         <div class="wrapper" v-if="!history">
-            <img src="@/assets/images/giphy.gif" />
+            <!-- <img src="@/assets/images/giphy.gif" /> -->
         </div>
         <div v-else class="content">
             <!-- 寶物資訊 -->

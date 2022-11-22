@@ -1,14 +1,17 @@
 {
-    "name": "smart-face-tracker",
-    "version": "1.01.04",
-    "description": "Smart Face Tracker",
+    "name": "nx-aira",
+    "version": "1.00.00",
+    "description": "NX Aira",
     "scripts": {
         "start": "npm run start --prefix ../",
         "build": "npm run build --prefix ../",
         "create-project": "git checkout --orphan"
     },
     "dependencies": {
-        "opensea-js": "^3.0.4",
-        "trading-vue-js": "^1.0.2"
+        "echarts": "^5.4.0",
+        "vue-echarts": "^6.2.3"
+    },
+    "devDependencies": {
+        "@vue/composition-api": "^1.7.1"
     }
 }
