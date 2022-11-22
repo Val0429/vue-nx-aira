@@ -10,56 +10,18 @@
                     <div style="font-size: 20px; line-height: 23px; color: white; margin-left: 20px; padding-top: 22px">Filter</div>
                 </div>
                 <div class="menu-content">
+                    <ivc-card label="Time Period" icon="fa-clock-o">
+                        <iv-form
+                            :interface="tp_interface()"
+                            />
+                    </ivc-card>
+                    <ivc-separator />
                     <ivc-card ref="card-camera" label="Camera" icon="fa-video-camera" :class="{ 'flex-fill-zero': ($vref('card-camera')||{}).isVisible }">
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
-                        Cameras<BR/>
+                        <iv-form-selection :multiple="true" :options="[{id: '1', text: 'Zone A'},{id: '2', text: 'Zone B'},{id: '3', text: 'Zone C'},{id: '4', text: 'Zone D'},{id: '5', text: 'Zone E'},{id: '6', text: 'Zone F'},{id: '7', text: 'Zone G'},{id: '8', text: 'Zone H'},{id: '9', text: 'Zone I'}]" placeholder="No Selection" />
                     </ivc-card>
                     <ivc-separator />
                     <ivc-card ref="card-attributes" label="Attributes" icon="fa-video-camera" :class="{ 'flex-fill-zero': ($vref('card-attributes')||{}).isVisible }">
                         Attributes
-                    </ivc-card>
-                    <ivc-separator />
-                    <ivc-card label="Time Period" icon="fa-clock-o">
-                        Time Period
                     </ivc-card>
                     <div :class="{ 'flex-fill': !($vref('card-camera')||{}).isVisible && !($vref('card-attributes')||{}).isVisible }" />
                     <ivc-separator />
@@ -132,6 +94,7 @@
         /deep/ .card {
             transition: flex-grow 500ms ease-in-out;
             overflow-y: hidden;
+            flex: 0 0 238px;
 
             &.flex-fill-zero {
                 flex: 1 1 0;
