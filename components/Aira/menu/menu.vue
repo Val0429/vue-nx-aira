@@ -89,6 +89,10 @@
         display: flex;
         flex-direction: column;
 
+        /deep/ .card {
+            transition: flex-grow 500ms ease-in-out;
+        }
+
         .buttons {
             display: flex;
             padding: 10px 10px;
