@@ -3,7 +3,7 @@
         <!-- header -->
         <div class="content-header">
             <!-- filter -->
-            <iv-button icon="fa-filter" variant="primary" />
+            <iv-button icon="fa-filter" variant="dark" />
         </div>
 
         <!-- body -->
@@ -26,7 +26,6 @@
 
     .btn-filter-on {
         color: #fff;
-        @include button-ghost-variant(#007bff);
     }
     /deep/ {
         .v-icon-filter {

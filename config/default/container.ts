@@ -10,6 +10,6 @@ import CoreUIBlue from '@/container/CoreUI-Blue.vue';
 import { AiraBlack } from '@/container/Aira-Black';
 
 var config: Config = {
-    container: AiraBlack
+    container: CoreUIWhite
 }
 export default config;
