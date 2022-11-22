@@ -1,8 +1,12 @@
 <template>
     <fragment>
+        <!-- header -->
         <div class="content-header">
+            <!-- filter -->
+            <iv-button icon="fa-filter" variant="primary" />
         </div>
 
+        <!-- body -->
         <div class="d-flex content-body" style="flex-direction: column">
             <v-chart class="mt-3 mb-3" style="flex: 1" :option="bsoption" />
             <div class="d-flex" style="flex: 1; flex-direction: row">
@@ -17,7 +21,20 @@
 .content-header {
     border-top: 1px solid #8A9192;
     border-bottom: 1px solid black;
+    box-sizing: border-box;
     height: 67px;
+
+    .btn-filter-on {
+        color: #fff;
+        @include button-ghost-variant(#007bff);
+    }
+    /deep/ {
+        .v-icon-filter {
+            width: 32px;
+            height: 32px;
+            background: url("~@/assets/images/filter_off.png");
+        }
+    }
 }
 .content-body {
     border-top: 1px solid #8A9192;

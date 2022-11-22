@@ -29,6 +29,7 @@ $height: 60px;
         text-align: center;
         background: #00000033;
         mix-blend-mode: normal;
+        box-sizing: border-box;
         border-bottom: 1px solid black;
         
         .logo {
