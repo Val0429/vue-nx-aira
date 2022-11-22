@@ -7,7 +7,6 @@ import { Config } from '@/../config/default/container';
 
 import CoreUIWhite from '@/container/CoreUI.vue';
 import CoreUIBlue from '@/container/CoreUI-Blue.vue';
-import { AiraBlack } from '@/container/Aira-Black';
 
 var config: Config = {
     container: CoreUIWhite
