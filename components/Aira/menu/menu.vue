@@ -10,11 +10,51 @@
                     <div style="font-size: 20px; line-height: 23px; color: white; margin-left: 20px; padding-top: 22px">Filter</div>
                 </div>
                 <div class="menu-content">
-                    <ivc-card ref="card-camera" label="Camera" icon="fa-video-camera" :class="{ 'flex-fill': ($vref('card-camera')||{}).isVisible }">
-                        Cameras
+                    <ivc-card ref="card-camera" label="Camera" icon="fa-video-camera" :class="{ 'flex-fill-zero': ($vref('card-camera')||{}).isVisible }">
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
+                        Cameras<BR/>
                     </ivc-card>
                     <ivc-separator />
-                    <ivc-card ref="card-attributes" label="Attributes" icon="fa-video-camera" :class="{ 'flex-fill': ($vref('card-attributes')||{}).isVisible }">
+                    <ivc-card ref="card-attributes" label="Attributes" icon="fa-video-camera" :class="{ 'flex-fill-zero': ($vref('card-attributes')||{}).isVisible }">
                         Attributes
                     </ivc-card>
                     <ivc-separator />
@@ -91,6 +131,11 @@
 
         /deep/ .card {
             transition: flex-grow 500ms ease-in-out;
+            overflow-y: hidden;
+
+            &.flex-fill-zero {
+                flex: 1 1 0;
+            }
         }
 
         .buttons {

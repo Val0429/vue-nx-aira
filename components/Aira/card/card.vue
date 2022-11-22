@@ -17,6 +17,7 @@
 
         <b-collapse
             :visible="innateVisible"
+            class="scrollable-collapse"
             @show="innateVisible = true; $emit('update:visible', true);"
             @hide="innateVisible = false; $emit('update:visible', false);"
             :id="'collapse-' + _uid">
@@ -43,6 +44,11 @@
     > .title {
         color: #B4BFC0;
     }
+}
+
+.scrollable-collapse {
+    flex: 1 1 0;
+    overflow-y: auto;
 }
 
 .toolbox {
