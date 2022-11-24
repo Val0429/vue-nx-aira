@@ -1,17 +1,20 @@
 <template>
     <fragment>
-        <!-- body -->
         <div class="d-flex content-body" style="flex-direction: column">
-            <v-chart class="mt-3 mb-3" style="flex: 1" :option="bsoption" />
-            <div class="d-flex" style="flex: 1; flex-direction: row">
-                <v-chart class="mt-1 mb-3" style="flex: 1" :option="pdoption" />
-                <v-chart class="mt-1 mb-3" style="flex: 1" :option="pcoption" />
+            <v-chart ref="chart1" class="mt-3 mb-3 overflow-hidden flex-fill-0" :option="bsoption" />
+            <div class="d-none d-lg-flex flex-row flex-fill-0 overflow-hidden">
+                <v-chart ref="chart2" class="mt-1 mb-3" style="flex: 1" :option="pdoption" />
+                <v-chart ref="chart3" class="mt-1 mb-3" style="flex: 1" :option="pcoption" />
             </div>
         </div>
     </fragment>        
 </template>
 
 <style lang="scss" scoped>
+.flex-fill-0 {
+    flex: 1 1 0;
+}
+
 .content-body {
     border-top: 1px solid #8A9192;
     width: 100vw;
@@ -43,5 +46,21 @@ export default class Dashboard extends Vue {
     pdoption = pdopt;
     pcoption = pcopt;
 
+    isReloadReady = false;
+    mounted() {
+        if (!this.isReloadReady) {
+            this.$nextTick(() => {
+                this.isReloadReady = true;
+                let charts = [
+                    this.$refs["chart1"],
+                    this.$refs["chart2"],
+                    this.$refs["chart3"]
+                ];
+                window.addEventListener("resize", () => {
+                    charts.forEach(o => (o as any).resize());
+                });
+            });
+        }
+    }
 }
 </script>
