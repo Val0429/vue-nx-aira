@@ -1,5 +1,5 @@
 <template>
-    <fragment>
+    <div class="content-header">
         <!-- filter -->
         <iv-button class="b-icon-filter" icon="v-icon-filter" variant="dark" @click="filterEnabled=!filterEnabled" />
         <!-- menu -->
@@ -33,84 +33,94 @@
             </div>
             <div key="2" v-if="!filterEnabled" class="menu-holder" />
         </iv-auto-transition>
-    </fragment>
+    </div>
 </template>
 
 <script lang="ts" src="./menu.vue.ts" />
 
 <style lang="scss" scoped>
-/// Filter Button
-.b-icon-filter {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    padding-left: 3px;
-    margin: 17px;
-    margin-left: 20px;
+.content-header {
+    position: relative;
+    border-top: 1px solid #8A9192;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+    height: $menu-title-height;
+    max-height: $menu-title-height;
 
-    /deep/ .v-icon-filter {
-        margin-left: -6px;
-        width: 18px;
-        height: 16px;
-        background: url("~@/assets/images/filter.svg");
-        border-radius: 0 !important;
-    }
-}
+    /// Filter Button
+    .b-icon-filter {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        padding-left: 3px;
+        margin: 17px;
+        margin-left: 20px;
 
-.menu, .menu-holder, .menu-transition {
-    width: $menu-width;
-}
-.menu-transition {
-    position: absolute;
-    top: 0;
-}
-.menu, .menu-holder {
-    height: calc(100vh - #{$top-height}) !important;
-    position: absolute;
-    z-index: -1;
-    left: 0;
-    top: 0;
-    background: transparent;
-}
-
-.menu {
-    z-index: 1000;
-    background: #4D5758;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-    > .menu-title {
-        border-top: 0;
-        border-bottom: 1px solid black;
-        box-sizing: border-box;
-        height: calc(#{$menu-title-height} - 1px);
+        /deep/ .v-icon-filter {
+            margin-left: 1px;
+            margin-top: 1px;
+            width: 18px;
+            height: 16px;
+            background: url("~@/assets/images/filter.svg");
+            border-radius: 0 !important;
+        }
     }
 
-    > .menu-content {
-        box-sizing: border-box;
-        border-top: 1px solid #8A9192;
-        height: calc(100vh - #{$top-height} - #{$menu-title-height});
-        display: flex;
-        flex-direction: column;
+    .menu, .menu-holder, .menu-transition {
+        width: $menu-width;
+    }
+    .menu-transition {
+        position: absolute;
+        top: 0;
+    }
+    .menu, .menu-holder {
+        height: calc(100vh - #{$top-height}) !important;
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        top: 0;
+        background: transparent;
+    }
 
-        /deep/ .card {
-            transition: flex-grow 500ms ease-in-out;
-            overflow-y: hidden;
-            flex: 0 0 238px;
+    .menu {
+        z-index: 1000;
+        background: #4D5758;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
-            &.flex-fill-zero {
-                flex: 1 1 0;
-            }
+        > .menu-title {
+            border-top: 0;
+            border-bottom: 1px solid black;
+            box-sizing: border-box;
+            height: calc(#{$menu-title-height} - 1px);
         }
 
-        .buttons {
+        > .menu-content {
+            box-sizing: border-box;
+            border-top: 1px solid #8A9192;
+            height: calc(100vh - #{$top-height} - #{$menu-title-height});
             display: flex;
-            padding: 10px 10px;
-            > * {
-                margin: 10px;
-                flex: 1;
+            flex-direction: column;
+
+            /deep/ .card {
+                transition: flex-grow 500ms ease-in-out;
+                overflow-y: hidden;
+                flex: 0 0 238px;
+
+                &.flex-fill-zero {
+                    flex: 1 1 0;
+                }
+            }
+
+            .buttons {
+                display: flex;
+                padding: 10px 10px;
+                > * {
+                    margin: 10px;
+                    flex: 1;
+                }
             }
         }
-    }
+    }    
 }
 </style>
 
