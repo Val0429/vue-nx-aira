@@ -1,7 +1,6 @@
 <template>
     <div class="app theme-airablack" id="app">
         <ivc-topbar />
-        <ivc-menu />
         <router-view></router-view>
     </div>
 </template>

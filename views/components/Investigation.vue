@@ -1,7 +1,10 @@
 <template>
-    <div class="d-flex content-body flex-column">
+    <fragment>
+        <ivc-menu />
+        <div class="d-flex content-body flex-column">
 
-    </div>
+        </div>
+    </fragment>
 </template>
 
 <style lang="scss" scoped>

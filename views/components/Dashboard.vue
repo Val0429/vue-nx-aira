@@ -1,5 +1,6 @@
 <template>
     <fragment>
+        <ivc-menu />
         <div class="d-flex content-body flex-column">
             <v-chart ref="chart1" class="mt-3 mb-3 overflow-hidden flex-fill-0" :option="bsoption" />
             <div class="d-none d-lg-flex flex-row flex-fill-0 overflow-hidden">

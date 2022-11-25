@@ -12,6 +12,8 @@
                 <div class="menu-content">
                     <ivc-card label="Time Period" icon="fa-clock-o">
                         <iv-form
+                            ref="form_tp"
+                            :value="ftp_value"
                             :interface="tp_interface()"
                             />
                     </ivc-card>
@@ -19,6 +21,7 @@
                     <ivc-card ref="card-camera" label="Camera" icon="fa-video-camera" :class="{ 'flex-fill-zero': ($vref('card-camera')||{}).isVisible }">
                         <iv-form
                             ref="form_cam"
+                            :value="fcam_value"
                             :interface="cam_interface()"
                             />
                     </ivc-card>
@@ -26,6 +29,7 @@
                     <ivc-card ref="card-attributes" label="Attributes" icon="fa-video-camera" :class="{ 'flex-fill-zero': ($vref('card-attributes')||{}).isVisible }">
                         <iv-form
                             ref="form_att"
+                            :value="fatt_value"
                             :interface="att_interface()"
                             />
                     </ivc-card>
@@ -33,7 +37,7 @@
                     <ivc-separator />
                     <div class="buttons">
                         <iv-button variant="dark" size="lg">Now</iv-button>
-                        <iv-button variant="primary" size="lg">Apply</iv-button>
+                        <iv-button variant="primary" size="lg" @click="form_submit()">Apply</iv-button>
                     </div>
                 </div>
             </div>
