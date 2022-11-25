@@ -8,9 +8,7 @@
         </div>
         <b-sidebar id="sidebar-1" bg-variant="sidebar" no-header shadow>
             <template #default="{ hide }">
-                <button class="navbar-toggler" type="button" @click="hide()">
-                    <span class="navbar-toggler-icon v-icon-close"></span>
-                </button>
+                <iv-button variant="transparent" size="lg" icon="v-icon-close" @click="hide()" />
                 <div class="mx-4 mb-2" style="border-top: 1px solid #8A9192"></div>
                 <router-link to="/dashboard">Dashboard</router-link>
                 <router-link to="/investigation">Investigation</router-link>
@@ -87,18 +85,23 @@
             color: #43A0D1 !important;
         }
     }
+    .b-sidebar-body > a {
+        display: block;
+        padding-left: 35px;
+    }
 
     /// Clear Button
-    .v-icon-close {
-        width: 12px;
-        height: 12px;
+    /deep/ .v-icon-close {
+        width: 16px;
+        height: 16px;
         background-image: url("~@/assets/images/close.svg") !important;
     }
     button:has(> .v-icon-close) {
-        margin-top: 18px;
-        margin-left: 26px;
-        margin-bottom: 21px;
+        margin-top: 6px;
+        margin-left: 18px;
+        margin-bottom: 5px;
     }
+
 }
 </style>
 
