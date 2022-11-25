@@ -52,12 +52,10 @@
         width: 32px;
         height: 32px;
         padding: 0;
-        padding-left: 3px;
         margin: 17px;
         margin-left: 20px;
 
         /deep/ .v-icon-filter {
-            margin-left: 1px;
             margin-top: 1px;
             width: 18px;
             height: 16px;
