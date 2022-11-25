@@ -119,4 +119,8 @@ export default class LangObject {
     m_StepNum = "Step {0}";
     w_Connect = "Connect";
     w_Finish = "Finish";
+
+    /// Override
+    mb_Date_Not_Selected = "Input Date";
+    mb_Time_Not_Selected = "Input Time";
 }

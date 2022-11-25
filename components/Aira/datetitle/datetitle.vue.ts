@@ -14,7 +14,7 @@ export class DateTitle extends Vue {
     created() {
         this.interval = setInterval(() => {
             this.date = new Date();
-        }, 300);
+        }, 100);
     }
 }
 

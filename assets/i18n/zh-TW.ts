@@ -118,4 +118,8 @@ export default class LangObject implements ILang {
     m_StepNum = "步驟 {0}";
     w_Connect = "連線";
     w_Finish = "完成";
+
+    /// Override
+    mb_Date_Not_Selected = "Input Date";
+    mb_Time_Not_Selected = "Input Time";
 }

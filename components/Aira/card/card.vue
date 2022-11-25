@@ -86,6 +86,7 @@
 
 .title {
     display: inline-block;
+    margin-left: 6px;
     min-height: .8rem;
 }
 

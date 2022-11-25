@@ -1,6 +1,6 @@
 <template>
     <fragment>
-        <div class="d-flex content-body" style="flex-direction: column">
+        <div class="d-flex content-body flex-column">
             <v-chart ref="chart1" class="mt-3 mb-3 overflow-hidden flex-fill-0" :option="bsoption" />
             <div class="d-none d-lg-flex flex-row flex-fill-0 overflow-hidden">
                 <v-chart ref="chart2" class="mt-1 mb-3" style="flex: 1" :option="pdoption" />
@@ -19,11 +19,6 @@
     border-top: 1px solid #8A9192;
     width: 100vw;
     height: calc(100vh - 67px - 60px);
-
-    // > .bar-stack {
-    //     margin: 20px 0;
-    //     height: 440px;
-    // }
 }
 </style>
 
