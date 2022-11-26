@@ -13,6 +13,7 @@
                     <ivc-card class="sticky-time-period" label="Time Period" icon="v-time-period">
                         <iv-form
                             ref="form_tp"
+                            v-stream:mounted="form_tp$"
                             :value="ftp_value"
                             :interface="tp_interface()"
                             >
@@ -22,6 +23,7 @@
                     <ivc-card ref="card-camera" label="Camera" icon="v-camera" :class="{ 'flex-fill-zero': ($vref('card-camera')||{}).isVisible }">
                         <iv-form
                             ref="form_cam"
+                            v-stream:mounted="form_cam$"
                             :value="fcam_value"
                             :interface="cam_interface()"
                             />
@@ -30,6 +32,7 @@
                     <ivc-card ref="card-attributes" label="Attributes" icon="v-attributes" :class="{ 'flex-fill-zero': ($vref('card-attributes')||{}).isVisible }">
                         <iv-form
                             ref="form_att"
+                            v-stream:mounted="form_att$"
                             :value="fatt_value"
                             :interface="att_interface()"
                             />
@@ -44,6 +47,13 @@
             </div>
             <div key="2" v-if="!filterEnabled" class="menu-holder" />
         </iv-auto-transition>
+
+        <!-- Camera Label -->
+        <ivc-menu-camera-attributes label="Camera" :value="fcam_value" :items="cam_values" />
+        <!-- Attribute Label -->
+        <ivc-menu-camera-attributes label="Attribute" :value="fatt_value" :items="att_values" />
+        <!-- TimePeriod Label -->
+        <ivc-menu-time-attributes :value="ftp_value" />
     </div>
 </template>
 
@@ -57,6 +67,8 @@
     box-sizing: border-box;
     height: $menu-title-height;
     max-height: $menu-title-height;
+    display: flex;
+    align-items: center;
 
     /// Filter Button
     .b-icon-filter {

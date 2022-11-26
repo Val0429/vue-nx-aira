@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div>{{ date.toLocaleDateString() }}</div>
-        <div>{{ date.toLocaleTimeString() }}</div>
+        <div>{{ getDateString() }}</div>
+        <div>{{ getTimeString() }}</div>
     </div>
 </template>
 

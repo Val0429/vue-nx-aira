@@ -17,12 +17,12 @@ DisableLoginRouter();
 // })();
 
 
-(async () => {
-    try {
-        let rtn = await Global.nx_server.login("admin", "Az123567!");
-        console.log("result", rtn);
-    } catch(e) {
-        console.log("error", e);
-    }
-})();
+// (async () => {
+//     try {
+//         let rtn = await Global.nx_server.login("admin", "Az123567!");
+//         console.log("result", rtn);
+//     } catch(e) {
+//         console.log("error", e);
+//     }
+// })();
 

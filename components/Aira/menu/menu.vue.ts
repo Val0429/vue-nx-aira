@@ -5,14 +5,31 @@
  */
 
 import { Vue, Component, Prop, Model, Emit, Watch } from "vue-property-decorator";
-import { toEnumInterface } from '@/../core';
+import { toEnumInterface, ObjectHelper } from '@/../core';
 import { Subject } from 'rxjs/internal/Subject';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { Global } from '@/helpers';
+import { first } from 'rxjs/internal/operators/first';
 
 @Component
 export class Menu extends Vue {
+    private cam_values = {};
+    private att_values = {};
+
+    private form_tp$ = new Subject();
+    private form_cam$ = new Subject();
+    private form_att$ = new Subject();
     created() {
-        this.bindValues();        
+        this.bindValues();
+
+        Global.cameras.subscribe(o => this.cam_values = o);
+        Global.attributes.subscribe(o => this.att_values = o);
+
+        Promise.all([
+            this.form_tp$.pipe(first()).toPromise(),
+            this.form_cam$.pipe(first()).toPromise(),
+            this.form_att$.pipe(first()).toPromise()
+        ]).then(() => this.form_submit());
     }
 
     filterEnabled: boolean = false;
@@ -28,9 +45,7 @@ export class Menu extends Vue {
              * @uiLabel - Attributes
              * @uiHidden - ${this.$form("form_att", "selectAll") === true}
              */
-            cameras?: ${toEnumInterface({
-                "1": "Red", "2": "Green", "3": "Blue"
-            }, true)}
+            values?: ${toEnumInterface(this.att_values, true)}
         };
         `;
     }
@@ -46,9 +61,7 @@ export class Menu extends Vue {
              * @uiLabel - Cameras
              * @uiHidden - ${this.$form("form_cam", "selectAll") === true}
              */
-            cameras?: ${toEnumInterface({
-                "1": "Zone 1", "2": "Zone 2", "3": "Zone 3"
-            }, true)}
+            values?: ${toEnumInterface(this.cam_values, true)}
         };
         `;
     }
@@ -75,10 +88,6 @@ export class Menu extends Vue {
         `;
     }
 
-    static gsj_ftp_value: BehaviorSubject<any> = new BehaviorSubject({});
-    static gsj_fcam_value: BehaviorSubject<any> = new BehaviorSubject({});
-    static gsj_fatt_value: BehaviorSubject<any> = new BehaviorSubject({});
-
     ftp_value = {};
     fcam_value = {};
     fatt_value = {};
@@ -88,23 +97,28 @@ export class Menu extends Vue {
         let fcam = this.$form("form_cam");
         let fatt = this.$form("form_att");
 
-        this.syncValues(ftp, fcam, fatt);
+        if (ObjectHelper.ObjectVueEmpty([ftp, fcam, fatt])) {
+            console.log("vue object empty", JSON.stringify(ftp), JSON.stringify(fcam), JSON.stringify(fatt));
+            setTimeout(() => this.form_submit(), 0);
+        }
+        else this.syncValues(ftp, fcam, fatt);
+        // this.syncValues(ftp, fcam, fatt);
     }
     subscriptions: any[] = [];
     private bindValues() {
         if (this.subscriptions.length !== 0) return;
-        this.subscriptions.push( Menu.gsj_ftp_value.subscribe(value => this.ftp_value = value) );
-        this.subscriptions.push( Menu.gsj_fcam_value.subscribe(value => this.fcam_value = value) );
-        this.subscriptions.push( Menu.gsj_fatt_value.subscribe(value => this.fatt_value = value) );
+        this.subscriptions.push( Global.timeperiod_value.subscribe(value => this.ftp_value = value) );
+        this.subscriptions.push( Global.camera_value.subscribe(value => this.fcam_value = value) );
+        this.subscriptions.push( Global.attribute_value.subscribe(value => this.fatt_value = value) );
     }
     private unbindValues() {
         this.subscriptions.forEach(sub => sub.unsubscribe());
         this.subscriptions.length = 0;
     }
     private syncValues(ftp, fcam, fatt) {
-        Menu.gsj_ftp_value.next(ftp);
-        Menu.gsj_fcam_value.next(fcam);
-        Menu.gsj_fatt_value.next(fatt);
+        Global.timeperiod_value.next(ftp);
+        Global.camera_value.next(fcam);
+        Global.attribute_value.next(fatt);
     }
 }
 export default Menu;
