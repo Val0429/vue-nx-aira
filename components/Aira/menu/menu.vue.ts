@@ -62,11 +62,13 @@ export class Menu extends Vue {
             /**
              * @uiLabel - From
              * @uiDefault - ${from}
+             * @uiType - ivc-form-datetime
              */
             from?: Date;
             /**
              * @uiLabel - To
              * @uiDefault - ${now}
+             * @uiType - ivc-form-datetime
              */
             to?: Date;
         };

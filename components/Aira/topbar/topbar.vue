@@ -8,7 +8,7 @@
         </div>
         <b-sidebar id="sidebar-1" bg-variant="sidebar" no-header shadow>
             <template #default="{ hide }">
-                <iv-button variant="transparent" size="lg" icon="v-icon-close" @click="hide()" />
+                <iv-button class="mt-2 ml-3 mb-2" variant="transparent" size="lg" icon="v-icon-close" @click="hide()" />
                 <div class="mx-4 mb-2" style="border-top: 1px solid #8A9192"></div>
                 <router-link to="/dashboard">Dashboard</router-link>
                 <router-link to="/investigation">Investigation</router-link>
@@ -96,12 +96,6 @@
         height: 16px;
         background-image: url("~@/assets/images/close.svg") !important;
     }
-    button:has(> .v-icon-close) {
-        margin-top: 6px;
-        margin-left: 18px;
-        margin-bottom: 5px;
-    }
-
 }
 </style>
 

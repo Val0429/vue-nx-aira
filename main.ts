@@ -1,6 +1,7 @@
 import { DisableLoginRouter, obDefaultRoute } from "@/../core/router";
 
 import "echarts";
+import { Global } from './helpers/global';
 
 DisableLoginRouter();
 
@@ -14,3 +15,14 @@ DisableLoginRouter();
 //         router.push("/walk-through");
 //     }
 // })();
+
+
+(async () => {
+    try {
+        let rtn = await Global.nx_server.login("admin", "Az123567!");
+        console.log("result", rtn);
+    } catch(e) {
+        console.log("error", e);
+    }
+})();
+

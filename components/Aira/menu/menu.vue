@@ -10,15 +10,16 @@
                     <div style="font-size: 20px; line-height: 23px; color: white; margin-left: 20px; padding-top: 22px">Filter</div>
                 </div>
                 <div class="menu-content">
-                    <ivc-card label="Time Period" icon="fa-clock-o">
+                    <ivc-card class="sticky-time-period" label="Time Period" icon="v-time-period">
                         <iv-form
                             ref="form_tp"
                             :value="ftp_value"
                             :interface="tp_interface()"
-                            />
+                            >
+                        </iv-form>
                     </ivc-card>
                     <ivc-separator />
-                    <ivc-card ref="card-camera" label="Camera" icon="fa-video-camera" :class="{ 'flex-fill-zero': ($vref('card-camera')||{}).isVisible }">
+                    <ivc-card ref="card-camera" label="Camera" icon="v-camera" :class="{ 'flex-fill-zero': ($vref('card-camera')||{}).isVisible }">
                         <iv-form
                             ref="form_cam"
                             :value="fcam_value"
@@ -26,7 +27,7 @@
                             />
                     </ivc-card>
                     <ivc-separator />
-                    <ivc-card ref="card-attributes" label="Attributes" icon="fa-video-camera" :class="{ 'flex-fill-zero': ($vref('card-attributes')||{}).isVisible }">
+                    <ivc-card ref="card-attributes" label="Attributes" icon="v-attributes" :class="{ 'flex-fill-zero': ($vref('card-attributes')||{}).isVisible }">
                         <iv-form
                             ref="form_att"
                             :value="fatt_value"
@@ -110,12 +111,31 @@
             flex-direction: column;
 
             /deep/ .card {
-                transition: flex-grow 500ms ease-in-out;
+                transition: flex-grow 300ms ease-in-out;
                 overflow-y: hidden;
-                flex: 0 0 238px;
+                
+                &.sticky-time-period {
+                    flex: 0 0 238px;
+                }
 
                 &.flex-fill-zero {
                     flex: 1 1 0;
+                }
+
+                .v-time-period {
+                    width: 16px;
+                    height: 16px;
+                    background: url("~@/assets/images/time-period.svg");
+                }
+                .v-camera {
+                    width: 20px;
+                    height: 10px;
+                    background: url("~@/assets/images/camera.svg");
+                }
+                .v-attributes {
+                    width: 18px;
+                    height: 18px;
+                    background: url("~@/assets/images/attributes.svg");
                 }
             }
 

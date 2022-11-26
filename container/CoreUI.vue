@@ -6,6 +6,9 @@
 </template>
 
 <style lang="scss">
+body {
+    background: black;
+}
 body * {
     font-style: normal;
     font-family: Helvetica, 微軟正黑體, Arial, sans-serif;

@@ -37,15 +37,20 @@
 <script lang="ts" src="./card.vue.ts" />
 
 <style lang="scss" scoped>
-.card > .bg-iv-card-header {
-    color: white;
-    font-size: 20px;
+.card {
+    overflow-y: visible !important;
 
-    > .title {
-        color: #B4BFC0;
+    > .bg-iv-card-header {
+        color: white;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+
+        > .title {
+            color: #B4BFC0;
+        }
     }
 }
-
 .scrollable-collapse {
     flex: 1 1 0;
     overflow-y: auto;
