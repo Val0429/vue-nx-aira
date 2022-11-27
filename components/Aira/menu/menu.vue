@@ -12,9 +12,9 @@
                 <div class="menu-content">
                     <ivc-card class="sticky-time-period" label="Time Period" icon="v-time-period">
                         <iv-form
-                            ref="form_tp"
-                            v-stream:mounted="form_tp$"
-                            :value="ftp_value"
+                            ref="form_timeperiod"
+                            :value="timeperiod_value$"
+                            v-stream:submit="timeperiod_value$"
                             :interface="tp_interface()"
                             >
                         </iv-form>
@@ -22,18 +22,18 @@
                     <ivc-separator />
                     <ivc-card ref="card-camera" label="Camera" icon="v-camera" :class="{ 'flex-fill-zero': ($vref('card-camera')||{}).isVisible }">
                         <iv-form
-                            ref="form_cam"
-                            v-stream:mounted="form_cam$"
-                            :value="fcam_value"
+                            ref="form_camera"
+                            :value="camera_value$"
+                            v-stream:submit="camera_value$"
                             :interface="cam_interface()"
                             />
                     </ivc-card>
                     <ivc-separator />
                     <ivc-card ref="card-attributes" label="Attributes" icon="v-attributes" :class="{ 'flex-fill-zero': ($vref('card-attributes')||{}).isVisible }">
                         <iv-form
-                            ref="form_att"
-                            v-stream:mounted="form_att$"
-                            :value="fatt_value"
+                            ref="form_attribute"
+                            :value="attribute_value$"
+                            v-stream:submit="attribute_value$"
                             :interface="att_interface()"
                             />
                     </ivc-card>
@@ -49,11 +49,11 @@
         </iv-auto-transition>
 
         <!-- Camera Label -->
-        <ivc-menu-camera-attributes label="Camera" :value="fcam_value" :items="cam_values" />
+        <ivc-menu-camera-attributes label="Camera" :value="camera_value$" :items="cameras$" />
         <!-- Attribute Label -->
-        <ivc-menu-camera-attributes label="Attribute" :value="fatt_value" :items="att_values" />
+        <ivc-menu-camera-attributes label="Attribute" :value="attribute_value$" :items="attributes$" />
         <!-- TimePeriod Label -->
-        <ivc-menu-time-attributes :value="ftp_value" />
+        <ivc-menu-time-attributes :value="timeperiod_value$" />
     </div>
 </template>
 
