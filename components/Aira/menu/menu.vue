@@ -16,8 +16,7 @@
                             :value="timeperiod_value$"
                             v-stream:submit="timeperiod_value$"
                             :interface="tp_interface()"
-                            >
-                        </iv-form>
+                            />
                     </ivc-card>
                     <ivc-separator />
                     <ivc-card ref="card-camera" label="Camera" icon="v-camera" :class="{ 'flex-fill-zero': ($vref('card-camera')||{}).isVisible }">
@@ -47,6 +46,17 @@
             </div>
             <div key="2" v-if="!filterEnabled" class="menu-holder" />
         </iv-auto-transition>
+        <!-- <iv-auto-transition :step="filterEnabled ? 1 : 2" class="menu-transition-small">
+            <div key="1" v-show="filterEnabled" class="menu flex-row">
+                <div style="flex: 0 0 185px; border-right: 1px solid black">
+                    123
+                </div>
+                <div style="flex: 1; border-left: 1px solid #8A9192">
+                    456
+                </div>
+            </div>
+            <div key="2" v-if="!filterEnabled" class="menu-holder" />
+        </iv-auto-transition> -->
 
         <!-- Camera Label -->
         <ivc-menu-camera-attributes label="Camera" :value="camera_value$" :items="cameras$" />
@@ -87,80 +97,105 @@
         }
     }
 
-    .menu, .menu-holder, .menu-transition {
-        width: $menu-width;
+    .menu-transition-small {
+        width: 100vw;
+        position: absolute;
+        top: 0;
+        height: calc(100vh - #{$top-height});
+
+        .menu, .menu-holder {
+            width: 100vw;
+            position: absolute;
+            z-index: -1;
+            left: 0;
+            top: 0;
+            background: transparent;
+        }
+        .menu, .menu-holder, .menu > div {
+            height: calc(100vh - #{$top-height}) !important;
+        }
+        .menu {
+            z-index: 1000;
+            background: #4D5758;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            overflow: hidden;
+        }
     }
+
     .menu-transition {
+        width: $menu-width;
         position: absolute;
         top: 0;
-    }
-    .menu, .menu-holder {
-        height: calc(100vh - #{$top-height}) !important;
-        position: absolute;
-        z-index: -1;
-        left: 0;
-        top: 0;
-        background: transparent;
-    }
 
-    .menu {
-        z-index: 1000;
-        background: #4D5758;
-        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-        > .menu-title {
-            border-top: 0;
-            border-bottom: 1px solid black;
-            box-sizing: border-box;
-            height: calc(#{$menu-title-height} - 1px);
+        .menu, .menu-holder {
+            width: $menu-width;
+            height: calc(100vh - #{$top-height}) !important;
+            position: absolute;
+            z-index: -1;
+            left: 0;
+            top: 0;
+            background: transparent;
         }
 
-        > .menu-content {
-            box-sizing: border-box;
-            border-top: 1px solid #8A9192;
-            height: calc(100vh - #{$top-height} - #{$menu-title-height});
-            display: flex;
-            flex-direction: column;
+        .menu {
+            z-index: 1000;
+            background: #4D5758;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
-            /deep/ .card {
-                transition: flex-grow 300ms ease-in-out;
-                overflow-y: hidden;
-                
-                &.sticky-time-period {
-                    flex: 0 0 238px;
-                }
-
-                &.flex-fill-zero {
-                    flex: 1 1 0;
-                }
-
-                .v-time-period {
-                    width: 16px;
-                    height: 16px;
-                    background: url("~@/assets/images/time-period.svg");
-                }
-                .v-camera {
-                    width: 20px;
-                    height: 10px;
-                    background: url("~@/assets/images/camera.svg");
-                }
-                .v-attributes {
-                    width: 18px;
-                    height: 18px;
-                    background: url("~@/assets/images/attributes.svg");
-                }
+            > .menu-title {
+                border-top: 0;
+                border-bottom: 1px solid black;
+                box-sizing: border-box;
+                height: calc(#{$menu-title-height} - 1px);
             }
 
-            .buttons {
+            > .menu-content {
+                box-sizing: border-box;
+                border-top: 1px solid #8A9192;
+                height: calc(100vh - #{$top-height} - #{$menu-title-height});
                 display: flex;
-                padding: 10px 10px;
-                > * {
-                    margin: 10px;
-                    flex: 1;
+                flex-direction: column;
+
+                /deep/ .card {
+                    transition: flex-grow 300ms ease-in-out;
+                    overflow-y: hidden;
+                    
+                    &.sticky-time-period {
+                        flex: 0 0 238px;
+                    }
+
+                    &.flex-fill-zero {
+                        flex: 1 1 0;
+                    }
+
+                    .v-time-period {
+                        width: 16px;
+                        height: 16px;
+                        background: url("~@/assets/images/time-period.svg");
+                    }
+                    .v-camera {
+                        width: 20px;
+                        height: 10px;
+                        background: url("~@/assets/images/camera.svg");
+                    }
+                    .v-attributes {
+                        width: 18px;
+                        height: 18px;
+                        background: url("~@/assets/images/attributes.svg");
+                    }
+                }
+
+                .buttons {
+                    display: flex;
+                    padding: 10px 10px;
+                    > * {
+                        margin: 10px;
+                        flex: 1;
+                    }
                 }
             }
-        }
-    }    
+        }        
+    }
 }
 </style>
 
