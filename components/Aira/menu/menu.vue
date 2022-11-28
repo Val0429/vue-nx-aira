@@ -1,16 +1,16 @@
 <template>
     <div class="content-header">
         <!-- filter -->
-        <iv-button class="b-icon-filter" icon="v-icon-filter" variant="dark" @click="filterEnabled=!filterEnabled" />
+        <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="dark" @click="filterEnabled=!filterEnabled" />
         <!-- menu -->
-        <iv-auto-transition :step="filterEnabled ? 1 : 2" class="menu-transition">
-            <div key="1" v-show="filterEnabled" class="menu">
+        <b-sidebar id="sidebar-menu" bg-variant="white" no-header shadow>
+            <div class="menu">
                 <div class="menu-title">
-                    <iv-button class="b-icon-filter" icon="v-icon-filter" variant="primary" style="float: right" @click="filterEnabled=!filterEnabled" />
+                    <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="primary" style="float: right" @click="filterEnabled=!filterEnabled" />
                     <div style="font-size: 20px; line-height: 23px; color: white; margin-left: 20px; padding-top: 22px">Filter</div>
                 </div>
                 <div class="menu-content">
-                    <ivc-card class="sticky-time-period" label="Time Period" icon="v-time-period">
+                    <ivc-card ref="card-timeperiod" label="Time Period" icon="v-time-period" :class="{ 'sticky-time-period': ($vref('card-timeperiod')||{}).isVisible, 'time-period': !($vref('card-timeperiod')||{}).isVisible }" >
                         <iv-form
                             ref="form_timeperiod"
                             :value="timeperiod_value$"
@@ -44,8 +44,13 @@
                     </div>
                 </div>
             </div>
+        </b-sidebar>
+        <!-- <iv-auto-transition :step="filterEnabled ? 1 : 2" class="menu-transition">
+            <div key="1" v-show="filterEnabled" class="menu">
+
+            </div>
             <div key="2" v-if="!filterEnabled" class="menu-holder" />
-        </iv-auto-transition>
+        </iv-auto-transition> -->
         <!-- <iv-auto-transition :step="filterEnabled ? 1 : 2" class="menu-transition-small">
             <div key="1" v-show="filterEnabled" class="menu flex-row">
                 <div style="flex: 0 0 185px; border-right: 1px solid black">
@@ -68,6 +73,12 @@
 </template>
 
 <script lang="ts" src="./menu.vue.ts" />
+
+<style lang="scss">
+.bg-sidebar-menu {
+    background: #111111DD;
+}
+</style>
 
 <style lang="scss" scoped>
 .content-header {
@@ -97,56 +108,21 @@
         }
     }
 
-    .menu-transition-small {
-        width: 100vw;
-        position: absolute;
-        top: 0;
-        height: calc(100vh - #{$top-height});
+    /deep/ #sidebar-menu {
+        margin-top: $top-height;
 
-        .menu, .menu-holder {
-            width: 100vw;
-            position: absolute;
-            z-index: -1;
-            left: 0;
-            top: 0;
-            background: transparent;
-        }
-        .menu, .menu-holder, .menu > div {
-            height: calc(100vh - #{$top-height}) !important;
-        }
         .menu {
+            height: calc(100vh - #{$top-height}) !important;
             z-index: 1000;
             background: #4D5758;
             box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
             overflow: hidden;
-        }
-    }
-
-    .menu-transition {
-        width: $menu-width;
-        position: absolute;
-        top: 0;
-
-        .menu, .menu-holder {
-            width: $menu-width;
-            height: calc(100vh - #{$top-height}) !important;
-            position: absolute;
-            z-index: -1;
-            left: 0;
-            top: 0;
-            background: transparent;
-        }
-
-        .menu {
-            z-index: 1000;
-            background: #4D5758;
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
             > .menu-title {
-                border-top: 0;
+                border-top: 1px solid #8A9192;
                 border-bottom: 1px solid black;
                 box-sizing: border-box;
-                height: calc(#{$menu-title-height} - 1px);
+                height: $menu-title-height;
             }
 
             > .menu-content {
@@ -156,12 +132,15 @@
                 display: flex;
                 flex-direction: column;
 
-                /deep/ .card {
-                    transition: flex-grow 300ms ease-in-out;
+                .card {
+                    transition: flex-grow 300ms ease-in-out, flex-basis 300ms ease-in-out;
                     overflow-y: hidden;
                     
                     &.sticky-time-period {
                         flex: 0 0 238px;
+                    }
+                    &.time-period {
+                        flex: 0 0 54px;
                     }
 
                     &.flex-fill-zero {
@@ -194,7 +173,7 @@
                     }
                 }
             }
-        }        
+        }
     }
 }
 </style>
