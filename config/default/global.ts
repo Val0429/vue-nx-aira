@@ -44,7 +44,7 @@ export const $global = {
     }),
 
     /// charts
-    chart1_value$: new BehaviorSubject<IDVEventsCategoryByDate>({ identify: [], unknown: [] }),
+    chart1_value$: new BehaviorSubject<IDVEventsCategoryByDate>([]),
 }
 
 declare module "vue/types/vue" {

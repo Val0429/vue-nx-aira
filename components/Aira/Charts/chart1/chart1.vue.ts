@@ -34,28 +34,32 @@ export class Chart1 extends Vue {
                 }
             },
             legend: {},
+            dataset: {
+                dimensions: ['time', 'identify', 'unknown'],
+                source: value
+            },
             grid: {
                 left: '3%',
                 right: '4%',
                 bottom: '3%',
                 containLabel: true
             },
-            xAxis: [ { type: 'time' } ],
-            yAxis: [ { type: 'value' } ],
+            xAxis: { type: 'time' },
+            yAxis: { type: 'value' },
             series: [
             {
                 name: 'Identify',
                 type: 'bar',
                 stack: 'Ad',
-                emphasis: { focus: 'series' },
-                data: value.identify
+                dimensions: ['time', 'identify'],
+                emphasis: { focus: 'series' }
             },
             {
                 name: 'Unknown',
                 type: 'bar',
                 stack: 'Ad',
-                emphasis: { focus: 'series' },
-                data: value.unknown
+                dimensions: ['time', 'unknown'],
+                emphasis: { focus: 'series' }
             }
             ]
         }

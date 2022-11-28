@@ -13,10 +13,8 @@ export interface IDBEvents {
 const db_events = db.addCollection("events", { indices: [] });
 
 /// chart1 data
-export interface IDVEventsCategoryByDate {
-    identify: Array<[number /*timestamp*/, number/*value*/]>;
-    unknown: Array<[number /*timestamp*/, number/*value*/]>;
-}
+export type IDVEventsCategoryByDate =
+    Array<{ time: number, identify: number, unknown: number }>;
 enum EChart1Type { Identify = "identify", Unknown = "unknown" };
 type IDBChart1Map = [number/*time*/, EChart1Type];
 const dv_events_chart1_category_by_date = {
@@ -29,26 +27,21 @@ const dv_events_chart1_category_by_date = {
                 return [time, isIdentify ? EChart1Type.Identify : EChart1Type.Unknown];
 
             }, (ary: IDBChart1Map[]): IDVEventsCategoryByDate => {
-                let rtn: IDVEventsCategoryByDate = { identify: [], unknown: [] };
+                let rtn: IDVEventsCategoryByDate = [];
                 let middle = ary.reduce((final, value) => {
                     let [time, type] = value;
-                    final[type][time] = (final[type][time] || 0)+1;
+                    final[time] = (final[time] || {time, identify: 0, unknown: 0});
+                    final[time][type]++;
                     return final;
-                }, { identify: {}, unknown: {} });
+                }, {});
 
                 /// categorize
-                Object.keys(middle.identify).forEach(time => {
-                    let value = middle.identify[time];
-                    rtn.identify.push([parseInt(time, 10), value]);
-                });
-                Object.keys(middle.unknown).forEach(time => {
-                    let value = middle.unknown[time];
-                    rtn.unknown.push([parseInt(time, 10), value]);
+                Object.keys(middle).forEach(time => {
+                    rtn.push(middle[time]);
                 });
 
                 /// sort
-                rtn.identify.sort((a, b) => a[0] - b[0]);
-                rtn.unknown.sort((a, b) => a[0] - b[0]);
+                rtn.sort((a, b) => a.time - b.time);
 
                 return rtn;
             }
