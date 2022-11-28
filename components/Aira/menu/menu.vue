@@ -1,10 +1,10 @@
 <template>
     <div class="content-header">
         <!-- filter -->
-        <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="dark" @click="filterEnabled=!filterEnabled" />
+        <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="dark" />
         <!-- menu -->
-        <b-sidebar id="sidebar-menu" bg-variant="white" no-header shadow>
-            <div class="menu">
+        <b-sidebar id="sidebar-menu" bg-variant="sidebar-menu" no-header shadow>
+            <div class="menu d-none d-lg-block">
                 <div class="menu-title">
                     <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="primary" style="float: right" @click="filterEnabled=!filterEnabled" />
                     <div style="font-size: 20px; line-height: 23px; color: white; margin-left: 20px; padding-top: 22px">Filter</div>
@@ -44,24 +44,18 @@
                     </div>
                 </div>
             </div>
-        </b-sidebar>
-        <!-- <iv-auto-transition :step="filterEnabled ? 1 : 2" class="menu-transition">
-            <div key="1" v-show="filterEnabled" class="menu">
-
-            </div>
-            <div key="2" v-if="!filterEnabled" class="menu-holder" />
-        </iv-auto-transition> -->
-        <!-- <iv-auto-transition :step="filterEnabled ? 1 : 2" class="menu-transition-small">
-            <div key="1" v-show="filterEnabled" class="menu flex-row">
-                <div style="flex: 0 0 185px; border-right: 1px solid black">
-                    123
+            <div class="menu-small d-flex d-lg-none flex-row">
+                <div class="menu-left">
+                    <div class="menu-title d-flex flex-row align-items-center">
+                        <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="primary"" />
+                        <div style="flex: 1; font-size: 20px; line-height: 23px; color: white">Filter</div>
+                    </div>
                 </div>
-                <div style="flex: 1; border-left: 1px solid #8A9192">
+                <div class="menu-right">
                     456
                 </div>
             </div>
-            <div key="2" v-if="!filterEnabled" class="menu-holder" />
-        </iv-auto-transition> -->
+        </b-sidebar>
 
         <!-- Camera Label -->
         <ivc-menu-camera-attributes label="Camera" :value="camera_value$" :items="cameras$" />
@@ -76,7 +70,7 @@
 
 <style lang="scss">
 .bg-sidebar-menu {
-    background: #111111DD;
+    background: #4D5758F8;
 }
 </style>
 
@@ -111,10 +105,29 @@
     /deep/ #sidebar-menu {
         margin-top: $top-height;
 
+        width: 100vw;
+        @media (min-width: 992px) { width: 320px; }
+
+        .menu-small {
+            width: 100vw;
+            height: calc(100vh - #{$top-height});
+
+            > .menu-left, .menu-right {
+                color: white;
+            }
+            > .menu-left {
+                flex: 0 0 185px;
+                border-right: 1px solid black;
+            }
+            > .menu-right {
+                flex: 1;
+                border-left: 1px solid #8A9192;
+            }
+        }
+
         .menu {
             height: calc(100vh - #{$top-height}) !important;
             z-index: 1000;
-            background: #4D5758;
             box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
             overflow: hidden;
 
