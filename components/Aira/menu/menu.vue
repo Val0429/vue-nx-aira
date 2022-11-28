@@ -50,6 +50,7 @@
                         content-class="tab-content"
                         nav-class="tab-nav"
                         nav-wrapper-class="tab-nav-wrapper"
+                        class="text-light"
                         >
                         <template #tabs-start>
                             <div class="menu-title d-flex flex-row align-items-center">
@@ -60,7 +61,7 @@
                         <template #tabs-end>
                             <div class="buttons mt-auto d-flex flex-column">
                                 <iv-button variant="dark" size="md">Now</iv-button>
-                                <iv-button variant="primary" size="md" @click="form_submit()">Apply</iv-button>
+                                <iv-button variant="primary" size="md" @click="form_submit('small')">Apply</iv-button>
                             </div>
                         </template>
 
@@ -71,7 +72,14 @@
                                     <span class="title-name ml-3">Time Period</span>
                                 </div>
                             </template>
-                            <b-card-text>Hihi</b-card-text>
+                            <b-card-text>
+                                <iv-form
+                                    ref="form_timeperiod_small"
+                                    :value="timeperiod_value$"
+                                    v-stream:submit="timeperiod_value$"
+                                    :interface="tp_interface()"
+                                    />
+                            </b-card-text>
                         </b-tab>
                         <b-tab active>
                             <template #title>
@@ -80,7 +88,14 @@
                                     <span class="title-name ml-3">Cameras</span>
                                 </div>
                             </template>
-                            <b-card-text>Hihi</b-card-text>
+                            <b-card-text>
+                                <iv-form
+                                    ref="form_camera_small"
+                                    :value="camera_value$"
+                                    v-stream:submit="camera_value$"
+                                    :interface="cam_interface('small')"
+                                    />
+                            </b-card-text>
                         </b-tab>
                         <b-tab>
                             <template #title>
@@ -89,7 +104,14 @@
                                     <span class="title-name ml-3">Attributes</span>
                                 </div>
                             </template>
-                            <b-card-text>Hihi</b-card-text>
+                            <b-card-text>
+                                <iv-form
+                                    ref="form_attribute_small"
+                                    :value="attribute_value$"
+                                    v-stream:submit="attribute_value$"
+                                    :interface="att_interface('small')"
+                                    />
+                            </b-card-text>
                         </b-tab>
                     </b-tabs>
                 </b-card>

@@ -13,7 +13,7 @@ import { first } from 'rxjs/internal/operators/first';
 @Component
 export class Menu extends Vue {
     filterEnabled: boolean = false;
-    att_interface() {
+    att_interface(alter?) {
         return `
         interface {
             /**
@@ -22,13 +22,13 @@ export class Menu extends Vue {
             selectAll?: boolean;
             /**
              * @uiLabel - Attributes
-             * @uiHidden - ${this.$form("form_attribute", "selectAll") !== false}
+             * @uiHidden - ${this.$form("form_attribute"+(alter?`_${alter}`:""), "selectAll") !== false}
              */
             values?: ${toEnumInterface((this.$observables.attributes$ as any).value, true)}
         };
         `;
     }
-    cam_interface() {
+    cam_interface(alter?) {
         return `
         interface {
             /**
@@ -37,7 +37,7 @@ export class Menu extends Vue {
             selectAll?: boolean;
             /**
              * @uiLabel - Cameras
-             * @uiHidden - ${this.$form("form_camera", "selectAll") !== false}
+             * @uiHidden - ${this.$form("form_camera"+(alter?`_${alter}`:""), "selectAll") !== false}
              */
             values?: ${toEnumInterface((this.$observables.cameras$ as any).value, true)}
         };
@@ -60,10 +60,10 @@ export class Menu extends Vue {
         `;
     }
 
-    private form_submit() {
-        (this.$refs["form_timeperiod"] as any).doSubmit();
-        (this.$refs["form_camera"] as any).doSubmit();
-        (this.$refs["form_attribute"] as any).doSubmit();
+    private form_submit(alter?) {
+        (this.$refs["form_timeperiod"+(alter?`_${alter}`:"")] as any).doSubmit();
+        (this.$refs["form_camera"+(alter?`_${alter}`:"")] as any).doSubmit();
+        (this.$refs["form_attribute"+(alter?`_${alter}`:"")] as any).doSubmit();
     }
 }
 export default Menu;
