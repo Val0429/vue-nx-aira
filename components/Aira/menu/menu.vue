@@ -45,15 +45,54 @@
                 </div>
             </div>
             <div class="menu-small d-flex d-lg-none flex-row">
-                <div class="menu-left">
-                    <div class="menu-title d-flex flex-row align-items-center">
-                        <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="primary"" />
-                        <div style="flex: 1; font-size: 20px; line-height: 23px; color: white">Filter</div>
-                    </div>
-                </div>
-                <div class="menu-right">
-                    456
-                </div>
+                <b-card no-body>
+                    <b-tabs vertical
+                        content-class="tab-content"
+                        nav-class="tab-nav"
+                        nav-wrapper-class="tab-nav-wrapper"
+                        >
+                        <template #tabs-start>
+                            <div class="menu-title d-flex flex-row align-items-center">
+                                <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="primary" style="transform: scale(0.8)" />
+                                <div style="flex: 1; font-size: 16px; line-height: 18px; color: white">Filter</div>
+                            </div>
+                        </template>
+                        <template #tabs-end>
+                            <div class="buttons mt-auto d-flex flex-column">
+                                <iv-button variant="dark" size="md">Now</iv-button>
+                                <iv-button variant="primary" size="md" @click="form_submit()">Apply</iv-button>
+                            </div>
+                        </template>
+
+                        <b-tab>
+                            <template #title>
+                                <div class="d-flex flex-row align-items-center ml-2">
+                                    <iv-icon icon="v-time-period" variant="primary" />
+                                    <span class="title-name ml-3">Time Period</span>
+                                </div>
+                            </template>
+                            <b-card-text>Hihi</b-card-text>
+                        </b-tab>
+                        <b-tab active>
+                            <template #title>
+                                <div class="d-flex flex-row align-items-center ml-2">
+                                    <iv-icon icon="v-camera" variant="primary" />
+                                    <span class="title-name ml-3">Cameras</span>
+                                </div>
+                            </template>
+                            <b-card-text>Hihi</b-card-text>
+                        </b-tab>
+                        <b-tab>
+                            <template #title>
+                                <div class="d-flex flex-row align-items-center ml-2">
+                                    <iv-icon icon="v-attributes" variant="primary" />
+                                    <span class="title-name ml-3">Attributes</span>
+                                </div>
+                            </template>
+                            <b-card-text>Hihi</b-card-text>
+                        </b-tab>
+                    </b-tabs>
+                </b-card>
             </div>
         </b-sidebar>
 
@@ -75,6 +114,26 @@
 </style>
 
 <style lang="scss" scoped>
+$time-period-svg: url("~@/assets/images/time-period.svg");
+$camera-svg: url("~@/assets/images/camera.svg");
+$attributes-svg: url("~@/assets/images/attributes.svg");
+
+/deep/ .v-time-period {
+    width: 16px;
+    height: 16px;
+    background: $time-period-svg;
+}
+/deep/ .v-camera {
+    width: 20px;
+    height: 10px;
+    background: $camera-svg;
+}
+/deep/ .v-attributes {
+    width: 18px;
+    height: 18px;
+    background: $attributes-svg;
+}
+
 .content-header {
     position: relative;
     border-top: 1px solid #8A9192;
@@ -112,16 +171,64 @@
             width: 100vw;
             height: calc(100vh - #{$top-height});
 
-            > .menu-left, .menu-right {
-                color: white;
+            // tabs container
+            .tabs {
+                width: 100vw;
+                height: calc(100vh - #{$top-height});
             }
-            > .menu-left {
-                flex: 0 0 185px;
+
+            .tab-content {
+                border: 0;
+                border-left: 1px solid #8A9192;
+                background: transparent;
+            }
+            .tab-nav {
+                height: calc(100vh - #{$top-height});
+                border-bottom: 0;
+            }
+            /// outer wrapper of nav
+            .tab-nav-wrapper {
+                width: 185px;
+                border: 0;
                 border-right: 1px solid black;
             }
-            > .menu-right {
-                flex: 1;
-                border-left: 1px solid #8A9192;
+
+            .nav-tabs .nav-link.active {
+                background: transparent !important;
+                border: 1px solid transparent !important;
+                i {
+                    &.v-time-period {
+                        background: none;
+                        background-color: #43A0D1;
+                        -webkit-mask: $time-period-svg no-repeat center;
+                         mask: $time-period-svg no-repeat center;                    
+                    }
+                    &.v-camera {
+                        background: none;
+                        background-color: #43A0D1;
+                        -webkit-mask: $camera-svg no-repeat center;
+                         mask: $camera-svg no-repeat center;                    
+                    }
+                    &.v-attributes {
+                        background: none;
+                        background-color: #43A0D1;
+                        -webkit-mask: $attributes-svg no-repeat center;
+                         mask: $attributes-svg no-repeat center;                    
+                    }
+                }
+                span {
+                    color: #43A0D1;
+                }
+            }
+
+            .menu-title {
+                height: $menu-title-height;
+            }
+            .nav-item .title-name {
+                color: #B4BFC0;
+            }
+            .buttons > button {
+                margin: 0px 6px 15px 24px;
             }
         }
 
@@ -158,22 +265,6 @@
 
                     &.flex-fill-zero {
                         flex: 1 1 0;
-                    }
-
-                    .v-time-period {
-                        width: 16px;
-                        height: 16px;
-                        background: url("~@/assets/images/time-period.svg");
-                    }
-                    .v-camera {
-                        width: 20px;
-                        height: 10px;
-                        background: url("~@/assets/images/camera.svg");
-                    }
-                    .v-attributes {
-                        width: 18px;
-                        height: 18px;
-                        background: url("~@/assets/images/attributes.svg");
                     }
                 }
 
