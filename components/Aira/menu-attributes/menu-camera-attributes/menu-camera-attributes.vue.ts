@@ -26,6 +26,7 @@ export class MenuCameraAttributes extends Vue {
     private getValueString(value) {
         if (!value || value.selectAll === undefined) return "";
         if (value.selectAll == true) return "All";
+        if (!value.values) return "None";
         let nameList = value.values.map(o => this.items[o]);
         return nameList.join(", ");
     }
@@ -33,6 +34,7 @@ export class MenuCameraAttributes extends Vue {
         const maxLen = 10;
         if (!value || value.selectAll === undefined) return "";
         if (value.selectAll == true) return "All";
+        if (!value.values) return "None";
         let nameList = value.values.map(o => this.items[o]);
 
         let nameCount = nameList.length;

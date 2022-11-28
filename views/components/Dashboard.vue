@@ -2,7 +2,7 @@
     <fragment>
         <ivc-menu />
         <div class="d-flex content-body flex-column">
-            <v-chart ref="chart1" class="mt-3 mb-3 overflow-hidden flex-fill-0" :option="bsoption" />
+            <ivc-chart1 class="mt-3 mb-3 overflow-hidden flex-fill-0" />
             <div class="d-none d-lg-flex flex-row flex-fill-0 overflow-hidden">
                 <v-chart ref="chart2" class="mt-1 mb-3" style="flex: 1" :option="pdoption" />
                 <v-chart ref="chart3" class="mt-1 mb-3" style="flex: 1" :option="pcoption" />
@@ -48,7 +48,6 @@ export default class Dashboard extends Vue {
             this.$nextTick(() => {
                 this.isReloadReady = true;
                 let charts = [
-                    this.$refs["chart1"],
                     this.$refs["chart2"],
                     this.$refs["chart3"]
                 ];

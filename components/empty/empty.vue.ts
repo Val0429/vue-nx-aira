@@ -8,5 +8,7 @@ import { Vue, Component, Prop, Model } from "vue-property-decorator";
 
 @Component
 export class Empty extends Vue {
+    @Model('input', { type: String })
+    value: string;
 }
 export default Empty;

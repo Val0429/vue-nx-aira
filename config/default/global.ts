@@ -1,6 +1,7 @@
 import { Vue } from 'vue-property-decorator';
 import { NxServer } from './../../helpers/services/nx-server';
 import { BehaviorSubject } from 'rxjs';
+import { db_events, dv_events_chart1_category_by_date, IDVEventsCategoryByDate } from './globals/db';
 
 interface IValue {
     [index: string]: string;
@@ -16,7 +17,9 @@ interface ICameraValue {
 type IAttributeValue = ICameraValue;
 
 export const Global = {
-    nx_server: new NxServer({ ip: "localhost", port: 7001 })
+    nx_server: new NxServer({ ip: "localhost", port: 7001 }),
+    db_events,
+    dv_events_chart1_category_by_date
 }
 
 /// timeperiod_value
@@ -38,7 +41,10 @@ export const $global = {
     }),
     attribute_value$: new BehaviorSubject<IAttributeValue>({
         selectAll: true
-    })
+    }),
+
+    /// charts
+    chart1_value$: new BehaviorSubject<IDVEventsCategoryByDate>({ identify: [], unknown: [] }),
 }
 
 declare module "vue/types/vue" {
@@ -59,28 +65,3 @@ export const GlobalPlugin = {
         });
     }
 }
-
-/// test data: cameras
-$global.cameras$.next({
-    "1": "Zone A",
-    "2": "Zone B",
-    "3": "Zone C",
-    "4": "Zone D",
-    "5": "Zone E"
-});
-
-/// test data: attributes
-$global.attributes$.next({
-    "1": "Black",
-    "2": "White",
-    "3": "Gray",
-    "4": "Red",
-    "5": "Orange",
-    "6": "Yellow",
-    "7": "Violet",
-    "8": "Green",
-    "9": "Blue",
-    "10": "Brown"
-});
-
-/// test data: face & person
