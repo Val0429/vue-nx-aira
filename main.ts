@@ -94,8 +94,22 @@ zip(
         console.log(db_events.count(), "test events created.");
     }
 
+    /// resolve chart1 data
     $global.chart1_value$.next(
         Global.dv_events_chart1_category_by_date.data()
     );
     console.log("chart1 data: ", $global.chart1_value$.value);
+
+    /// resolve chart2 data
+    let color_data = Global.dv_events_chart2_category_by_color.data();
+    let color_attr = $global.attributes$.value;
+    color_data = color_data.map(o => ({ name: color_attr[o.name], value: o.value }));
+    $global.chart2_value$.next(color_data);
+    console.log("chart2 data: ", $global.chart2_value$.value);
+
+    /// resolve chart3 data
+    $global.chart3_value$.next(
+        Global.dv_events_chart3_category_by_type.data()
+    );
+    console.log("chart3 data: ", $global.chart3_value$.value);
 });

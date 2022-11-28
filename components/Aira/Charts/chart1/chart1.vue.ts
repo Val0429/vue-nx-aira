@@ -16,14 +16,13 @@ export class Chart1 extends Vue {
     @Model('input')
     value: IDVEventsCategoryByDate;
 
-    private chart_ready(o, v) {
-        window.addEventListener("resize", () => {
-            (o as any).resize();
-        });
-    }
+    private _chart;
+    private chart_ready(o) { this._chart = o; window.addEventListener("resize", this.chart_handler); }
+    private chart_finished() { window.removeEventListener("resize", this.chart_handler); }
+    private chart_handler(o) { this._chart.resize(); }
 
     getOption() {
-        let value = this.chart1_value$;
+        let value = (this as any).chart1_value$;
         if (!value) return;
         return {
             backgroundColor: "transparent",
@@ -33,9 +32,9 @@ export class Chart1 extends Vue {
                     type: 'shadow'
                 }
             },
-            legend: {},
+            legend: { itemGap: 35, padding: 15 },
             dataset: {
-                dimensions: ['time', 'identify', 'unknown'],
+                dimensions: ['time', 'Identify', 'Unknown'],
                 source: value
             },
             grid: {
@@ -51,14 +50,14 @@ export class Chart1 extends Vue {
                 name: 'Identify',
                 type: 'bar',
                 stack: 'Ad',
-                dimensions: ['time', 'identify'],
+                dimensions: ['time', 'Identify'],
                 emphasis: { focus: 'series' }
             },
             {
                 name: 'Unknown',
                 type: 'bar',
                 stack: 'Ad',
-                dimensions: ['time', 'unknown'],
+                dimensions: ['time', 'Unknown'],
                 emphasis: { focus: 'series' }
             }
             ]

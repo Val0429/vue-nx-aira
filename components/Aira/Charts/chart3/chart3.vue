@@ -5,4 +5,4 @@
 <style lang="scss" scoped>
 </style>
 
-<script lang="ts" src="./chart1.vue.ts" />
+<script lang="ts" src="./chart3.vue.ts" />

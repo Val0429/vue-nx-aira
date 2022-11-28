@@ -4,8 +4,9 @@
         <div class="d-flex content-body flex-column">
             <ivc-chart1 class="mt-3 mb-3 overflow-hidden flex-fill-0" />
             <div class="d-none d-lg-flex flex-row flex-fill-0 overflow-hidden">
-                <v-chart ref="chart2" class="mt-1 mb-3" style="flex: 1" :option="pdoption" />
-                <v-chart ref="chart3" class="mt-1 mb-3" style="flex: 1" :option="pcoption" />
+                <ivc-chart2 class="mt-1 mb-3 flex-fill-0" />
+                <ivc-chart3 class="mt-1 mb-3 flex-fill-0" />
+                <!-- <v-chart ref="chart3" class="mt-1 mb-3 flex-fill-0" :option="pcoption" /> -->
             </div>
         </div>
     </fragment>        
@@ -48,7 +49,6 @@ export default class Dashboard extends Vue {
             this.$nextTick(() => {
                 this.isReloadReady = true;
                 let charts = [
-                    this.$refs["chart2"],
                     this.$refs["chart3"]
                 ];
                 window.addEventListener("resize", () => {
