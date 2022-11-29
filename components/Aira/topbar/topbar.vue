@@ -6,7 +6,7 @@
             </button>
             <div class="logo" />
         </div>
-        <b-sidebar id="sidebar-1" bg-variant="sidebar" no-header shadow>
+        <b-sidebar id="sidebar-1" bg-variant="sidebar" no-header shadow class="d-block d-lg-none" style="z-index: 2000">
             <template #default="{ hide }">
                 <iv-button class="mt-2 ml-3 mb-2" variant="transparent" size="lg" icon="v-icon-close" @click="hide()" />
                 <div class="mx-4 mb-2" style="border-top: 1px solid #8A9192"></div>

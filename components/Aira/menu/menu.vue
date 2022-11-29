@@ -3,7 +3,7 @@
         <!-- filter -->
         <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="dark" />
         <!-- menu -->
-        <b-sidebar id="sidebar-menu" bg-variant="sidebar-menu" no-header shadow>
+        <b-sidebar id="sidebar-menu" class="overflow-visible" bg-variant="sidebar-menu" no-header shadow>
             <div class="menu d-none d-lg-block">
                 <div class="menu-title">
                     <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="primary" style="float: right" @click="filterEnabled=!filterEnabled" />
@@ -54,8 +54,8 @@
                         >
                         <template #tabs-start>
                             <div class="menu-title d-flex flex-row align-items-center">
-                                <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="primary" style="transform: scale(0.8)" />
-                                <div style="flex: 1; font-size: 16px; line-height: 18px; color: white">Filter</div>
+                                <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="primary" style="transform: scale(1)" />
+                                <div style="flex: 1; font-size: 18px; line-height: 21px; color: white">Filter</div>
                             </div>
                         </template>
                         <template #tabs-end>
@@ -170,6 +170,7 @@ $attributes-svg: url("~@/assets/images/attributes.svg");
     .b-icon-filter {
         width: 32px;
         height: 32px;
+        flex: 0 0 32px;
         padding: 0;
         margin: 17px;
         margin-left: 20px;
@@ -201,6 +202,7 @@ $attributes-svg: url("~@/assets/images/attributes.svg");
 
             .tab-content {
                 border: 0;
+                margin-top: 0px;
                 border-left: 1px solid #8A9192;
                 background: transparent;
             }
@@ -212,6 +214,7 @@ $attributes-svg: url("~@/assets/images/attributes.svg");
             .tab-nav-wrapper {
                 width: 185px;
                 border: 0;
+                margin-top: 0px;
                 border-right: 1px solid black;
             }
 
