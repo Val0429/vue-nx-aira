@@ -7,6 +7,24 @@ import { db_events,
     dv_events_chart3_category_by_type,
     IDVEventsCategoryByDate, IDVEventsCategoryByColor, IDVEventsCategoryByType } from './globals/db';
 
+// declare module "vue/types/vue" {
+//     export interface Vue extends Partial<(typeof $global)> {}
+// }
+// type ApisExtractInput<T> = T extends [infer K, infer U, infer V] ? K : never;
+
+type RealType<T> = T extends BehaviorSubject<infer U> ? U : never;
+type GlobalType = typeof $global;
+export type RealGlobalType<T> = {
+    [P in keyof T]?: RealType<T[P]>;
+}
+declare module "vue/types/vue" {
+    export interface Vue extends RealGlobalType<GlobalType> {}
+}
+
+// declare module "vue/types/vue" {
+//     export interface Vue extends Partial<(typeof $global)> {}
+// }
+
 interface IValue {
     [index: string]: string;
 }
@@ -34,6 +52,7 @@ export const $global = {
     timeperiod_value$: new BehaviorSubject<ITimePeriodValue>({
         from, to
     }),
+    alt_timeperiod_value$: new BehaviorSubject<ITimePeriodValue>(null),
     camera_value$: new BehaviorSubject<ICameraValue>({
         selectAll: true
     }),

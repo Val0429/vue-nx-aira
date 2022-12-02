@@ -4,7 +4,7 @@
  * Copyright (c) 2019, iSAP Solution
  */
 
-import { Vue, Component, Prop, Model } from "vue-property-decorator";
+import { Vue, Component, Prop, Model, Emit } from "vue-property-decorator";
 import { IDVEventsCategoryByDate } from '@/config/default/globals/db';
 import VChart, { THEME_KEY } from "vue-echarts";
 
@@ -20,6 +20,11 @@ export class Chart1 extends Vue {
     private chart_ready(o) { this._chart = o; window.addEventListener("resize", this.chart_handler); }
     private chart_finished() { window.removeEventListener("resize", this.chart_handler); }
     private chart_handler(o) { this._chart.resize(); }
+
+    @Emit("click")
+    private chart_clicked(e) {
+        return e;
+    }
 
     getOption() {
         let value = (this as any).chart1_value$;

@@ -1,5 +1,5 @@
 <template>
-    <v-chart @mounted="chart_ready" @unmounted="chart_finished" :option="getOption()" />
+    <v-chart @mounted="chart_ready" @unmounted="chart_finished" :option="getOption()" @click="chart_clicked" />
 </template>
 
 <style lang="scss" scoped>

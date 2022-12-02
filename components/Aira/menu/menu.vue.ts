@@ -65,5 +65,9 @@ export class Menu extends Vue {
         (this.$refs["form_camera"+(alter?`_${alter}`:"")] as any).doSubmit();
         (this.$refs["form_attribute"+(alter?`_${alter}`:"")] as any).doSubmit();
     }
+
+    private alt_time_cancel() {
+        (this.$observables.alt_timeperiod_value$ as any).next(null);
+    }
 }
 export default Menu;

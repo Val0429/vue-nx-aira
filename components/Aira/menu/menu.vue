@@ -124,6 +124,8 @@
         <ivc-menu-camera-attributes label="Attribute" :value="attribute_value$" :items="attributes$" />
         <!-- TimePeriod Label -->
         <ivc-menu-time-attributes :value="timeperiod_value$" />
+        <!-- Alt-TimePeriod Label -->
+        <ivc-cancelable-text v-if="alt_timeperiod_value$" class="ml-1" :value="alt_timeperiod_value$" @cancel="alt_time_cancel" />
     </div>
 </template>
 
