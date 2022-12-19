@@ -1,11 +1,7 @@
 import { Vue } from 'vue-property-decorator';
 import { NxServer } from './../../helpers/services/nx-server';
 import { BehaviorSubject } from 'rxjs';
-import { db_events,
-    dv_events_chart1_category_by_date,
-    dv_events_chart2_category_by_color,
-    dv_events_chart3_category_by_type,
-    IDVEventsCategoryByDate, IDVEventsCategoryByColor, IDVEventsCategoryByType } from './globals/db';
+import { IDVEventsCategoryByDate, IDVEventsCategoryByColor, IDVEventsCategoryByType } from './globals/db';
 
 // declare module "vue/types/vue" {
 //     export interface Vue extends Partial<(typeof $global)> {}
@@ -86,9 +82,5 @@ export const GlobalPlugin = {
 }
 
 export const Global = {
-    nx_server: new NxServer({ ip: "localhost", port: 7001 }),
-    db_events,
-    dv_events_chart1_category_by_date,
-    dv_events_chart2_category_by_color,
-    dv_events_chart3_category_by_type,
+    // nx_server: new NxServer({ ip: "localhost", port: 7001 })
 }

@@ -1,24 +1,22 @@
 import { iSAPServerBase, ApisRequestBase, InputR, OutputR, OutputU, InputU } from '@/../core/server';
 
 interface RestfulRequest extends ApisRequestBase { 
-    "Get": { 
-        // "/config/sfs": [GetConfigSFS.Input, GetConfigSFS.Output, false]
-        // "/config/vast2": [GetConfigVAST2.Input, GetConfigVAST2.Output, false]
-        // "/cameras": [GetCameras.Input, GetCameras.Output, false]
-        // "/cameras/sync": [GetCamerasSync.Input, GetCamerasSync.Output, false]
-        // "/license": [GetLicense.Input, OutputR<GetLicense.Output> & { summary: any, productKey: string }, false]
-        // "/license/mac": [GetLicenseMac.Input, GetLicenseMac.Output, false]
-        "/apis": [GetApis.Input, GetApis.Output, false]
-        "/chart": [GetChart.Input, GetChart.Output, false],
-        "/chart/data": [any, any, false],
-        "/chart/history": [any, any, false],
-        "/looksrarelist": [any, any, false],
-        "/nfttools/yesfloor": [any, any, false],
-        "/nftautotools/stats": [any, any, false],
-        "/nftautotools/suggestion": [any, any, false],
+    "Get": {
+        "/apis": [GetApis.Input, GetApis.Output, false],
+        "/nx/devices": [any, any, false],
+        "/nx/meta-search": [any, any, false],
+        "/nx/meta-search/all": [any, any, false],
+        "/nx/dashboard": [any, any, false],
+        // "/chart": [GetChart.Input, GetChart.Output, false],
+        // "/chart/data": [any, any, false],
+        // "/chart/history": [any, any, false],
+        // "/looksrarelist": [any, any, false],
+        // "/nfttools/yesfloor": [any, any, false],
+        // "/nftautotools/stats": [any, any, false],
+        // "/nftautotools/suggestion": [any, any, false],
     }, 
     "Post": { 
-        "/rating": [any, any, false]
+        "/nx/login": [any, any, false],
     },
     "Put": {
         // "/cameras": [PutCameras.Input, PutCameras.Output, false]
