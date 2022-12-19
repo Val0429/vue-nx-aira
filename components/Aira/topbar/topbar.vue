@@ -12,7 +12,7 @@
                 <div class="mx-4 mb-2" style="border-top: 1px solid #8A9192"></div>
                 <router-link to="/dashboard">Dashboard</router-link>
                 <router-link to="/investigation">Investigation</router-link>
-                <router-link to="/case">Case</router-link>
+                <router-link to="/case">Incident</router-link>
             </template>
         </b-sidebar>
 
@@ -22,7 +22,12 @@
             <router-link to="/case">Case</router-link>
         </div>
 
-        <ivc-datetitle class="datetitle" />
+        <div class="datetitle d-flex flex-row align-items-center">
+            <ivc-datetitle />
+            <!-- setting -->
+            <!-- <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="dark" /> -->
+            <iv-button class="b-icon-setting ml-4" icon="v-icon-setting" variant="dark" />
+        </div>
     </div>
 </template>
 
@@ -63,7 +68,7 @@
 
     .datetitle {
         position: absolute;
-        right: 25px; top: 50%;
+        right: 20px; top: 50%;
         transform: translateY(-50%);
     }
 
@@ -88,6 +93,22 @@
     .b-sidebar-body > a {
         display: block;
         padding-left: 35px;
+    }
+
+    /// Setting Button
+    .b-icon-setting {
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+        padding: 0;
+
+        /deep/ .v-icon-setting {
+            margin-top: 1px;
+            width: 20px;
+            height: 20px;
+            background: url("~@/assets/images/setting.svg");
+            border-radius: 0 !important;
+        }
     }
 
     /// Clear Button

@@ -2,7 +2,7 @@ module.exports = {
     prodMode: process.env.NODE_ENV === 'production',
 
     title: 'Val Co.',
-    port: 8080,
+    port: 8081,
     https: false,
     autoOpen: false,
     historyApiFallback: true,
