@@ -26,8 +26,14 @@
             <ivc-datetitle />
             <!-- setting -->
             <!-- <iv-button v-b-toggle.sidebar-menu class="b-icon-filter" icon="v-icon-filter" variant="dark" /> -->
-            <iv-button class="b-icon-setting ml-4" icon="v-icon-setting" variant="dark" />
+            <iv-button v-b-toggle.sidebar-menu-setting class="b-icon-setting ml-4" icon="v-icon-setting" variant="dark" />
         </div>
+
+        <!-- menu - setting -->
+        <b-sidebar id="sidebar-menu-setting" class="overflow-visible" bg-variant="sidebar-menu" no-header shadow no-slide>
+            <ivc-system-setting />
+        </b-sidebar>
+
     </div>
 </template>
 
@@ -116,6 +122,18 @@
         width: 16px;
         height: 16px;
         background-image: url("~@/assets/images/close.svg") !important;
+    }
+
+    /// menu - setting
+    /deep/ #sidebar-menu-setting {
+        margin-top: $top-height;
+
+        width: 100vw;
+        height: calc(100vh - #{$top-height});
+
+        .b-sidebar-body {
+            overflow: hidden !important;
+        }
     }
 }
 </style>

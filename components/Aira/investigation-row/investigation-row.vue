@@ -1,6 +1,8 @@
 <template>
     <div class="investigation-row-container">
-        <div class="image" :class="{[tmp_image_count]: true}" />
+        <!-- <div class="image" :class="{[tmp_image_count]: true}" /> -->
+
+        <ivc-chart11 class="mt-3 mb-3 overflow-hidden flex-fill-0" />
     </div>
 </template>
 
