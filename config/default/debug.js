@@ -7,6 +7,7 @@ module.exports = {
     autoOpen: false,
     historyApiFallback: true,
 
+    fakeData: true,
     showNonePermissionBlock: true
 }
 

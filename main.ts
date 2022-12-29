@@ -6,6 +6,7 @@ import { $global, Global } from './config/default/global';
 import { zip } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
 import { IDBEvents } from './config/default/globals/db';
+let config = require('@/config/default/debug');
 
 DisableLoginRouter();
 
@@ -41,83 +42,85 @@ zip(
     $global.attribute_value$
 ).pipe(throttleTime(100))
 .subscribe(o => {
-    // createFakeData();
-    console.log("hello");
+    if (config.fakeData) {
+        createFakeData();
+    }
+    // console.log("hello");
 });
 
 
 
-// /// fake test data
-// function createFakeData() {
-//     /// clean old events / make db_events
-//     {
-//         let db_events = Global.db_events;
-//         /// clean old data
-//         db_events.findAndRemove();
+/// fake test data
+function createFakeData() {
+    /// clean old events / make db_events
+    {
+        let db_events = Global.db_events;
+        /// clean old data
+        db_events.findAndRemove();
 
-//         /// prepare variables
-//         const v_time = $global.timeperiod_value$.value;
-//         const v_cameras = $global.camera_value$.value;
-//         const v_attributes = $global.attribute_value$.value;
+        /// prepare variables
+        const v_time = $global.timeperiod_value$.value;
+        const v_cameras = $global.camera_value$.value;
+        const v_attributes = $global.attribute_value$.value;
 
-//         const a_time = {
-//             from: v_time.from.valueOf(),
-//             to: v_time.to.valueOf()
-//         };
-//         const a_cameras = v_cameras.selectAll !== true ?
-//             (v_cameras.values || []) :
-//             Object.keys($global.cameras$.value);
-//         const a_attributes = v_attributes.selectAll !== true ?
-//             (v_attributes.values || []) :
-//             Object.keys($global.attributes$.value);
+        const a_time = {
+            from: v_time.from.valueOf(),
+            to: v_time.to.valueOf()
+        };
+        const a_cameras = v_cameras.selectAll !== true ?
+            (v_cameras.values || []) :
+            Object.keys($global.cameras$.value);
+        const a_attributes = v_attributes.selectAll !== true ?
+            (v_attributes.values || []) :
+            Object.keys($global.attributes$.value);
 
-//         const randTime = () => Math.floor(Math.random()*(max_time-min_time)) + min_time;
-//         const randPos = () => ({x0:0,y0:0,x1:1,y1:1});
-//         const randType = (): IDBEvents["type"] => ["nx.base.Person", "nx.base.Face"][Math.floor(Math.random() * 2)] as any;
-//         const randColor = () => a_attributes[Math.floor(Math.random()*a_attributes.length)];
-//         const randName = (optional?) => {
-//             if (optional && Math.floor(Math.random()*2) === 0) return;
-//             const names = ["Frank", "Val", "Tulip"];
-//             return names[Math.floor(Math.random()*names.length)];
-//         }
+        const randTime = () => Math.floor(Math.random()*(max_time-min_time)) + min_time;
+        const randPos = () => ({x0:0,y0:0,x1:1,y1:1});
+        const randType = (): IDBEvents["type"] => ["nx.base.Person", "nx.base.Face"][Math.floor(Math.random() * 2)] as any;
+        const randColor = () => a_attributes[Math.floor(Math.random()*a_attributes.length)];
+        const randName = (optional?) => {
+            if (optional && Math.floor(Math.random()*2) === 0) return;
+            const names = ["Frank", "Val", "Tulip"];
+            return names[Math.floor(Math.random()*names.length)];
+        }
 
-//         /// each camera
-//         for (let camera of a_cameras) {
-//             let time = a_time.from + randTime();
-//             while (time < a_time.to) {
-//                 let type = randType();
-//                 let obj: IDBEvents = {
-//                     time,
-//                     camera,
-//                     position: randPos(),
-//                     type,
-//                     color: randColor(),
-//                     name: randName(type === "nx.base.Person")
-//                 }
-//                 db_events.insert(obj);
-//                 time += randTime();
-//             }
-//         }
+        /// each camera
+        for (let camera of a_cameras) {
+            let time = a_time.from + randTime();
+            while (time < a_time.to) {
+                let type = randType();
+                let obj: IDBEvents = {
+                    time,
+                    camera,
+                    position: randPos(),
+                    type,
+                    color: randColor(),
+                    name: randName(type === "nx.base.Person")
+                }
+                db_events.insert(obj);
+                time += randTime();
+            }
+        }
 
-//         console.log(db_events.count(), "test events created.");
-//     }
+        console.log(db_events.count(), "test events created.");
+    }
 
-//     /// resolve chart1 data
-//     $global.chart1_value$.next(
-//         Global.dv_events_chart1_category_by_date.data()
-//     );
-//     console.log("chart1 data: ", $global.chart1_value$.value);
+    /// resolve chart1 data
+    $global.chart1_value$.next(
+        Global.dv_events_chart1_category_by_date.data()
+    );
+    console.log("chart1 data: ", $global.chart1_value$.value);
 
-//     /// resolve chart2 data
-//     let color_data = Global.dv_events_chart2_category_by_color.data();
-//     let color_attr = $global.attributes$.value;
-//     color_data = color_data.map(o => ({ name: color_attr[o.name], value: o.value }));
-//     $global.chart2_value$.next(color_data);
-//     console.log("chart2 data: ", $global.chart2_value$.value);
+    /// resolve chart2 data
+    let color_data = Global.dv_events_chart2_category_by_color.data();
+    let color_attr = $global.attributes$.value;
+    color_data = color_data.map(o => ({ name: color_attr[o.name], value: o.value }));
+    $global.chart2_value$.next(color_data);
+    console.log("chart2 data: ", $global.chart2_value$.value);
 
-//     /// resolve chart3 data
-//     $global.chart3_value$.next(
-//         Global.dv_events_chart3_category_by_type.data()
-//     );
-//     console.log("chart3 data: ", $global.chart3_value$.value);    
-// }
+    /// resolve chart3 data
+    $global.chart3_value$.next(
+        Global.dv_events_chart3_category_by_type.data()
+    );
+    console.log("chart3 data: ", $global.chart3_value$.value);    
+}

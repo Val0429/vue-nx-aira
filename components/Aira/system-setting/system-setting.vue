@@ -19,7 +19,14 @@
                             </div>
                         </template>
                         <b-card-text>
-                            123
+                            <iv-form
+                                ref="form_setting"
+                                :interface="inf_setting()"
+                                />
+                            <div class="d-flex align-items-center justify-content-center mt-3">
+                                <iv-button v-if="$vref('form_setting')" class="pl-5 pr-5" style="font-size: 18px; min-width: 200px"
+                                    size="lg" v-bind="$vref('form_setting').submitBindings.$attrs" v-on="$vref('form_setting').submitBindings.$listeners">Apply</iv-button>
+                            </div>
                         </b-card-text>
                     </b-tab>
                 </b-tabs>

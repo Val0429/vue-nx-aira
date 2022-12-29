@@ -47,7 +47,19 @@
     // }    
 }
 
-/// iSAPUI
+/// AiraUI
+
+/// form
+#{$theme-name} {
+    .form-control {
+        color: white;
+
+        &:focus {
+            color: white;
+        }
+    }
+}
+
 /// card
 $iv-card-header-background-color: transparent;
 #{$theme-name} {

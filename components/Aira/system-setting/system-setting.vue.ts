@@ -10,5 +10,32 @@ import { Vue, Component, Prop, Model } from "vue-property-decorator";
 export class SystemSetting extends Vue {
     @Model('input', { type: String })
     value: string;
+
+    private inf_setting() {
+        return `
+        interface {
+            /**
+             * @uiLabel - IP Address
+             * @uiColumnGroup - 1
+             */
+            ip: string;
+            /**
+             * @uiLabel - Port
+             * @uiColumnGroup - 1
+             */
+            port: number;
+            /**
+             * @uiLabel - Username
+             * @uiColumnGroup - 2
+             */
+            username: string;
+            /**
+             * @uiLabel - Password
+             * @uiColumnGroup - 2
+             */
+            password: string;
+        };
+        `;
+    }
 }
 export default SystemSetting;
