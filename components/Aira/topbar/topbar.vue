@@ -19,7 +19,7 @@
         <div class="navs d-none d-lg-block">
             <router-link to="/dashboard">Dashboard</router-link>
             <router-link to="/investigation">Investigation</router-link>
-            <router-link to="/case">Case</router-link>
+            <router-link to="/incident">Incident</router-link>
         </div>
 
         <div class="datetitle d-flex flex-row align-items-center">
