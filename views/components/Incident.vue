@@ -32,7 +32,7 @@
             </div>
             <div class="right">
                 <div class="toolbox d-flex flex-column">
-                    <iv-button variant="secondary" size="lg">PDF Report</iv-button>
+                    <iv-button variant="secondary" size="lg" @click="pdf_print()">PDF Report</iv-button>
                     <iv-button variant="secondary" size="lg">HTML Video Archive</iv-button>
                     <iv-button variant="secondary" size="lg">VMS Bookmark</iv-button>
                 </div>
@@ -47,6 +47,18 @@
 </template>
 
 <style lang="scss" scoped>
+@media print {
+    .main {
+        .top {
+            .left {
+                .image1 {
+                    -webkit-print-color-adjust: exact;
+                }
+            }
+        }
+    }
+}
+
 .main {
     box-sizing: border-box;
     padding: 6vh 7vw;
@@ -132,5 +144,8 @@ import { toEnumInterface } from '@/../core';
 
 @Component
 export default class Incident extends Vue {
+    private pdf_print() {
+        window.print();
+    }
 }
 </script>
