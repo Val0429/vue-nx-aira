@@ -9,7 +9,7 @@ import { DateHelper } from '@/../core/utilities/date-helper';
 
 @Component
 export class DateTitle extends Vue {
-    private interval: number;
+    private interval: any;
     date: Date = new Date();
 
     created() {

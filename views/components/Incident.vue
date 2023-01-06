@@ -1,10 +1,10 @@
 <template>
-    <div class="main d-flex flex-column">
+    <div class="main d-flex flex-column" id="export-root">
         <div class="top d-flex">
             <div class="left d-flex">
                 <div style="flex: 1 1 0; margin-right: 1.5vw; margin-left: 1.8vw">
                     <!-- image -->
-                    <div class="image1" />
+                    <div id="export-image1" class="image1" />
 
                     <BR/>
                     <!-- Camera Label -->
@@ -16,7 +16,7 @@
 
                 </div>
                 <div style="flex-basis: 120px">
-                    <img width="120px" height="120px" src="@/assets/images/image-m2.png" />
+                    <img id="export-image2" width="120px" height="120px" src="@/assets/images/image-m2.png" />
                 </div>
             </div>
             <div class="right">
@@ -25,15 +25,15 @@
         <div class="bottom d-flex">
             <div class="left" style="margin-left: 2vw; margin-top: 1vh">
                 <div style="margin-left: 0.4vw">Accompany</div>
-                <div class="body1" style="margin-top: 1vh">
+                <div id="export-left-body" class="body1" style="margin-top: 1vh">
                     <img src="@/assets/images/image-m11.png" />
                     <img src="@/assets/images/image-m12.png" />
                 </div>
             </div>
-            <div class="right">
-                <div class="toolbox d-flex flex-column">
+            <div id="export-right-body" class="right">
+                <div id="export-toolbox" class="toolbox d-flex flex-column">
                     <iv-button variant="secondary" size="lg" @click="pdf_print()">PDF Report</iv-button>
-                    <iv-button variant="secondary" size="lg">HTML Video Archive</iv-button>
+                    <iv-button variant="secondary" size="lg" @click="html_export()">HTML Video Archive</iv-button>
                     <iv-button variant="secondary" size="lg">VMS Bookmark</iv-button>
                 </div>
 
@@ -71,7 +71,6 @@
 
         .left {
             .image1 {
-                background: purple;
                 aspect-ratio: 1 / 1;
                 align-self: flex-start;
                 background-image: url("~@/assets/images/image-m1.png");
@@ -141,11 +140,45 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { RegisterRouter } from '@/../core/router';
 import { toEnumInterface } from '@/../core';
+import { HtmlExporter } from '@/helpers/html-exporter';
 
 @Component
 export default class Incident extends Vue {
     private pdf_print() {
         window.print();
+    }
+    private async html_export() {
+        let doc = HtmlExporter.cloneElementWithIdIntoDocument("export-root");
+
+        /// handle images
+        await HtmlExporter.transferElementsToDataUrl(document, doc,
+            ["export-image1", "export-image2"]
+        );
+
+        await HtmlExporter.transferElementChildsToDataUrl(document, doc,
+            ["export-left-body", "export-right-body"]
+        );
+
+        /// remove export-toolbox
+        let toolbox = doc.getElementById("export-toolbox");
+        toolbox.parentElement.removeChild(toolbox);
+
+        // /// handle image1
+        // let oriImage1 = document.getElementById("export-image1");
+        // let image1 = doc.getElementById("export-image1");
+        // let image1Url = window.getComputedStyle(oriImage1).backgroundImage.slice(5, -2);
+        // let dataUrl = await HtmlExporter.getDataURLFromImageUrl(image1Url);
+        // image1.style.backgroundImage = `url(${dataUrl})`;
+
+        // /// handle image2
+        // let oriImage2 = document.getElementById("export-image2");
+        // let image2 = doc.getElementById("export-image2");
+        // let image2Url = (image2 as any).src;
+        // let dataUrl2 = await HtmlExporter.getDataURLFromImageUrl(image2Url);
+        // (image2 as any).src = dataUrl2;
+
+        /// do export
+        HtmlExporter.zipDocumentIntoFile(doc, "export.zip");
     }
 }
 </script>
