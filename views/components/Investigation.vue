@@ -2,7 +2,7 @@
     <fragment>
         <ivc-menu />
         <div class="d-flex content-body flex-column">
-            <ivc-investigation-row v-for="(o, index) in cameras" :key="index" :value="o" />
+            <ivc-investigation-row v-for="(o, index) in cameras" :key="index" :idx="index" :value="o" />
         </div>
     </fragment>
 </template>

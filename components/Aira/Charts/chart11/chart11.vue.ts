@@ -16,6 +16,10 @@ export class Chart11 extends Vue {
     @Model('input')
     value: IDVEventsCategoryByDate;
 
+    /// 0-4
+    @Prop({ type: Number, required: false })
+    colorType: number;
+
     private _chart;
     private chart_ready(o) { this._chart = o; window.addEventListener("resize", this.chart_handler); }
     private chart_finished() { window.removeEventListener("resize", this.chart_handler); }
@@ -27,6 +31,8 @@ export class Chart11 extends Vue {
     }
 
     getOption() {
+        const colors = ["#92C57B99", "#43A0D199", "#E4CA6D99", "#945CA899", "#9D684A99"];
+
         /// { id, time, count }
         let tenMinutes = 10*60*1000;
         let start = 1671588000000;
@@ -61,6 +67,7 @@ export class Chart11 extends Vue {
 
             series: {
                 coordinateSystem: "singleAxis", type: "scatter",
+                color: colors[(this.colorType || 0)%5],
                 encode: {
                     single: "time"
                 },

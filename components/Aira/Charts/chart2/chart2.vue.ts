@@ -23,16 +23,16 @@ export class Chart2 extends Vue {
 
     getOption() {
         const items = {
-            "Black": "#000",
-            "White": "#FFF",
-            "Gray": "#999",
-            "Red": "#F00",
-            "Orange": "#FFA500",
-            "Yellow": "#FF0",
-            "Violet": "#8F00FF",
-            "Green": "#0F0",
-            "Blue": "#00F",
-            "Brown": "#964B00"
+            "Black": "#474747",
+            "White": "#F0F0F0",
+            "Gray": "#898989",
+            "Red": "#C65555",
+            "Orange": "#C68242",
+            "Yellow": "#E4CA6D",
+            "Violet": "#945CA8",
+            "Green": "#92C57B",
+            "Blue": "#43A0D1",
+            "Brown": "#9D684A"
         }
 
         let data = (this as any).chart2_value$;

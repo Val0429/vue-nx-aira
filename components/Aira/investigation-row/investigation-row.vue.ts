@@ -11,6 +11,9 @@ export class InvestigationRow extends Vue {
     @Model('input', { type: String })
     value: string;
 
+    @Prop({ type: Number, required: false })
+    idx: number;
+
     private get tmp_image_count() {
         return `image${(parseInt(this.value, 10)%5)+1}`;
     }

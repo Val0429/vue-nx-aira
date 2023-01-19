@@ -7,22 +7,24 @@
                     <div id="export-image1" class="image1" />
 
                     <BR/>
-                    <!-- Camera Label -->
-                    <ivc-menu-camera-attributes label="Camera" :value="camera_value$" :items="cameras$" />
-                    <!-- Attribute Label -->
-                    <ivc-menu-camera-attributes label="Attribute" :value="attribute_value$" :items="attributes$" />
-                    <!-- TimePeriod Label -->
-                    <ivc-menu-time-attributes :value="timeperiod_value$" />
 
+                    <div class="d-none d-lg-block">
+                        <!-- Camera Label -->
+                        <ivc-menu-camera-attributes label="Camera" :value="camera_value$" :items="cameras$" />
+                        <!-- Attribute Label -->
+                        <ivc-menu-camera-attributes label="Attribute" :value="attribute_value$" :items="attributes$" />
+                        <!-- TimePeriod Label -->
+                        <ivc-menu-time-attributes :value="timeperiod_value$" />
+                    </div>
                 </div>
-                <div style="flex-basis: 120px">
-                    <img id="export-image2" width="120px" height="120px" src="@/assets/images/image-m2.png" />
+                <div class="small-pic">
+                    <img id="export-image2" src="@/assets/images/image-m2.png" />
                 </div>
             </div>
             <div class="right">
             </div>
         </div>
-        <div class="bottom d-flex">
+        <div class="bottom d-none d-lg-flex">
             <div class="left" style="margin-left: 2vw; margin-top: 1vh">
                 <div style="margin-left: 0.4vw">Accompany</div>
                 <div id="export-left-body" class="body1" style="margin-top: 1vh">
@@ -41,6 +43,23 @@
                 <img src="@/assets/images/image-m21.png" />
                 <img src="@/assets/images/image-m21.png" />
                 <img src="@/assets/images/image-m21.png" />
+            </div>
+        </div>
+
+        <div class="bottom d-flex d-lg-none flex-column">
+            <div class="d-flex my-3">
+                <!-- Camera Label -->
+                <ivc-menu-camera-attributes label="Camera" :value="camera_value$" :items="cameras$" />
+                <!-- Attribute Label -->
+                <ivc-menu-camera-attributes label="Attribute" :value="attribute_value$" :items="attributes$" />
+                <!-- TimePeriod Label -->
+                <ivc-menu-time-attributes :value="timeperiod_value$" />
+            </div>
+
+            <div class="toolbox d-flex flex-row align-items-stretch">
+                <iv-button variant="secondary" size="lg" @click="pdf_print()">PDF Report</iv-button>
+                <iv-button variant="secondary" size="lg" @click="html_export()">HTML Video Archive</iv-button>
+                <iv-button variant="secondary" size="lg">VMS Bookmark</iv-button>
             </div>
         </div>
     </div>
@@ -66,7 +85,6 @@
     color: white;
 
     .top {
-        border-bottom: 1px solid #031F22;
         flex: 17;
 
         .left {
@@ -77,6 +95,16 @@
                 background-size:     cover;
                 background-repeat:   no-repeat;
                 background-position: center center;
+            }
+
+            .small-pic {
+                flex-basis: 70px;
+                width: 70px;
+                height: 70px;
+                img {
+                    width: 70px;
+                    height: 70px;                    
+                }
             }
         }
 
@@ -105,17 +133,12 @@
         .right {
             margin-top: 2.5vh;
             position: relative;
+        }
 
-            .toolbox {
-                position: absolute;
-                right: 0;
-                bottom: 0;
-
-                button {
-                    padding-left: 25px;
-                    padding-right: 25px;
-                    margin: 2px 0;
-                }
+        .toolbox {
+            button {
+                width: 30%;
+                margin: 3px 10px;
             }
         }
     }
@@ -133,6 +156,42 @@
         }
         // background: blue;
     }
+}
+
+@media (min-width: 1200px) {
+.main {
+    .top {
+        border-bottom: 1px solid #031F22;
+        .left {
+            .small-pic {
+                flex-basis: 120px;
+                width: 120px;
+                height: 120px;
+
+                img {
+                    width: 120px;
+                    height: 120px;
+                }
+            }
+        }
+    }
+    .bottom {
+        .right {
+            .toolbox {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+
+                button {
+                    width: inherit;
+                    padding-left: 25px;
+                    padding-right: 25px;
+                    margin: 2px 0;
+                }
+            }
+        }
+    }
+}
 }
 </style>
 
